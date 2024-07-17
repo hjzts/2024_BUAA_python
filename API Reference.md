@@ -183,7 +183,7 @@
       {
         "userid": userid, // 整型，{用户ID}
         "username": "{username}",  // 用户名
-        "avatarurl": "{avatarurl}", // 头像图片地址，若用户未设置邮箱
+        "avatarurl": "{avatarurl}", // 头像图片完整URL地址，若用户未设置则为默认头像
         "studentid": "{studentid}_EMPTY", // 学号
         "isblock": true | false // 是否已经封禁
     	},
@@ -436,5 +436,76 @@
 
 ## 3. UserInfo
 
-### 1.getCurrentUserInfo
+### 1. getCurrentUserInfo
 
+| Method | Content-Type | 描述               |
+| ------ | ------------ | ------------------ |
+| GET    | /            | 获取当前用户的信息 |
+
+成功返回
+
+```json
+{
+  "data": {
+  	"username": "{username}",  // 用户名
+		"avatarurl": "{avatarurl}", // 头像图片完整URL地址，若用户未设置则为默认头像
+		"studentid": "{studentid}_EMPTY", // 学号
+  }
+}
+```
+
+### 2. updateAvatar
+
+| Method | Content-Type        | 描述         |
+| ------ | ------------------- | ------------ |
+| POST   | multipart/form-data | 用户修改头像 |
+
+表单内容
+
+| Key       | Value类型 | 描述         |
+| --------- | --------- | ------------ |
+| newavatar | File      | 用户的新头像 |
+
+成功返回
+
+```json
+{
+  "data": {
+		"avatarurl": "{avatarurl}", // 新的头像图片完整URL地址，若用户未设置则为默认头像
+  }
+}
+```
+
+错误代码
+
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 300201  | 新头像超出服务器限制 |
+
+### 3. updateStundentID
+
+| Method | Content-Type        | 描述         |
+| ------ | ------------------- | ------------ |
+| POST   | multipart/form-data | 用户修改学号 |
+
+表单内容
+
+| Key          | Value类型 | 描述         |
+| ------------ | --------- | ------------ |
+| newstudentid | String    | 用户的新学号 |
+
+成功返回
+
+```json
+{
+  "data": {
+		"studentid": "{studentid}", // 新的学号
+  }
+}
+```
+
+错误代码
+
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 300301  | 新学号中包含非法字符 |
