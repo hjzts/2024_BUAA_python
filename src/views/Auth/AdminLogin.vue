@@ -2,7 +2,7 @@
 
 </template>
 
-<script lang="ts" setup name="adminLogin">
+<script lang="ts" setup name="AdminLogin">
 
 </script>
 
