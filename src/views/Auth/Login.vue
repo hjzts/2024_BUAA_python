@@ -15,7 +15,7 @@
                                 </v-card-title>
                                 <v-card-text>
                                     <v-form>
-                                        <v-text-field label="学号" type="email" required></v-text-field>
+                                        <v-text-field label="学号" type="number" required></v-text-field>
                                         <v-text-field label="密码" type="password" required></v-text-field>
                                         <v-btn class="Login" color="primary" block>Log In</v-btn>
                                     </v-form>
