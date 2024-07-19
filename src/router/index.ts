@@ -9,10 +9,10 @@ import AdminView from "@/views/Admin/AdminView.vue"
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    {
-      path: '/',
-      redirect: '/auth',
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/auth',
+    // },
     {
       path: '/auth',
       name: 'auth',
