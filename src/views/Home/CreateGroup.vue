@@ -2,7 +2,7 @@
 
 </template>
 
-<script lang="ts" setup name="login">
+<script lang="ts" setup name="CreateGroup">
 
 </script>
 
