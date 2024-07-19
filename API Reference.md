@@ -1249,7 +1249,35 @@
 | ------- | -------------------- |
 | 700101  | 记录做错的题目不存在 |
 
-### 2. getCurrentEvaluation
+### 2. addRightLog
+
+| Method | Content-Type        | 描述                             |
+| ------ | ------------------- | -------------------------------- |
+| POST   | multipart/form-data | 记录 {题目ID} 对应的题目做对一次 |
+
+表单内容
+
+| Key        | Value类型 | 描述                  |
+| ---------- | --------- | --------------------- |
+| exerciseid | Integer   | 做对的题目的 {题目ID} |
+
+成功返回
+
+```json
+{
+  "data": {
+    "timestamp": timestamp, // 整型，当前时间的时间戳
+  }
+}
+```
+
+错误代码
+
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 700201  | 记录做对的题目不存在 |
+
+### 3. getCurrentEvaluation
 
 | Method | Content-Type | 描述                   |
 | ------ | ------------ | ---------------------- |
@@ -1274,7 +1302,7 @@
 }
 ```
 
-### 3. getRecommendExercise
+### 4. getRecommendExercise
 
 | Method | Content-Type | 描述                                                         |
 | ------ | ------------ | ------------------------------------------------------------ |
