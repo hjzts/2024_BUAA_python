@@ -23,7 +23,7 @@
                                 <v-divider></v-divider>
 
                                 <v-card-subtitle class="text-center">
-                                    Don't have an account yet? <a href="#">Sign up</a>
+                                    还没有账号？ <a href="/">注册</a>
                                 </v-card-subtitle>
                             </v-card>
                         </v-row>

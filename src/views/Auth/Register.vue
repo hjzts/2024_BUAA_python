@@ -36,11 +36,12 @@
                                         </v-checkbox>
 
                                         <v-col>
-                                            <v-btn class="Login" color="primary" block>注册</v-btn>
+                                            <v-btn class="Login" color="primary" block @click="register">注册</v-btn>
                                         </v-col>
                                         <v-spacer></v-spacer>
                                         <v-col>
-                                            <v-btn class="Login" color="primary" block>已有账号？登陆</v-btn>
+                                            <v-btn class="Login" color="primary" block
+                                                @click="retrunToLogin">已有账号？登录</v-btn>
                                         </v-col>
                                     </v-form>
                                 </v-card-text>
@@ -58,6 +59,13 @@
 import { useRouter } from "vue-router"
 const router = useRouter()
 let checkbox = false
+
+function retrunToLogin() {
+    router.push('/auth/login')
+}
+function register() {
+    console.log('注册')
+}
 </script>
 
 <style>
@@ -70,12 +78,15 @@ let checkbox = false
 }
 
 .v-input--selection-controls__input {
-  border: 1px solid #2c993e; /* 设置边框颜色 */
-  border-radius: 4px; /* 设置边框圆角 */
+    border: 1px solid #2c993e;
+    /* 设置边框颜色 */
+    border-radius: 4px;
+    /* 设置边框圆角 */
 }
 
 .custom-checkbox .v-input--selection-controls__ripple {
-  border-radius: 3px; /* 确保复选框的圆角边框 */
+    border-radius: 3px;
+    /* 确保复选框的圆角边框 */
 }
 
 .my-fill-height {

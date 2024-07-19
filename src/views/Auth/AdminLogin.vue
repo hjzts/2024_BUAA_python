@@ -17,7 +17,7 @@
                                     <v-form>
                                         <v-text-field label="管理员账号" type="number" required></v-text-field>
                                         <v-text-field label="管理员密码" type="password" required></v-text-field>
-                                        <v-btn class="Login" color="primary" block>Log In</v-btn>
+                                        <v-btn class="Login" color="primary" block @click="login">Log In</v-btn>
                                     </v-form>
                                 </v-card-text>
                                 <v-divider></v-divider>
@@ -34,7 +34,9 @@
 <script lang="ts" setup name="Login">
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
+function login() {
+    console.log("管理员登录了！！")
+}
 </script>
   
 <style>
