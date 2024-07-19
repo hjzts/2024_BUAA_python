@@ -10,9 +10,9 @@ import router from './router/index'
 
 const app = createApp(App)
 const vuetify = createVuetify({
-    components,
-    directives,
-  })
+  components,
+  directives,
+})
 
 app.use(createPinia())
 app.use(vuetify)
