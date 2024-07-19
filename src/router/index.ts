@@ -1,11 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Auth from '../views/Auth/AuthView.vue'
-import Home from '../views/Home/HomeView.vue'
-
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Auth from '@/views/Auth/AuthView.vue'
+import Login from '@/views/Auth/Login.vue'
+import Register from '@/views/Auth/Register.vue'
+import AdminLogin from '@/views/Auth/AdminLogin.vue'
+import Home from '@/views/Home/HomeView.vue'
+import AdminView from "@/views/Admin/AdminView.vue"
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
+    {
+      path: '/',
+      redirect: '/auth',
+    },
     {
       path: '/auth',
       name: 'auth',
@@ -14,17 +21,17 @@ const router = createRouter({
         {
           path: '/auth/login',
           name: 'login',
-          component: () => import('../views/Auth/Login.vue')
+          component: Login
         },
         {
           path: '/auth/register',
           name: 'register',
-          component: () => import('../views/Auth/Register.vue')
+          component: Register
         },
         {
-          path : 'auth/adminLogin',
+          path : '/auth/adminLogin',
           name : 'adminLogin',
-          component:() => import ('../views/Auth/AdminLogin.vue')
+          component: AdminLogin
         }
       ]
     },
@@ -34,8 +41,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path :'/',
-      redirect:'/home'
+      path: '/admin',
+      name: 'admin',
+      component: AdminView
     }
   ]
 })

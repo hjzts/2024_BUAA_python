@@ -1,11 +1,11 @@
-/**
-    * @name MyExercise
-    * @description 用户管理我的题目
-*/
-<template></template>
+<template>
 
-<script lang="ts" setup name="myExercise">
+</template>
+
+<script lang="ts" setup name="MyExercise">
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

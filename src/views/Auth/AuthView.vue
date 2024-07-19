@@ -1,9 +1,10 @@
-<template class = "auth">
+<template>
+    <v-app id="auth">
 
-
+    </v-app>
 </template>
 
-<script lang = "ts" setup name="auth">
+<script lang="ts" setup name="Auth">
 
 </script>
 

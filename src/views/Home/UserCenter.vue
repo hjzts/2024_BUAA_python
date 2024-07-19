@@ -2,7 +2,7 @@
 
 </template>
 
-<script lang="ts" setup name="userCenter">
+<script lang="ts" setup name="UserCenter">
 
 </script>
 

@@ -2,7 +2,7 @@
 
 </template>
 
-<script lang="ts" setup name="register">
+<script lang="ts" setup name="Register">
 
 </script>
 

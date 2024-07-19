@@ -1,14 +1,13 @@
-/**
-    * HomeView
-    *
-    * @description 共享题组的题目
-    */
-    
-*/
-<template></template>
+<template>
+    <v-app id="home">
+
+    </v-app>
+</template>
 
 <script lang="ts" setup name="Home">
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
