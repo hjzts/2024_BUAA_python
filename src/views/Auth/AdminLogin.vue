@@ -35,6 +35,7 @@
 import { useRouter } from 'vue-router'
 const router = useRouter()
 function login() {
+    router.push('/admin')
     console.log("管理员登录了！！")
 }
 </script>
