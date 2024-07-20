@@ -1,15 +1,13 @@
 <template>
-  <test></test>
   <div class="navigate">
   </div>
   <div class="main-content">
-    <!-- <RouterView></RouterView> -->
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script lang="ts" setup name="App">
 import { RouterView, RouterLink } from 'vue-router'
-import test from './views/Admin/test.vue'
 </script>
 
 <style scoped>
