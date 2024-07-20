@@ -4,7 +4,7 @@
             <v-col>
                 <v-navigation-drawer expand-on-hover rail>
                     <v-list>
-                        <v-list-item prepend-avatar="../../../public/labixiaoxin.jpg" :subtitle="userid"
+                        <v-list-item prepend-avatar="/labixiaoxin.jpg" :subtitle="userid"
                             :title="username"></v-list-item>
                     </v-list>
 

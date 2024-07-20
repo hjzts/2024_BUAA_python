@@ -12,7 +12,7 @@
                 <v-row justify="center" align="center" class="w-100">
                     <v-col justify="center" cols="12" md="6">
                         <v-row justify="center">
-                            <v-img src="../../../public/logo.png" class="logo" @click="goToAdminLogin"></v-img>
+                            <v-img src="/logo.png" class="logo" @click="goToAdminLogin"></v-img>
                         </v-row>
                         <v-row justify="center">
                             <v-card class=" elevation-12 login-card">
