@@ -17,10 +17,10 @@
                                     <v-form>
                                         <v-text-field label="学号" type="number" required></v-text-field>
                                         <v-text-field label="密码" type="password" required></v-text-field>
-                                        <v-btn class="Login" color="primary" block>Log In</v-btn>
+                                        <v-btn class="Login" color="primary" block size="x-large">Log In</v-btn>
                                     </v-form>
                                 </v-card-text>
-                                <v-divider></v-divider>
+                                <v-divider></v-divider> 
 
                                 <v-card-subtitle class="text-center">
                                     还没有账号？ <a href="/">注册</a>
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup name="Login">
-import {onMounted} from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 onMounted(() => {
@@ -55,12 +55,11 @@ onMounted(() => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #819bd4 0%, #134ea5 100%);
+    background: linear-gradient(to bottom, #48629b 0%, #134ea5 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     clip-path: polygon(50% 60%, 0% 0%, 100% 0%);
-    /* z-index: -1; */
 }
 
 .login-card {

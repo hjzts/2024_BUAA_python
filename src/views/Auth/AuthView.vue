@@ -12,7 +12,7 @@
                 <v-row justify="center" align="center" class="w-100">
                     <v-col justify="center" cols="12" md="6">
                         <v-row justify="center">
-                            <v-img src="/logo.png" class="logo" @click="goToAdminLogin"></v-img>
+                            <v-img src="/logo.png" class="logo" @dbclick="goToAdminLogin"></v-img>
                         </v-row>
                         <v-row justify="center">
                             <v-card class=" elevation-12 login-card">
@@ -22,16 +22,16 @@
                                 <v-card-text>
                                     <v-form>
                                         <v-col>
-                                            <v-btn class="Login" color="primary" block @click="goToLogin">登录</v-btn>
+                                            <v-btn class="Login" color="primary" block @click="goToLogin" size="large">登录</v-btn>
                                         </v-col>
                                         <v-spacer></v-spacer>
                                         <v-col>
-                                            <v-btn class="Login" color="primary" block @click="goToRegister">注册</v-btn>
+                                            <v-btn class="Login" color="primary" block @click="goToRegister" size="large">注册</v-btn>
                                         </v-col>
                                     </v-form>
                                 </v-card-text>
                                 <v-divider></v-divider>
-                            </v-card>
+                            </v-card>   
                         </v-row>
                     </v-col>
                 </v-row>
