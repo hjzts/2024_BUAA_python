@@ -26,86 +26,64 @@
                         查看您的信息
                     </v-card-title>
                     <v-divider></v-divider>
-                    <v-card-subtitle>
-                        <v-row>
-                            <v-col cols="2">
-                                <v-avatar size="64">
-                                    <v-icon size="64">mdi-account</v-icon>
-                                </v-avatar>
-                            </v-col>
-                            <v-spacer></v-spacer>
-                            <v-spacer></v-spacer>
-                            <v-spacer></v-spacer>
-                            <v-col cols="10">
-                                <div>胡健</div>
-                                <v-btn color="primary">修改头像</v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-card-subtitle>
-                    <v-card-text>
-                        <v-list dense density="compact">
-                            <v-card class="mx-auto" max-width="300">
-                                <v-list density="compact">
-                                    <v-list-subheader>REPORTS</v-list-subheader>
+                    <v-row>
+                        <v-col cols="22">
+                            <v-card-subtitle>
+                                <v-row>
+                                    <v-col cols="2" class="d-flex justify-start">
+                                        <v-row>
+                                            <v-col cols="12" class="d-flex justify-center">
+                                                <v-avatar size="128">
+                                                    <v-icon size="128">mdi-account</v-icon>
+                                                </v-avatar>
+                                            </v-col>
+                                            <v-col cols="12" class="d-flex justify-center">
+                                                <div style="font-size: 24px;">胡健</div>
+                                            </v-col>
+                                            <v-col cols="12" class="d-flex justify-center">
+                                                <v-btn color="primary">修改头像</v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </v-col>
+                                </v-row>
+                            </v-card-subtitle>
+                        </v-col>
 
-                                    <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary">
-                                        <template v-slot:prepend>
-                                            <v-icon :icon="item.icon"></v-icon>
-                                        </template>
+                        <v-col cols="22" class="d-flex align-center justify-center">
+                            <v-card-text>
+                                <v-list dense density="compact">
+                                    <v-card class="mx-auto" max-width="300">
+                                        <v-list density="compact">
+                                            <v-list-subheader>REPORTS</v-list-subheader>
 
-                                        <v-list-item-title v-text="item.text"></v-list-item-title>
-                                    </v-list-item>
+                                            <v-list-item v-for="(item, i) in items" :key="i" :value="item" color="primary">
+                                                <template v-slot:prepend>
+                                                    <v-icon :icon="item.icon"></v-icon>
+                                                </template>
+
+                                                <v-list-item-title v-text="item.text"></v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+                                    </v-card>
                                 </v-list>
-                            </v-card>
-                            <v-list-item>
-                                <v-list-item-icon>
-                                    <v-icon>mdi-account-card-details</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>学工号: 22373058</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-icon>
-                                    <v-icon>mdi-account</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>用户名: 学生</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-icon>
-                                    <v-icon>mdi-email</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>个人邮箱: 22373058@uuaa.edu.cn</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-icon>
-                                    <v-icon>mdi-calendar</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>创建时间: 2024-02-19</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                            <v-list-item>
-                                <v-list-item-icon>
-                                    <v-icon>mdi-clock</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title>当前学期: 2024春-课程系统</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn color="primary">修改密码</v-btn>
-                        <v-btn color="error">退出登录</v-btn>
-                    </v-card-actions>
-                    <v-card-subtitle class="text-danger">
-                        * 若您的个人信息有误，请联系系统管理员处理
-                    </v-card-subtitle>
+                            </v-card-text>
+                        </v-col>
+                    </v-row>
+
+                    <v-row align="center">
+                        <v-col cols="auto">
+                            <v-card-subtitle class="text-danger">
+                                * 若您的个人信息有误，请联系系统管理员处理
+                            </v-card-subtitle>
+                        </v-col>
+                        <v-col>
+                            <v-card-actions>
+                                <v-btn color="primary">修改密码</v-btn>
+                                <v-btn color="error">退出登录</v-btn>
+                            </v-card-actions>
+                        </v-col>
+
+                    </v-row>
                 </v-card>
             </v-col>
             <v-main style="height: 250px"></v-main>
