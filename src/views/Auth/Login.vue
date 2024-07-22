@@ -56,6 +56,7 @@
     import { useUserInfo } from "@/stores/userinfo"
     import type { GetUserInfoResponse, LoginResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
+    import emitter from "@/utils/emitter"
     import { ref } from "vue"
     import { useRouter } from "vue-router"
     const router = useRouter()
@@ -88,6 +89,7 @@
                         null,
                         (data) => {
                             userInfo.fillUser(<GetUserInfoResponse>data)
+                            emitter.emit("success_snackbar", "登录成功")    
                             router.replace({ name: "home" })
                         },
                         (errCode) => {

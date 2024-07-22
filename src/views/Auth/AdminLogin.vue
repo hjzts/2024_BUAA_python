@@ -47,6 +47,7 @@
     import { useUserInfo } from "@/stores/userinfo"
     import type { LoginResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
+    import emitter from "@/utils/emitter"
     import { useRouter } from "vue-router"
     import { ref } from "vue"
     const router = useRouter()
@@ -74,7 +75,8 @@
                 (data) => {
                     token.setAdmin((<LoginResponse>data).token)
                     userInfo.fillAdmin(adminname.value)
-                    router.replace({ name: "login" })
+                    emitter.emit("success_snackbar", "登录成功")
+                    router.replace({ name: "home" })
                 },
                 (errCode) => {
                     submit_loading.value = false
