@@ -112,7 +112,7 @@ function goToAdminView() {
 }
 </script>
 
-<style>
+<style scoped>
 .text-danger {
     color: red;
 }

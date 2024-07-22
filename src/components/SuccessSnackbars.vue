@@ -1,5 +1,5 @@
 <template>
-    <v-snackbar v-model="snackbar" color="red">
+    <v-snackbar v-model="snackbar" color="green">
         {{ text }}
         <template v-slot:actions>
             <v-btn color="white" variant="text" @click="snackbar = false">
@@ -9,14 +9,14 @@
     </v-snackbar>
 </template>
 
-<script lang="ts" setup name="APIErrorSnackbars">
+<script lang="ts" setup name="SuccessSnackbars">
     import { ref } from "vue"
     import emitter from "@/utils/emitter"
 
     let snackbar = ref(false)
-    let text = ref("未知错误")
+    let text = ref("")
 
-    emitter.on("apierror", (message) => {
+    emitter.on("success_snackbar", (message) => {
         text.value = <string>message
         snackbar.value = true
     })

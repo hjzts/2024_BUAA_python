@@ -1,92 +1,98 @@
 <template>
-    <div class="navigate">
-
+    <div class="login-background">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1903 556">
+            <path
+                class="svg-banner-shape"
+                d="M753.1,434.2c110.6,63.7,277.7,70.6,373.4,15.4L1905,0v555.9H0V0.2L753.1,434.2z"
+            />
+        </svg>
     </div>
-    <div class="main-content">
-        <RouterView></RouterView>
-    </div>
-    <v-app>
-        <v-main>
-            <v-container fluid class=" d-flex fill-height">
-                <div class="login-background"></div>
-                <v-row justify="center" align="center" class="w-100">
-                    <v-col justify="center" cols="12" md="6">
-                        <v-row justify="center">
-                            <v-img src="/logo.png" class="logo" @dbclick="goToAdminLogin"></v-img>
-                        </v-row>
-                        <v-row justify="center">
-                            <v-card class=" elevation-12 login-card">
-                                <v-card-title class="text-center">
-                                    <h2 class="text-center">Welcome to Exercise System</h2>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-form>
-                                        <v-col>
-                                            <v-btn class="Login" color="primary" block @click="goToLogin" size="large">登录</v-btn>
-                                        </v-col>
-                                        <v-spacer></v-spacer>
-                                        <v-col>
-                                            <v-btn class="Login" color="primary" block @click="goToRegister" size="large">注册</v-btn>
-                                        </v-col>
-                                    </v-form>
-                                </v-card-text>
-                                <v-divider></v-divider>
-                            </v-card>   
-                        </v-row>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-main>
-    </v-app>
+    <v-main>
+        <v-container fluid class="fill-height">
+            <v-row justify="center" class="w-100">
+                <v-col>
+                    <v-img
+                        src="/logo.png"
+                        max-height="80px"
+                        @dblclick="goToAdminLogin"
+                    ></v-img>
+                    <v-card
+                        class="elevation-5 px-2 py-4"
+                        max-width="480px"
+                        location="center"
+                    >
+                        <v-card-title class="text-center card-title">
+                            Shared Exercise Platform
+                        </v-card-title>
+                        <RouterView />
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-main>
 </template>
 
 <script lang="ts" setup name="Login">
-import { useRouter, RouterView } from 'vue-router'
-const router = useRouter()
+    import { useToken } from "@/stores/token"
+    import { useUserInfo } from "@/stores/userinfo"
+    import type { GetUserInfoResponse } from "@/types"
+    import { callapi } from "@/utils/callapi"
+    import { onMounted } from "vue"
+    import { useRouter, RouterView } from "vue-router"
+    const router = useRouter()
+    const token = useToken()
+    const userInfo = useUserInfo()
 
-function goToAdminLogin() {
-    console.log("图片被双击了")
-    router.push('/auth/adminlogin')
-}
+    let adminLogin = false
 
-function goToRegister() {
-    router.push('/auth/register')
-}
+    onMounted(() => {
+        if (token.isInit) {
+            router.replace({ name: "login" })
+        } else if (token.isAdmin) {
+            callapi.post("form-data", "Auth", "adminLogout")
+            token.clear()
+            router.replace({ name: "login" })
+        } else if (token.isUser) {
+            callapi.get(
+                "UserInfo",
+                "getCurrentUserInfo",
+                null,
+                (data) => {
+                    userInfo.fillUser(<GetUserInfoResponse>data)
+                    router.replace({ name: "home" })
+                },
+                (errCode) => {
+                    token.clear()
+                    router.replace({ name: "login" })
+                }
+            )
+        }
+    })
 
-function goToLogin() {
-    router.push('/auth/login')
-
-}
-
-
+    function goToAdminLogin() {
+        adminLogin = adminLogin ? false : true
+        router.replace({ name: adminLogin ? "adminLogin" : "login" })
+    }
 </script>
-  
-<style>
-.my-fill-height {
-    height: 100%;
-}
 
-.login-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #819bd4 0%, #134ea5 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    clip-path: polygon(50% 60%, 0% 0%, 100% 0%);
-    /* z-index: -1; */
-}
+<style scoped>
+    .login-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        min-height: 200px;
+        max-height: 600px;
+        background: linear-gradient(90deg, #021048, #1e38a3);
+    }
 
-.login-card {
-    width: 600px;
-}
+    .login-background svg {
+        position: absolute;
+        bottom: -1px;
+        fill: white;
+    }
 
-.logo {
-    max-height: 120px;
-    margin-bottom: 16px;
-}
+    .card-title {
+        font-size: 28px;
+        color: #142149;
+    }
 </style>
-  

@@ -1,74 +1,116 @@
 <template>
-    <v-app>
-        <v-main>
-            <v-container fluid class=" d-flex fill-height">
-                <div class="login-background"></div>
-                <v-row justify="center" align="center" class="w-100">
-                    <v-col justify="center" cols="12" md="6">
-                        <v-row justify="center">
-                            <v-img src="/logo.png" class="logo"></v-img>
-                        </v-row>
-                        <v-row justify="center">
-                            <v-card class=" elevation-12 login-card">
-                                <v-card-title class="text-center">
-                                    <h2 class="text-center">Welcome Back</h2>
-                                </v-card-title>
-                                <v-card-text>
-                                    <v-form>
-                                        <v-text-field label="学号" type="number" required></v-text-field>
-                                        <v-text-field label="密码" type="password" required></v-text-field>
-                                        <v-btn class="Login" color="primary" block size="x-large">Log In</v-btn>
-                                    </v-form>
-                                </v-card-text>
-                                <v-divider></v-divider> 
+    <v-card-subtitle class="text-center card-subtitle">
+        Welcome back!
+    </v-card-subtitle>
 
-                                <v-card-subtitle class="text-center">
-                                    还没有账号？ <a href="/">注册</a>
-                                </v-card-subtitle>
-                            </v-card>
-                        </v-row>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-main>
-    </v-app>
+    <v-card-text>
+        <v-form :readonly="submit_loading" @submit.prevent="onLoginSubmit">
+            <v-text-field
+                label="Username"
+                :rules="[(v) => !!v || 'Please input the username']"
+                v-model="username"
+                variant="outlined"
+                color="#3073C4"
+                prepend-inner-icon="mdi-account-outline"
+                class="mb-3"
+                type="text"
+            />
+            <v-text-field
+                label="Password"
+                :rules="[(v) => !!v || 'Please input the password']"
+                v-model="password"
+                variant="outlined"
+                color="#3073C4"
+                prepend-inner-icon="mdi-lock-outline"
+                class="mb-3"
+                :type="password_visible ? 'text' : 'password'"
+                :append-inner-icon="
+                    password_visible ? 'mdi-eye' : 'mdi-eye-off'
+                "
+                @click:append-inner="password_visible = !password_visible"
+            />
+            <v-btn
+                block
+                variant="flat"
+                color="#3073C4"
+                size="x-large"
+                class="mb-6"
+                type="submit"
+                :loading="submit_loading"
+                >Log In</v-btn
+            >
+            <v-btn
+                block
+                variant="tonal"
+                color="#3073C4"
+                size="x-large"
+                @click="onSignUpClick"
+                >Sign Up</v-btn
+            >
+        </v-form>
+    </v-card-text>
 </template>
 
 <script lang="ts" setup name="Login">
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
-onMounted(() => {
-    console.log('Login.vue挂载了')
-})
+    import { useToken } from "@/stores/token"
+    import { useUserInfo } from "@/stores/userinfo"
+    import type { GetUserInfoResponse, LoginResponse } from "@/types"
+    import { callapi } from "@/utils/callapi"
+    import { ref } from "vue"
+    import { useRouter } from "vue-router"
+    const router = useRouter()
+    const token = useToken()
+    const userInfo = useUserInfo()
 
+    let password_visible = ref(false)
+    let username = ref("")
+    let password = ref("")
+    let submit_loading = ref(false)
+
+    function onLoginSubmit(event: SubmitEvent) {
+        submit_loading.value = true
+        if (username.value == "" || password.value == "") {
+            submit_loading.value = false
+        } else {
+            callapi.post(
+                "form-data",
+                "Auth",
+                "login",
+                {
+                    username: username.value,
+                    password: password.value,
+                },
+                (data) => {
+                    token.setUser((<LoginResponse>data).token)
+                    callapi.get(
+                        "UserInfo",
+                        "getCurrentUserInfo",
+                        null,
+                        (data) => {
+                            userInfo.fillUser(<GetUserInfoResponse>data)
+                            router.replace({ name: "home" })
+                        },
+                        (errCode) => {
+                            token.clear()
+                            router.replace({ name: "login" })
+                        }
+                    )
+                },
+                (errCode) => {
+                    submit_loading.value = false
+                }
+            )
+        }
+    }
+
+    function onSignUpClick() {
+        router.push({ name: "register" })
+    }
 </script>
-  
-<style>
-.my-fill-height {
-    height: 100%;
-}
 
-.login-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #48629b 0%, #134ea5 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    clip-path: polygon(50% 60%, 0% 0%, 100% 0%);
-}
-
-.login-card {
-    width: 600px;
-}
-
-.logo {
-    max-height: 120px;
-    margin-bottom: 16px;
-}
+<style scoped>
+    .card-subtitle {
+        font-size: 20px;
+        color: black;
+    }
 </style>
-  

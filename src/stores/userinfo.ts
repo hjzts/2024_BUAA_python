@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { type UserInfoRequest } from "@/types"
+import { type GetUserInfoResponse } from "@/types"
 
 export const useUserInfo = defineStore("userinfo", {
     state: () => {
@@ -11,7 +11,7 @@ export const useUserInfo = defineStore("userinfo", {
         }
     },
     actions: {
-        fillUser(data: UserInfoRequest) {
+        fillUser(data: GetUserInfoResponse) {
             this.type = "user"
             this.username = data.username
             this.avatarurl = data.avatarurl

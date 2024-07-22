@@ -1,17 +1,16 @@
 <template>
-    <RouterView></RouterView>
-    <APIErrorSnackbars />
+    <v-app theme="light">
+        <RouterView></RouterView>
+    </v-app>
+    <ErrorSnackbars />
+    <SuccessSnackbars />
 </template>
 
 <script setup lang="ts" name="App">
     import { RouterView } from "vue-router"
-    import APIErrorSnackbars from "./components/APIErrorSnackbars.vue"
+    import ErrorSnackbars from "./components/ErrorSnackbars.vue"
+    import SuccessSnackbars from "./components/SuccessSnackbars.vue";
 </script>
 
 <style scoped>
-    .navigate {
-        display: flex;
-        justify-content: space-around;
-        margin: 0 100px;
-    }
 </style>
