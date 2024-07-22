@@ -55,7 +55,6 @@
     import { useRouter } from "vue-router"
     import { ref } from "vue"
     const router = useRouter()
-    
 
     let password_visible = ref(false)
     let username = ref("")
@@ -78,7 +77,7 @@
                     password: password.value,
                 },
                 (data) => {
-                    emitter.emit('success_snackbar', '注册成功')
+                    emitter.emit("success_snackbar", "注册成功")
                     router.replace({ name: "login" })
                 },
                 (errCode) => {

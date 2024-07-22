@@ -89,7 +89,7 @@
                         null,
                         (data) => {
                             userInfo.fillUser(<GetUserInfoResponse>data)
-                            emitter.emit("success_snackbar", "登录成功")    
+                            emitter.emit("success_snackbar", "登录成功")
                             router.replace({ name: "home" })
                         },
                         (errCode) => {
