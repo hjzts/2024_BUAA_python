@@ -76,7 +76,7 @@
                     token.setAdmin((<LoginResponse>data).token)
                     userInfo.fillAdmin(adminname.value)
                     emitter.emit("success_snackbar", "登录成功")
-                    router.replace({ name: "home" })
+                    router.replace("/admin")
                 },
                 (errCode) => {
                     submit_loading.value = false

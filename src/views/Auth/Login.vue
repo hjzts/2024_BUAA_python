@@ -90,11 +90,7 @@
                         (data) => {
                             userInfo.fillUser(<GetUserInfoResponse>data)
                             emitter.emit("success_snackbar", "登录成功")
-                            router.replace({ name: "home" })
-                        },
-                        (errCode) => {
-                            token.clear()
-                            router.replace({ name: "login" })
+                            router.replace("/home")
                         }
                     )
                 },

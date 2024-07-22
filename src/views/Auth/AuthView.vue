@@ -59,11 +59,7 @@
                 null,
                 (data) => {
                     userInfo.fillUser(<GetUserInfoResponse>data)
-                    router.replace({ name: "home" })
-                },
-                (errCode) => {
-                    token.clear()
-                    router.replace({ name: "login" })
+                    router.replace("/home")
                 }
             )
         }

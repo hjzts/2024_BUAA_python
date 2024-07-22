@@ -7,6 +7,7 @@ import Home from "@/views/Home/HomeView.vue"
 import AdminView from "@/views/Admin/AdminView.vue"
 import UserManagement from "@/views/Admin/UserManagement.vue"
 import ExerciseManagement from "@/views/Admin/ExerciseManagement.vue"
+import AdminManagement from "@/views/Admin/AdminManagement.vue"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -16,7 +17,6 @@ const router = createRouter({
             redirect: "/auth",
         },
         {
-            name: "auth",
             path: "/auth",
             component: Auth,
             children: [
@@ -38,24 +38,31 @@ const router = createRouter({
             ],
         },
         {
-            name: "home",
             path: "/home",
             component: Home,
         },
         {
-            name: "admin",
             path: "/admin",
             component: AdminView,
             children: [
+                {
+                    path: "",
+                    redirect: "/admin/userManagement"
+                },
                 {
                     name: "userManagement",
                     path: "userManagement",
                     component: UserManagement,
                 },
                 {
-                    name: "exerciceManagement",
-                    path: "exerciceManagement",
+                    name: "exerciseManagement",
+                    path: "exerciseManagement",
                     component: ExerciseManagement,
+                },
+                {
+                    name: "adminManagement",
+                    path: "adminManagement",
+                    component: AdminManagement,
                 },
             ],
         },

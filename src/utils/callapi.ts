@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useToken } from "@/stores/token"
 import emitter from "./emitter"
+import router from "@/router"
 
 const baseURL = "http://localhost:5173/api/v1"
 
@@ -63,6 +64,10 @@ const callapi = {
                             error(result.errCode)
                         }
                         emitter.emit("apierror", errDescription[result.errCode])
+                        if (result.errCode == 99991) {
+                            token.clear()
+                            router.replace("/")
+                        }
                     }
                 } else {
                     emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
@@ -119,12 +124,17 @@ const callapi = {
                             error(result.errCode)
                         }
                         emitter.emit("apierror", errDescription[result.errCode])
+                        if (result.errCode == 99991) {
+                            token.clear()
+                            router.replace("/")
+                        }
                     }
                 } else {
                     emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
                 }
             })
             .catch((error) => {
+                console.log(error)
                 emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
             })
     },
