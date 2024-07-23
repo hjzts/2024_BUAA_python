@@ -30,7 +30,7 @@
 
 <script lang="ts" setup name="ChangeAvatar">
     import { useUserInfo } from "@/stores/userinfo"
-    import type { updateAvatarResponse } from "@/types"
+    import type { UpdateAvatarResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { ref } from "vue"
@@ -53,7 +53,7 @@
                 newavatar: newavatar.value,
             },
             (data) => {
-                userInfo.avatarurl = (<updateAvatarResponse>data).avatarurl
+                userInfo.avatarurl = (<UpdateAvatarResponse>data).avatarurl
                 emitter.emit("success_snackbar", "更换头像成功")
                 submit_loading.value = false
                 isActive.value = false
