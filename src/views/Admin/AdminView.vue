@@ -30,11 +30,13 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar
-            :title="title_dict[selected[0]]"
-            density="compact"
-            elevation="1"
-        ></v-app-bar>
+        <v-app-bar density="compact" elevation="1">
+            <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
+            <v-spacer />
+            <v-btn icon @click="onLogoutClick">
+                <v-icon>mdi-logout-variant</v-icon>
+            </v-btn>
+        </v-app-bar>
 
         <v-main>
             <RouterView />
@@ -43,11 +45,14 @@
 </template>
 
 <script lang="ts" setup name="AdminView">
+    import { useToken } from "@/stores/token"
     import { useUserInfo } from "@/stores/userinfo"
+    import { callapi } from "@/utils/callapi"
     import { ref, watch } from "vue"
     import { RouterView, useRoute, useRouter } from "vue-router"
     const route = useRoute()
     const router = useRouter()
+    const token = useToken()
     const userInfo = useUserInfo()
 
     const title_dict: {
@@ -63,6 +68,13 @@
     watch(selected, (newValue) => {
         router.push({ name: newValue[0] })
     })
+
+    function onLogoutClick() {
+        callapi.post("form-data", "Auth", "logout", null, (data) => {
+            token.clear()
+            router.replace("/")
+        })
+    }
 </script>
 
 <style scoped></style>
