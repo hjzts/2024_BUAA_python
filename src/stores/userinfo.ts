@@ -23,6 +23,12 @@ export const useUserInfo = defineStore("userinfo", {
             this.avatarurl = "http://localhost:5173/avatar/default.jpg" // TODO: 修改默认的头像地址
             this.studentid = ""
         },
+        clear() {
+            this.type = ""
+            this.username = ""
+            this.avatarurl = ""
+            this.studentid = ""
+        },
     },
-    persist: true
+    persist: true,
 })

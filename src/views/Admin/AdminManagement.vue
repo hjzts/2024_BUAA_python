@@ -1,11 +1,5 @@
-<template>
-    管理员管理
-</template>
+<template>管理员管理</template>
 
-<script lang="ts" setup name="AdminManagement">
+<script lang="ts" setup name="AdminManagement"></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

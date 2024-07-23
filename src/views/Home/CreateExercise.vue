@@ -1,11 +1,5 @@
-<template>
+<template>创建题目</template>
 
-</template>
+<script lang="ts" setup name="CreateExercise"></script>
 
-<script lang="ts" setup name="CreateExercise">
-
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

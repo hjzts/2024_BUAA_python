@@ -1,11 +1,5 @@
-<template>
+<template>我的题目</template>
 
-</template>
+<script lang="ts" setup name="MyExercise"></script>
 
-<script lang="ts" setup name="MyExercise">
-
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

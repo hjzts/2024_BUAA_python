@@ -1,11 +1,5 @@
-<template>
-题目管理
-</template>
+<template>题目管理</template>
 
-<script lang="ts" setup name="ExerciseManagement">
+<script lang="ts" setup name="ExerciseManagement"></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

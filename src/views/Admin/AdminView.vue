@@ -70,8 +70,9 @@
     })
 
     function onLogoutClick() {
-        callapi.post("form-data", "Auth", "logout", null, (data) => {
+        callapi.post("form-data", "Auth", "adminLogout", null, (data) => {
             token.clear()
+            userInfo.clear()
             router.replace("/")
         })
     }

@@ -9,11 +9,11 @@ export const useToken = defineStore("token", {
     },
     actions: {
         setUser(token: string) {
-            this.type = "user",
+            this.type = "user"
             this.token = token
         },
         setAdmin(token: string) {
-            this.type = "admin",
+            this.type = "admin"
             this.token = token
         },
         clear() {
@@ -30,7 +30,7 @@ export const useToken = defineStore("token", {
         },
         isAdmin(): boolean {
             return this.type == "admin"
-        }
+        },
     },
     persist: true,
 })
