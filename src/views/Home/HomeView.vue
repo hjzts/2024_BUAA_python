@@ -1,58 +1,56 @@
 <template>
-    <v-layout>
-        <v-navigation-drawer expand-on-hover rail permanent>
-            <v-list>
-                <v-list-item
-                    :prepend-avatar="userInfo.avatarurl"
-                    :title="userInfo.username"
-                    :subtitle="userInfo.studentid"
-                ></v-list-item>
-            </v-list>
+    <v-navigation-drawer expand-on-hover rail permanent>
+        <v-list>
+            <v-list-item
+                :prepend-avatar="userInfo.avatarurl"
+                :title="userInfo.username"
+                :subtitle="userInfo.studentid"
+            ></v-list-item>
+        </v-list>
 
-            <v-divider></v-divider>
+        <v-divider></v-divider>
 
-            <v-list density="compact" v-model:selected="selected" mandatory nav>
-                <v-list-item
-                    prepend-icon="mdi-clipboard-text-search"
-                    title="所有题目"
-                    value="allExercise"
-                />
-                <v-list-item
-                    prepend-icon="mdi-account-multiple"
-                    title="共享群组"
-                    value="group"
-                />
-                <v-list-item
-                    prepend-icon="mdi-pencil-ruler"
-                    title="我的题目"
-                    value="myExercise"
-                />
-                <v-list-item
-                    prepend-icon="mdi-plus-box-multiple"
-                    title="创建题目"
-                    value="createExercise"
-                />
-                <v-list-item
-                    prepend-icon="mdi-account-circle"
-                    title="个人中心"
-                    value="userCenter"
-                />
-            </v-list>
-        </v-navigation-drawer>
+        <v-list density="compact" v-model:selected="selected" mandatory nav>
+            <v-list-item
+                prepend-icon="mdi-clipboard-text-search"
+                title="所有题目"
+                value="allExercise"
+            />
+            <v-list-item
+                prepend-icon="mdi-account-multiple"
+                title="共享群组"
+                value="group"
+            />
+            <v-list-item
+                prepend-icon="mdi-pencil-ruler"
+                title="我的题目"
+                value="myExercise"
+            />
+            <v-list-item
+                prepend-icon="mdi-plus-box-multiple"
+                title="创建题目"
+                value="createExercise"
+            />
+            <v-list-item
+                prepend-icon="mdi-account-circle"
+                title="个人中心"
+                value="userCenter"
+            />
+        </v-list>
+    </v-navigation-drawer>
 
-        <v-app-bar density="compact" elevation="1">
-            <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
-            <v-spacer />
-            <p>{{ userInfo.username }}</p>
-            <v-btn icon @click="onLogoutClick">
-                <v-icon>mdi-logout-variant</v-icon>
-            </v-btn>
-        </v-app-bar>
+    <v-app-bar density="compact" elevation="1" location="top">
+        <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
+        <v-spacer />
+        <p>{{ userInfo.username }}</p>
+        <v-btn icon @click="onLogoutClick">
+            <v-icon>mdi-logout-variant</v-icon>
+        </v-btn>
+    </v-app-bar>
 
-        <v-main>
-            <RouterView />
-        </v-main>
-    </v-layout>
+    <v-main>
+        <RouterView />
+    </v-main>
 </template>
 
 <script lang="ts" setup name="Home">

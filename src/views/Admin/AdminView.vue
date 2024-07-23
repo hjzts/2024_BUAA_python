@@ -1,47 +1,45 @@
 <template>
-    <v-layout>
-        <v-navigation-drawer expand-on-hover rail permanent>
-            <v-list>
-                <v-list-item
-                    :prepend-avatar="userInfo.avatarurl"
-                    :title="userInfo.username"
-                    subtitle="管理员"
-                ></v-list-item>
-            </v-list>
+    <v-navigation-drawer expand-on-hover rail permanent>
+        <v-list>
+            <v-list-item
+                :prepend-avatar="userInfo.avatarurl"
+                :title="userInfo.username"
+                subtitle="管理员"
+            ></v-list-item>
+        </v-list>
 
-            <v-divider></v-divider>
+        <v-divider></v-divider>
 
-            <v-list density="compact" v-model:selected="selected" mandatory nav>
-                <v-list-item
-                    prepend-icon="mdi-account-circle"
-                    title="用户管理"
-                    value="userManagement"
-                />
-                <v-list-item
-                    prepend-icon="mdi-pencil-ruler"
-                    title="题目管理"
-                    value="exerciseManagement"
-                />
-                <v-list-item
-                    prepend-icon="mdi-account-star"
-                    title="管理员管理"
-                    value="adminManagement"
-                />
-            </v-list>
-        </v-navigation-drawer>
+        <v-list density="compact" v-model:selected="selected" mandatory nav>
+            <v-list-item
+                prepend-icon="mdi-account-circle"
+                title="用户管理"
+                value="userManagement"
+            />
+            <v-list-item
+                prepend-icon="mdi-pencil-ruler"
+                title="题目管理"
+                value="exerciseManagement"
+            />
+            <v-list-item
+                prepend-icon="mdi-account-star"
+                title="管理员管理"
+                value="adminManagement"
+            />
+        </v-list>
+    </v-navigation-drawer>
 
-        <v-app-bar density="compact" elevation="1">
-            <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
-            <v-spacer />
-            <v-btn icon @click="onLogoutClick">
-                <v-icon>mdi-logout-variant</v-icon>
-            </v-btn>
-        </v-app-bar>
+    <v-app-bar density="compact" elevation="1">
+        <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
+        <v-spacer />
+        <v-btn icon @click="onLogoutClick">
+            <v-icon>mdi-logout-variant</v-icon>
+        </v-btn>
+    </v-app-bar>
 
-        <v-main>
-            <RouterView />
-        </v-main>
-    </v-layout>
+    <v-main>
+        <RouterView />
+    </v-main>
 </template>
 
 <script lang="ts" setup name="AdminView">

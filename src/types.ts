@@ -15,3 +15,7 @@ export interface updateAvatarResponse {
 export interface updateStundentIDResponse {
     studentid: string
 }
+
+export interface OCRResponse {
+    text: string
+}
