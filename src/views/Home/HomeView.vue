@@ -5,10 +5,10 @@
                 :prepend-avatar="userInfo.avatarurl"
                 :title="userInfo.username"
                 :subtitle="userInfo.studentid"
-            ></v-list-item>
+            />
         </v-list>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-list density="compact" v-model:selected="selected" mandatory nav>
             <v-list-item

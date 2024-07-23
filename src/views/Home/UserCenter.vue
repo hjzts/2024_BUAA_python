@@ -14,7 +14,7 @@
                             :image="userInfo.avatarurl"
                             size="x-large"
                             rounded="50"
-                        ></v-avatar>
+                        />
                     </v-row>
                     <v-row class="py-2" justify="center">
                         <v-col cols="8">
@@ -72,7 +72,6 @@
     </v-container>
 
     <ChangeAvatar :activator="change_avatar_button" />
-
     <ChangeStudentID :activator="change_studentid_button" />
 </template>
 

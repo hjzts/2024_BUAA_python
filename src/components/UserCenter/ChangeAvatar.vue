@@ -2,7 +2,7 @@
     <v-dialog :activator="activator" max-width="500px" v-model="isActive">
         <v-card>
             <v-toolbar>
-                <v-btn icon="mdi-close" @click="isActive = false"></v-btn>
+                <v-btn icon="mdi-close" @click="isActive = false" />
                 <v-toolbar-title>修改头像</v-toolbar-title>
             </v-toolbar>
             <v-file-input
