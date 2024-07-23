@@ -34,4 +34,10 @@
         hold.value = true
         snackbar.value = true
     })
+
+    emitter.on("normalerror", (message) => {
+        text.value = <string>message ? <string>message : "未知错误"
+        hold.value = false
+        snackbar.value = true
+    })
 </script>
