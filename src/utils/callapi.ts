@@ -21,7 +21,7 @@ const errDescription: errDescription = {
 interface APIResponse {
     success: boolean
     errCode: number
-    data: Object
+    data: object
 }
 
 const callapi = {
@@ -29,7 +29,7 @@ const callapi = {
         module: string,
         method: string,
         params?: object | null,
-        success?: (data: Object) => any,
+        success?: (data: object) => any,
         error?: (errCode: number) => any
     ) {
         const token = useToken()
@@ -88,7 +88,7 @@ const callapi = {
         module: string,
         method: string,
         body?: object | null,
-        success?: (data: Object) => any,
+        success?: (data: object) => any,
         error?: (errCode: number) => any
     ) {
         const token = useToken()
