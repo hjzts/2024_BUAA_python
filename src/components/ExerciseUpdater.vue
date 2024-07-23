@@ -168,18 +168,6 @@
         {label: 'B', value: 'B'}, 
     ])
 
-    watch(exercise_type, (newValue) =>{
-        console.log(exercise_type.value)
-    })
-
-    watch(selectedOption, (newValue) =>{
-        console.log(selectedOption.value)
-    })
-
-    watch(selectedOptions, (newValue) =>{
-        console.log(selectedOptions.value)
-    })
-
     function addOptions() {
         if(options.length >= 26) {
             emitter.emit("normalerror", "不能超过26个选项")
