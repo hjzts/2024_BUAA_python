@@ -1,5 +1,9 @@
-<template>我的题目</template>
+<template>
+    <ExerciseUpdater />
+</template>
 
-<script lang="ts" setup name="MyExercise"></script>
+<script lang="ts" setup name="MyExercise">
+import ExerciseUpdater from '@/components/ExerciseUpdater.vue';
+</script>
 
 <style scoped></style>

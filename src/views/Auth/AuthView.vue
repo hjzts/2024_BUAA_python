@@ -15,7 +15,7 @@
                         src="/logo.png"
                         max-height="80px"
                         @dblclick="goToAdminLogin"
-                    ></v-img>
+                    />
                     <v-card
                         class="elevation-5 px-2 py-4"
                         max-width="480px"
@@ -53,15 +53,10 @@
             token.clear()
             router.replace({ name: "login" })
         } else if (token.isUser) {
-            callapi.get(
-                "UserInfo",
-                "getCurrentUserInfo",
-                null,
-                (data) => {
-                    userInfo.fillUser(<GetUserInfoResponse>data)
-                    router.replace("/home")
-                }
-            )
+            callapi.get("UserInfo", "getCurrentUserInfo", null, (data) => {
+                userInfo.fillUser(<GetUserInfoResponse>data)
+                router.replace("/home")
+            })
         }
     })
 
