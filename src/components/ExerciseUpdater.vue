@@ -84,6 +84,8 @@
                 <div 
                     v-for="(option,index) in options" 
                     :key="index"  
+                    :value="selectedOptions"
+                    :rules="[(v:string) => !!v || `请输入多选题的答案`]"
                     class="d-flex align-center"
                     v-if="exercise_type===2"
                 >
@@ -145,6 +147,18 @@
                 v-if="exercise_type===3" >
             </v-text-field>
 
+            <v-divider></v-divider>
+
+            <v-card-actions class="d-flex justify-end">
+                <v-btn 
+                    color="orange" 
+                    text="完成题目"
+                    variant="text"
+                    prepend-icon="mdi-check-circle"
+                    @click="checkFinishExercise"
+                ></v-btn>                
+            </v-card-actions>
+
         </v-card-item>
     </v-card>
 
@@ -185,6 +199,10 @@
         }else {
             options.pop()
         }
+    }
+
+    function checkFinishExercise() {
+        
     }
 </script>
 
