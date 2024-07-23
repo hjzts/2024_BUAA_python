@@ -60,21 +60,26 @@ const callapi = {
                             success(result.data)
                         }
                     } else {
-                        if (error != undefined) {
-                            error(result.errCode)
-                        }
                         emitter.emit("apierror", errDescription[result.errCode])
                         if (result.errCode == 99991) {
                             token.clear()
                             router.replace("/")
+                        } else if (error != undefined) {
+                            error(result.errCode)
                         }
                     }
                 } else {
-                    emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
+                    emitter.emit(
+                        "fatalerror",
+                        "网络错误：返回类型错误。请手动刷新页面"
+                    )
                 }
             })
             .catch((error) => {
-                emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
+                emitter.emit(
+                    "fatalerror",
+                    "网络错误：" + error.code + "。请手动刷新页面"
+                )
             })
     },
 
@@ -120,22 +125,27 @@ const callapi = {
                             success(result.data)
                         }
                     } else {
-                        if (error != undefined) {
-                            error(result.errCode)
-                        }
                         emitter.emit("apierror", errDescription[result.errCode])
                         if (result.errCode == 99991) {
                             token.clear()
                             router.replace("/")
+                        } else if (error != undefined) {
+                            error(result.errCode)
                         }
                     }
                 } else {
-                    emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
+                    emitter.emit(
+                        "fatalerror",
+                        "网络错误：返回类型错误。请手动刷新页面"
+                    )
                 }
             })
             .catch((error) => {
                 console.log(error)
-                emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
+                emitter.emit(
+                    "fatalerror",
+                    "网络错误：" + error.code + "。请手动刷新页面"
+                )
             })
     },
 }

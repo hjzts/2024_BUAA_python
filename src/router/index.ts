@@ -48,7 +48,7 @@ const router = createRouter({
             children: [
                 {
                     path: "",
-                    redirect: "/home/allExercise",
+                    redirect: "/home/userCenter",
                 },
                 {
                     name: "allExercise",

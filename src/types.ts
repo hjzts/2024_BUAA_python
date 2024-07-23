@@ -7,3 +7,11 @@ export interface GetUserInfoResponse {
     avatarurl: string
     studentid: string
 }
+
+export interface updateAvatarResponse {
+    avatarurl: string
+}
+
+export interface updateStundentIDResponse {
+    studentid: string
+}

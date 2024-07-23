@@ -23,13 +23,14 @@
     let hold = ref(false)
 
     emitter.on("apierror", (message) => {
-        text.value = <string>message == "" ? "未知错误" : <string>message
+        console.log(message)
+        text.value = <string>message ? <string>message : "未知错误"
         hold.value = false
         snackbar.value = true
     })
 
     emitter.on("fatalerror", (message) => {
-        text.value = <string>message == "" ? "未知错误" : <string>message
+        text.value = <string>message ? <string>message : "未知错误"
         hold.value = true
         snackbar.value = true
     })
