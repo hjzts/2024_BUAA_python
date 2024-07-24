@@ -1,7 +1,5 @@
 <template>
-    <v-card-subtitle class="text-center card-subtitle">
-        Let's start!
-    </v-card-subtitle>
+    <v-card-subtitle class="text-center card-subtitle"> Let's start! </v-card-subtitle>
 
     <v-card-text>
         <v-form :readonly="submit_loading" @submit.prevent="onRegisterSubmit">
@@ -13,8 +11,7 @@
                 color="#3073C4"
                 prepend-inner-icon="mdi-account-outline"
                 class="mb-3"
-                type="text"
-            />
+                type="text" />
             <v-text-field
                 label="Password"
                 :rules="[(v) => !!v || 'Please input the password']"
@@ -23,26 +20,16 @@
                 color="#3073C4"
                 prepend-inner-icon="mdi-lock-outline"
                 :type="password_visible ? 'text' : 'password'"
-                :append-inner-icon="
-                    password_visible ? 'mdi-eye' : 'mdi-eye-off'
-                "
-                @click:append-inner="password_visible = !password_visible"
-            />
+                :append-inner-icon="password_visible ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append-inner="password_visible = !password_visible" />
             <v-checkbox
                 label="I agree to the Terms of Service."
                 :rules="[(v) => !!v || 'Please agree the Terms of Service.']"
                 v-model="agree"
                 density="compact"
                 color="green"
-                class="mb-2"
-            />
-            <v-btn
-                block
-                variant="flat"
-                color="#3073C4"
-                size="x-large"
-                type="submit"
-                :loading="submit_loading"
+                class="mb-2" />
+            <v-btn block variant="flat" color="#3073C4" size="x-large" type="submit" :loading="submit_loading"
                 >Sign Up</v-btn
             >
         </v-form>

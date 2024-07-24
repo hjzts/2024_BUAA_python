@@ -6,8 +6,7 @@
             accept="image/*,.pdf"
             label="请选择文件以进行OCR"
             variant="outlined"
-            clearable
-        >
+            clearable>
             <template #append>
                 <v-btn
                     color="primary"
@@ -15,20 +14,13 @@
                     :loading="submit_loading"
                     @click="onOCRClick"
                     variant="text"
-                    size="large"
-                >
+                    size="large">
                     上传
                 </v-btn>
             </template>
         </v-file-input>
 
-        <v-text-field
-            v-model="OCR_page"
-            density="comfortable"
-            variant="underlined"
-            type="number"
-            label="请输入页码"
-        >
+        <v-text-field v-model="OCR_page" density="comfortable" variant="underlined" type="number" label="请输入页码">
             <template #prepend> （仅PDF文件有效）需要识别的页码： </template>
         </v-text-field>
 
@@ -40,8 +32,7 @@
             color="primary"
             bg-color="grey-lighten-3"
             placeholder="OCR结果将显示在这里"
-            hide-details
-        />
+            hide-details />
     </v-card>
 </template>
 

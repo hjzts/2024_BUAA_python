@@ -69,17 +69,11 @@ const callapi = {
                         }
                     }
                 } else {
-                    emitter.emit(
-                        "fatalerror",
-                        "网络错误：返回类型错误。请手动刷新页面"
-                    )
+                    emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
                 }
             })
             .catch((error) => {
-                emitter.emit(
-                    "fatalerror",
-                    "网络错误：" + error.code + "。请手动刷新页面"
-                )
+                emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
             })
     },
 
@@ -98,10 +92,7 @@ const callapi = {
             baseURL: baseURL,
             url: url,
             headers: {
-                "Content-Type":
-                    type == "form-data"
-                        ? "multipart/form-data"
-                        : "application/json",
+                "Content-Type": type == "form-data" ? "multipart/form-data" : "application/json",
             },
             params: {
                 token: token.token,
@@ -134,18 +125,12 @@ const callapi = {
                         }
                     }
                 } else {
-                    emitter.emit(
-                        "fatalerror",
-                        "网络错误：返回类型错误。请手动刷新页面"
-                    )
+                    emitter.emit("fatalerror", "网络错误：返回类型错误。请手动刷新页面")
                 }
             })
             .catch((error) => {
                 console.log(error)
-                emitter.emit(
-                    "fatalerror",
-                    "网络错误：" + error.code + "。请手动刷新页面"
-                )
+                emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
             })
     },
 }

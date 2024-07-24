@@ -2,14 +2,7 @@
     <v-snackbar v-model="snackbar" color="red" :timeout="hold ? -1 : 5000">
         {{ text }}
         <template v-slot:actions>
-            <v-btn
-                color="white"
-                variant="text"
-                @click="snackbar = false"
-                v-if="!hold"
-            >
-                关闭
-            </v-btn>
+            <v-btn color="white" variant="text" @click="snackbar = false" v-if="!hold"> 关闭 </v-btn>
         </template>
     </v-snackbar>
 </template>

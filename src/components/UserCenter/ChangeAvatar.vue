@@ -12,8 +12,7 @@
                 label="新头像图片文件"
                 clearable
                 variant="outlined"
-                class="ma-2"
-            />
+                class="ma-2" />
             <template v-slot:actions>
                 <v-btn @click="isActive = false">取消</v-btn>
                 <v-btn

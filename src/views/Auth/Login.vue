@@ -1,7 +1,5 @@
 <template>
-    <v-card-subtitle class="text-center card-subtitle">
-        Welcome back!
-    </v-card-subtitle>
+    <v-card-subtitle class="text-center card-subtitle"> Welcome back! </v-card-subtitle>
 
     <v-card-text>
         <v-form :readonly="submit_loading" @submit.prevent="onLoginSubmit">
@@ -13,8 +11,7 @@
                 color="#3073C4"
                 prepend-inner-icon="mdi-account-outline"
                 class="mb-3"
-                type="text"
-            />
+                type="text" />
             <v-text-field
                 label="Password"
                 :rules="[(v) => !!v || 'Please input the password']"
@@ -24,11 +21,8 @@
                 prepend-inner-icon="mdi-lock-outline"
                 class="mb-3"
                 :type="password_visible ? 'text' : 'password'"
-                :append-inner-icon="
-                    password_visible ? 'mdi-eye' : 'mdi-eye-off'
-                "
-                @click:append-inner="password_visible = !password_visible"
-            />
+                :append-inner-icon="password_visible ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append-inner="password_visible = !password_visible" />
             <v-btn
                 block
                 variant="flat"
@@ -39,14 +33,7 @@
                 :loading="submit_loading"
                 >Log In</v-btn
             >
-            <v-btn
-                block
-                variant="tonal"
-                color="#3073C4"
-                size="x-large"
-                @click="onSignUpClick"
-                >Sign Up</v-btn
-            >
+            <v-btn block variant="tonal" color="#3073C4" size="x-large" @click="onSignUpClick">Sign Up</v-btn>
         </v-form>
     </v-card-text>
 </template>
@@ -83,16 +70,11 @@
                 },
                 (data) => {
                     token.setUser((<LoginResponse>data).token)
-                    callapi.get(
-                        "UserInfo",
-                        "getCurrentUserInfo",
-                        null,
-                        (data) => {
-                            userInfo.fillUser(<GetUserInfoResponse>data)
-                            emitter.emit("success_snackbar", "登录成功")
-                            router.replace("/home")
-                        }
-                    )
+                    callapi.get("UserInfo", "getCurrentUserInfo", null, (data) => {
+                        userInfo.fillUser(<GetUserInfoResponse>data)
+                        emitter.emit("success_snackbar", "登录成功")
+                        router.replace("/home")
+                    })
                 },
                 (errCode) => {
                     submit_loading.value = false

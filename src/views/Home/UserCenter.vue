@@ -1,20 +1,11 @@
 <template>
     <v-container class="my-3">
-        <v-card
-            prepend-icon="mdi-account-circle"
-            title="查看您的信息"
-            max-width="600px"
-            location="bottom"
-        >
+        <v-card prepend-icon="mdi-account-circle" title="查看您的信息" max-width="600px" location="bottom">
             <v-divider />
             <v-row no-gutters class="my-10" align="center" justify="center">
                 <v-col cols="4">
                     <v-row justify="center">
-                        <v-avatar
-                            :image="userInfo.avatarurl"
-                            size="x-large"
-                            rounded="50"
-                        />
+                        <v-avatar :image="userInfo.avatarurl" size="x-large" rounded="50" />
                     </v-row>
                     <v-row class="py-2" justify="center">
                         <v-col cols="8">
@@ -30,8 +21,7 @@
                             variant="text"
                             prepend-icon="mdi-pencil"
                             color="primary"
-                            size="large"
-                        >
+                            size="large">
                             修改头像
                         </v-btn>
                     </v-row>
@@ -50,19 +40,10 @@
                             <v-list-item-title>
                                 学号
                                 <span class="mx-1"></span>
-                                {{
-                                    userInfo.studentid
-                                        ? userInfo.studentid
-                                        : "未填写"
-                                }}
+                                {{ userInfo.studentid ? userInfo.studentid : "未填写" }}
                             </v-list-item-title>
                             <template v-slot:append>
-                                <v-btn
-                                    variant="text"
-                                    color="primary"
-                                    ref="change_studentid_button"
-                                    >修改学号</v-btn
-                                >
+                                <v-btn variant="text" color="primary" ref="change_studentid_button">修改学号</v-btn>
                             </template>
                         </v-list-item>
                     </v-list>

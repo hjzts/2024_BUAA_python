@@ -9,18 +9,13 @@
             <v-col>
                 <p class="text-h6">第二步：创建题目</p>
                 <p class="text-subtitle-1 mb-1">可以同时创建多个题目</p>
-                <div
-                    v-for="(value, key) in new_exercise_list"
-                    :key="key"
-                    class="mb-4"
-                >
+                <div v-for="(value, key) in new_exercise_list" :key="key" class="mb-4">
                     <ExerciseUpdater
                         v-model="new_exercise_list[key]"
                         :current_user_tag="currentUserTag"
                         :exercise_index="key"
                         :submit="onExerciseSubmit"
-                        @add_tag="addTagDialogActivate = true"
-                    />
+                        @add_tag="addTagDialogActivate = true" />
                 </div>
             </v-col>
         </v-row>
@@ -36,8 +31,7 @@
         extended
         app
         @click="pushNewExercise"
-        class="mt-4"
-    />
+        class="mt-4" />
 
     <AddTag v-model="addTagDialogActivate" @add_finish="getCurrentUserTag" />
 </template>
@@ -45,11 +39,7 @@
 <script lang="ts" setup name="CreateExercise">
     import OCR from "@/components/CreateExercise/OCR.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
-    import type {
-        FullTag,
-        GetCurrentUserTagResponse,
-        NewExerciseItem,
-    } from "@/types"
+    import type { CreateExerciseResponse, FullTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { getNewExerciseModel } from "@/utils/exercise"
@@ -79,16 +69,33 @@
         new_exercise_list[Date.now()] = {
             exerciseid: undefined,
             exercise: getNewExerciseModel(),
+            is_upload_success: false,
+            last_upload_time: undefined,
         }
     }
 
     function onExerciseSubmit(index: number) {
-        console.log(index)
         if (new_exercise_list[index] != undefined) {
             if (new_exercise_list[index].exerciseid == undefined) {
-                // callapi.post
+                callapi.post("json", "Exercise", "createExercise", new_exercise_list[index].exercise, (data) => {
+                    new_exercise_list[index].exerciseid = (<CreateExerciseResponse>data).exerciseid
+                    new_exercise_list[index].last_upload_time = new Date().toLocaleString()
+                    new_exercise_list[index].is_upload_success = true
+                })
             } else {
-                // callapi.post
+                callapi.post(
+                    "json",
+                    "Exercise",
+                    "updateExercise",
+                    {
+                        exerciseid: new_exercise_list[index].exerciseid,
+                        newdata: new_exercise_list[index].exercise,
+                    },
+                    (data) => {
+                        new_exercise_list[index].last_upload_time = new Date().toLocaleString()
+                        new_exercise_list[index].is_upload_success = true
+                    }
+                )
             }
         } else {
             emitter.emit("fatalerror", "提交题目数组下标越界")

@@ -10,8 +10,7 @@
                 :rules="[(v) => !!v || '请输入新学号']"
                 label="新学号"
                 variant="outlined"
-                class="ma-2"
-            />
+                class="ma-2" />
             <template v-slot:actions>
                 <v-btn @click="isActive = false">取消</v-btn>
                 <v-btn

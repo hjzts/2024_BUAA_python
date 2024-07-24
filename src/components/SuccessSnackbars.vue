@@ -2,9 +2,7 @@
     <v-snackbar v-model="snackbar" color="green">
         {{ text }}
         <template v-slot:actions>
-            <v-btn color="white" variant="text" @click="snackbar = false">
-                关闭
-            </v-btn>
+            <v-btn color="white" variant="text" @click="snackbar = false"> 关闭 </v-btn>
         </template>
     </v-snackbar>
 </template>

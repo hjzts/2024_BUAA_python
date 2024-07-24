@@ -1,31 +1,15 @@
 <template>
     <v-navigation-drawer expand-on-hover rail permanent>
         <v-list>
-            <v-list-item
-                :prepend-avatar="userInfo.avatarurl"
-                :title="userInfo.username"
-                subtitle="管理员"
-            />
+            <v-list-item :prepend-avatar="userInfo.avatarurl" :title="userInfo.username" subtitle="管理员" />
         </v-list>
 
         <v-divider />
 
         <v-list density="compact" v-model:selected="selected" mandatory nav>
-            <v-list-item
-                prepend-icon="mdi-account-circle"
-                title="用户管理"
-                value="userManagement"
-            />
-            <v-list-item
-                prepend-icon="mdi-pencil-ruler"
-                title="题目管理"
-                value="exerciseManagement"
-            />
-            <v-list-item
-                prepend-icon="mdi-account-star"
-                title="管理员管理"
-                value="adminManagement"
-            />
+            <v-list-item prepend-icon="mdi-account-circle" title="用户管理" value="userManagement" />
+            <v-list-item prepend-icon="mdi-pencil-ruler" title="题目管理" value="exerciseManagement" />
+            <v-list-item prepend-icon="mdi-account-star" title="管理员管理" value="adminManagement" />
         </v-list>
     </v-navigation-drawer>
 
