@@ -2,22 +2,76 @@
     <v-container fluid class="fill-height">
         <v-row class="fill-height" justify="center" align-content="start">
             <v-col cols="6" align-self="start">
+                <p class="text-h6">第一步：OCR识别</p>
+                <p class="text-subtitle-1 mb-1">使用OCR提取文件中的问题</p>
                 <OCR />
             </v-col>
             <v-col>
-                <v-btn size="large" color="primary" class="w-100 mb-3">
-                    新建题目
-                </v-btn>
-                <v-btn size="large" color="green" class="w-100" disabled>
-                    完成创建
-                </v-btn>
+                <p class="text-h6">第二步：创建题目</p>
+                <p class="text-subtitle-1 mb-1">可以同时创建多个题目</p>
+                <ExerciseUpdater
+                    v-for="(value, key) in new_exercise_list"
+                    :key="key"
+                    v-model="new_exercise_list[key]"
+                    :exercise_index="key"
+                    :submit="onExerciseSubmit"
+                    class="mb-4"
+                />
             </v-col>
         </v-row>
     </v-container>
+
+    <v-fab
+        color="primary"
+        prepend-icon="mdi-plus"
+        location="top end"
+        size="x-large"
+        position="sticky"
+        text="添加题目"
+        extended
+        app
+        @click="pushNewExercise"
+        class="mt-4"
+    />
 </template>
 
 <script lang="ts" setup name="CreateExercise">
     import OCR from "@/components/CreateExercise/OCR.vue"
+    import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
+    import type { NewExerciseItem } from "@/types"
+    import { callapi } from "@/utils/callapi"
+    import emitter from "@/utils/emitter"
+    import { getNewExerciseModel } from "@/utils/exercise"
+    import { reactive, watch } from "vue"
+
+    interface NewExerciseList {
+        [key: number]: NewExerciseItem
+    }
+
+    let new_exercise_list = reactive(<NewExerciseList>{})
+
+    function pushNewExercise() {
+        new_exercise_list[Date.now()] = {
+            exerciseid: undefined,
+            exercise: getNewExerciseModel(),
+        }
+    }
+
+    function onExerciseSubmit(index: number) {
+        if (new_exercise_list[index] != undefined) {
+            if (new_exercise_list[index].exerciseid == undefined) {
+                // callapi.post
+            } else {
+                // callapi.post
+            }
+        } else {
+            emitter.emit("fatalerror", "提交题目数组下标越界")
+        }
+    }
+
+    watch(new_exercise_list, (newValue) => {
+        console.log(newValue)
+    })
 </script>
 
 <style scoped></style>

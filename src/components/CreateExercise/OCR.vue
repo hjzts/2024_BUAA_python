@@ -1,5 +1,5 @@
 <template>
-    <v-card elevation="4" title="使用OCR提取文件中的问题" class="px-4">
+    <v-card elevation="4" class="pa-4">
         <v-file-input
             v-model="OCR_file"
             :rules="[(v) => !!v.length || '请选择文件']"
@@ -40,8 +40,8 @@
             color="primary"
             bg-color="grey-lighten-3"
             placeholder="OCR结果将显示在这里"
-        >
-        </v-textarea>
+            hide-details
+        />
     </v-card>
 </template>
 

@@ -33,6 +33,11 @@ export interface NewExercise extends PublicExercise {
     tag: number[]
 }
 
+export interface NewExerciseItem {
+    exerciseid: number | undefined
+    exercise: NewExercise
+}
+
 // 获取的题目，用于getReachableExercise、getExerciseByID、searchExercise、getExerciseFromTag、getRecommendExercise
 export interface GotExercise extends PublicExercise {
     exerciseid: string
