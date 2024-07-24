@@ -20,6 +20,10 @@ export interface OCRResponse {
     text: string
 }
 
+export interface GetCurrentUserTagResponse {
+    tag: FullTag[]
+}
+
 interface PublicExercise {
     type: 0 | 1 | 2 | 10
     title: string
@@ -51,4 +55,9 @@ export interface GotExercise extends PublicExercise {
 // 获取有屏蔽信息的题目，用于getAllExercise
 export interface AdminExercise extends GotExercise {
     isBlock: boolean
+}
+
+export interface FullTag {
+    tagid: number,
+    tagname: string
 }

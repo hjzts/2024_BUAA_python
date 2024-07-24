@@ -9,14 +9,19 @@
             <v-col>
                 <p class="text-h6">第二步：创建题目</p>
                 <p class="text-subtitle-1 mb-1">可以同时创建多个题目</p>
-                <ExerciseUpdater
+                <div
                     v-for="(value, key) in new_exercise_list"
                     :key="key"
-                    v-model="new_exercise_list[key]"
-                    :exercise_index="key"
-                    :submit="onExerciseSubmit"
                     class="mb-4"
-                />
+                >
+                    <ExerciseUpdater
+                        v-model="new_exercise_list[key]"
+                        :current_user_tag="currentUserTag"
+                        :exercise_index="key"
+                        :submit="onExerciseSubmit"
+                        @add_tag="addTagDialogActivate = true"
+                    />
+                </div>
             </v-col>
         </v-row>
     </v-container>
@@ -33,20 +38,40 @@
         @click="pushNewExercise"
         class="mt-4"
     />
+
+    <AddTag v-model="addTagDialogActivate" @add_finish="getCurrentUserTag" />
 </template>
 
 <script lang="ts" setup name="CreateExercise">
     import OCR from "@/components/CreateExercise/OCR.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
-    import type { NewExerciseItem } from "@/types"
+    import type {
+        FullTag,
+        GetCurrentUserTagResponse,
+        NewExerciseItem,
+    } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { getNewExerciseModel } from "@/utils/exercise"
-    import { reactive, watch } from "vue"
+    import { onMounted, reactive, ref, watch } from "vue"
+    import AddTag from "@/components/AddTag.vue"
 
     interface NewExerciseList {
         [key: number]: NewExerciseItem
     }
+
+    let addTagDialogActivate = ref(false)
+    let currentUserTag = ref(<FullTag[]>[])
+
+    function getCurrentUserTag() {
+        callapi.get("Tag", "getCurrentUserTag", null, (data) => {
+            currentUserTag.value = (<GetCurrentUserTagResponse>data).tag
+        })
+    }
+
+    onMounted(() => {
+        getCurrentUserTag()
+    })
 
     let new_exercise_list = reactive(<NewExerciseList>{})
 
@@ -58,6 +83,7 @@
     }
 
     function onExerciseSubmit(index: number) {
+        console.log(index)
         if (new_exercise_list[index] != undefined) {
             if (new_exercise_list[index].exerciseid == undefined) {
                 // callapi.post
@@ -68,10 +94,6 @@
             emitter.emit("fatalerror", "提交题目数组下标越界")
         }
     }
-
-    watch(new_exercise_list, (newValue) => {
-        console.log(newValue)
-    })
 </script>
 
 <style scoped></style>

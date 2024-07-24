@@ -166,6 +166,31 @@
 
         <v-divider />
 
+        <p class="text-subtitle-2 mt-2">所属题目组（必须属于一个题目组）</p>
+        <v-chip-group
+            v-model="modal.exercise.tag"
+            mandatory
+            multiple
+            selected-class="bg-green-darken-3"
+        >
+            <v-chip
+                v-for="item in current_user_tag"
+                :key="item.tagid"
+                :value="item.tagid"
+            >
+                {{ item.tagname }}
+            </v-chip>
+        </v-chip-group>
+        <v-btn
+            variant="text"
+            color="green"
+            class="w-100"
+            @click="$emit('add_tag', null)"
+        >
+            添加题目组
+        </v-btn>
+        <v-divider />
+
         <v-card-actions class="d-flex justify-end">
             <v-btn
                 color="orange"
@@ -178,11 +203,13 @@
                 完成创建</v-btn
             >
         </v-card-actions>
+
+        <!-- 如果放到v-card外面就会有一些暂时不能理解的问题 -->
     </v-card>
 </template>
 
-<script lang="ts" setup name="CreateExercise">
-    import { watch, ref, computed } from "vue"
+<script lang="ts" setup name="ExerciseUpdater">
+    import { watch, ref, computed, onMounted } from "vue"
     import emitter from "@/utils/emitter"
     import type { NewExerciseItem } from "@/types"
     import { getNewExerciseModel } from "@/utils/exercise"
@@ -195,7 +222,8 @@
         },
     })
 
-    defineProps(["exercise_index", "submit"])
+    defineProps(["current_user_tag", "exercise_index", "submit"])
+    defineEmits(["add_tag"])
 
     let options = ref(["A", "B"])
 
@@ -241,7 +269,8 @@
         const premise =
             !!modal.value.exercise.title &&
             !!modal.value.exercise.content &&
-            modal.value.exercise.answer.length > 0
+            modal.value.exercise.answer.length > 0 &&
+            modal.value.exercise.tag.length > 0
         if (
             modal.value.exercise.type === 1 ||
             modal.value.exercise.type === 2

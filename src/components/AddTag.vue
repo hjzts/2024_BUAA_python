@@ -1,14 +1,14 @@
 <template>
-    <v-dialog :activator="activator" max-width="500px" v-model="isActive">
+    <v-dialog max-width="500px" v-model="isActive">
         <v-card>
             <v-toolbar>
                 <v-btn icon="mdi-close" @click="isActive = false" />
-                <v-toolbar-title>修改学号</v-toolbar-title>
+                <v-toolbar-title>添加题目组</v-toolbar-title>
             </v-toolbar>
             <v-text-field
-                v-model="newstudentid"
-                :rules="[(v) => !!v || '请输入新学号']"
-                label="新学号"
+                v-model="newtagname"
+                :rules="[(v) => !!v || '请输入新题目组名称']"
+                label="新题目组名称"
                 variant="outlined"
                 class="ma-2"
             />
@@ -16,44 +16,41 @@
                 <v-btn @click="isActive = false">取消</v-btn>
                 <v-btn
                     color="primary"
-                    :disabled="newstudentid == ''"
+                    :disabled="newtagname == ''"
                     :loading="submit_loading"
-                    @click="onChangeStudentIDClick"
-                    >修改学号</v-btn
+                    @click="onAddTagClick"
+                    >添加题目组</v-btn
                 >
             </template>
         </v-card>
     </v-dialog>
 </template>
 
-<script lang="ts" setup name="ChangeStudentID">
-    import { useUserInfo } from "@/stores/userinfo"
-    import type { UpdateStundentIDResponse } from "@/types"
+<script lang="ts" setup name="AddTag">
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { ref } from "vue"
 
-    defineProps(["activator"])
+    const emit = defineEmits(['add_finish'])
 
-    const userInfo = useUserInfo()
+    let isActive = defineModel({default: false})
 
-    let isActive = ref(false)
     let submit_loading = ref(false)
-    let newstudentid = ref("")
+    let newtagname = ref("")
 
-    function onChangeStudentIDClick() {
+    function onAddTagClick() {
         submit_loading.value = true
         callapi.post(
             "form-data",
-            "UserInfo",
-            "updateStundentID",
+            "Tag",
+            "createTag",
             {
-                newstudentid: newstudentid.value,
+                tagname: newtagname.value,
             },
             (data) => {
-                userInfo.studentid = (<UpdateStundentIDResponse>data).studentid
-                emitter.emit("success_snackbar", "修改学号成功")
-                newstudentid.value = ""
+                emit('add_finish')
+                emitter.emit("success_snackbar", "添加题目组成功")
+                newtagname.value = ''
                 submit_loading.value = false
                 isActive.value = false
             },

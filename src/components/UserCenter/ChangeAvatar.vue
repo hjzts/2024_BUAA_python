@@ -55,6 +55,7 @@
             (data) => {
                 userInfo.avatarurl = (<UpdateAvatarResponse>data).avatarurl
                 emitter.emit("success_snackbar", "更换头像成功")
+                newavatar.value = null
                 submit_loading.value = false
                 isActive.value = false
             },
