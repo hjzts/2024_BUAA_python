@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="pa-6">
-        <p class="text-h4 mt-6 mb-4">所有管理员</p>
-        <p class="text-subtitle-2 mb-4">点击封禁、解封用户</p>
+        <p class="text-h4 mt-6 mb-4">管理员管理</p>
+        <p class="text-subtitle-2 mb-4">添加删除管理员</p>
 
         <v-data-table :headers="headers" :items="allAdmin" item-value="exerciseid" disable-sort sticky>
             <template v-slot:item.actions="{ item }">
@@ -70,7 +70,7 @@
                 <v-toolbar-title>删除管理员</v-toolbar-title>
             </v-toolbar>
 
-            <v-card-item> 确定要删除{{ delDialogAdminName }}？ </v-card-item>
+            <v-card-item> 确定要删除管理员“{{ delDialogAdminName }}”？ </v-card-item>
 
             <template v-slot:actions>
                 <v-btn @click="delDialogActive = false">取消</v-btn>

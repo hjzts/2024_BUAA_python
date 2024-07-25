@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="pa-6">
         <p class="text-h4 mt-6 mb-4">所有用户</p>
-        <p class="text-subtitle-2 mb-4">点击封禁、解封用户</p>
+        <p class="text-subtitle-2 mb-4">封禁、解封用户</p>
 
         <v-data-table :headers="headers" :items="allUser" item-value="exerciseid" disable-sort sticky>
             <template v-slot:item.avatarurl="{ item }">
@@ -36,6 +36,7 @@
             </template>
         </v-data-table>
     </v-container>
+
     <v-dialog max-width="500px" v-model="dialogActive">
         <v-card>
             <v-toolbar>
@@ -43,11 +44,11 @@
                 <v-toolbar-title>{{ dialogType ? "解封" : "封禁" }}用户</v-toolbar-title>
             </v-toolbar>
 
-            <v-card-item> 确定要{{ dialogType ? "解封" : "封禁" }} {{ dialogUserName }}？ </v-card-item>
+            <v-card-item> 确定要{{ dialogType ? "解封" : "封禁" }}用户“{{ dialogUserName }}”？ </v-card-item>
 
             <template v-slot:actions>
                 <v-btn @click="dialogActive = false">取消</v-btn>
-                <v-btn color="red" :loading="submit_loading" @click="onBlockUnblockClick">
+                <v-btn :color="dialogType ? 'green' : 'red'" :loading="submit_loading" @click="onBlockUnblockClick">
                     {{ dialogType ? "解封" : "封禁" }}
                 </v-btn>
             </template>
