@@ -19,6 +19,11 @@
     </v-navigation-drawer>
 
     <v-app-bar density="compact" elevation="1" location="top">
+        <template #prepend>
+            <v-btn v-if="navigator" variant="text" icon density="comfortable" class="ml-2" @click="navigateBack">
+                <v-icon size="default"> mdi-arrow-left </v-icon>
+            </v-btn>
+        </template>
         <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
         <v-spacer />
         <p>{{ userInfo.username }}</p>
@@ -58,6 +63,12 @@
     watch(selected, (newValue) => {
         router.push({ name: newValue[0] })
     })
+
+    let navigator = ref(false)
+
+    function navigateBack() {
+        router.back()
+    }
 
     function onLogoutClick() {
         callapi.post("form-data", "Auth", "logout", null, (data) => {
