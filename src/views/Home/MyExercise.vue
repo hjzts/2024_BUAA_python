@@ -13,12 +13,12 @@
             :headers="headers"
             :items="exerciseFromTag"
             item-value="exerciseid"
+            :loading="table_loading"
             disable-sort
             sticky
             items-per-page="20"
-            show-select
-            no-data-text="无题目"
-            v-model="selectedExercise">
+            no-data-text="未选择题目组或无题目"
+            loading-text="加载中">
             <template v-slot:item.title="{ item }">
                 <p class="text-break">{{ item.title }}</p>
             </template>
@@ -39,32 +39,51 @@
                 }}</v-chip>
             </template>
 
-            <template v-slot:item.actions="{ item }">
-                <v-btn variant="tonal" icon density="comfortable" color="primary" class="me-1">
-                    <v-icon size="default"> mdi-file-document </v-icon>
-                </v-btn>
-                <v-btn variant="tonal" icon density="comfortable" color="secondary" class="me-1">
-                    <v-icon size="default"> mdi-tag-plus </v-icon>
-                </v-btn>
+            <template v-slot:item.actions="{ item, index }">
                 <v-btn
-                    v-if="item.createusername == userInfo.username"
                     variant="tonal"
                     icon
                     density="comfortable"
                     color="green"
-                    class="me-1">
+                    class="me-1"
+                    :disabled="item.createusername != userInfo.username"
+                    @click="editDialog(index)">
                     <v-icon size="default"> mdi-pencil </v-icon>
                 </v-btn>
             </template>
         </v-data-table>
     </v-container>
+
+    <v-dialog max-width="500px" v-model="editDialogActive">
+        <v-card>
+            <v-toolbar>
+                <v-btn icon="mdi-close" @click="editDialogActive = false" />
+                <v-toolbar-title>编辑题目</v-toolbar-title>
+            </v-toolbar>
+
+            <ExerciseUpdater
+                v-model="editExercise"
+                :current_user_tag="currentUserTag"
+                @add_tag="addTagDialogActive = true" />
+        </v-card>
+    </v-dialog>
+
+    <AddTag v-model="addTagDialogActive" @add_finish="getCurrentUserTag" />
 </template>
 
 <script lang="ts" setup name="MyExercise">
-    import { useUserInfo } from "@/stores/userinfo"
-    import type { FullTag, GetCurrentUserTagResponse, GetListExerciseResponse, GotExercise } from "@/types"
+    import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
+    import AddTag from "@/components/AddTag.vue"
+    import type {
+        FullTag,
+        GetCurrentUserTagResponse,
+        GetListExerciseResponse,
+        GotExercise,
+        NewExerciseItem,
+    } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref, watch } from "vue"
+    import { useUserInfo } from "@/stores/userinfo"
     const userInfo = useUserInfo()
 
     const exerciseType = {
@@ -99,8 +118,10 @@
     let exerciseFromTag = ref(<GotExercise[]>[])
     let exercisePages = ref(0)
     let nowPage = ref(1)
+    let table_loading = ref(false)
 
-    function getReachableExercise(page: number) {
+    function getExerciseFromTag(page: number) {
+        table_loading.value = true
         callapi.get(
             "Tag",
             "getExerciseFromTag",
@@ -112,19 +133,47 @@
                 const result = <GetListExerciseResponse>data
                 exercisePages.value = result.pages
                 exerciseFromTag.value = result.thispage
+                table_loading.value = false
             }
         )
     }
 
     watch(nowPage, (newValue) => {
-        getReachableExercise(newValue)
+        getExerciseFromTag(newValue)
     })
 
     watch(seletedTagId, (newValue) => {
-        getReachableExercise(1)
+        getExerciseFromTag(1)
     })
 
-    let selectedExercise = ref()
+    let editDialogActive = ref(false)
+    let editExerciseIndex = ref(0)
+    let editExercise = ref(<NewExerciseItem>{})
+
+    function editDialog(index: number) {
+        editExerciseIndex.value = index
+        editExercise.value = {
+            exerciseid: exerciseFromTag.value[index].exerciseid,
+            exercise: {
+                type: exerciseFromTag.value[index].type,
+                title: exerciseFromTag.value[index].title,
+                content: exerciseFromTag.value[index].content,
+                option: exerciseFromTag.value[index].option,
+                answer: exerciseFromTag.value[index].answer,
+                tag: exerciseFromTag.value[index].tag.map((value) => value.tagid),
+            },
+        }
+        editDialogActive.value = true
+    }
+
+    watch(editDialogActive, (newValue, oldValue) => {
+        if (oldValue && !newValue) {
+            exerciseFromTag.value = <GotExercise[]>[]
+            getExerciseFromTag(nowPage.value)
+        }
+    })
+
+    let addTagDialogActive = ref(false)
 </script>
 
 <style scoped></style>

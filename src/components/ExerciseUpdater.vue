@@ -132,7 +132,7 @@
                 :disabled="!canSubmit"
                 :loading="submit_loading"
                 @click="onExerciseSubmit">
-                完成创建</v-btn
+                完成{{ modal.exerciseid === undefined ? "创建" : "修改" }}</v-btn
             >
         </v-card-actions>
 

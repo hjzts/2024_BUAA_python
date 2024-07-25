@@ -13,7 +13,7 @@
                     <ExerciseUpdater
                         v-model="new_exercise_list[key]"
                         :current_user_tag="currentUserTag"
-                        @add_tag="addTagDialogActivate = true" />
+                        @add_tag="addTagDialogActive = true" />
                 </div>
             </v-col>
         </v-row>
@@ -31,7 +31,7 @@
         @click="pushNewExercise"
         class="mt-4" />
 
-    <AddTag v-model="addTagDialogActivate" @add_finish="getCurrentUserTag" />
+    <AddTag v-model="addTagDialogActive" @add_finish="getCurrentUserTag" />
 </template>
 
 <script lang="ts" setup name="CreateExercise">
@@ -47,7 +47,7 @@
         [key: number]: NewExerciseItem
     }
 
-    let addTagDialogActivate = ref(false)
+    let addTagDialogActive = ref(false)
     let currentUserTag = ref(<FullTag[]>[])
 
     function getCurrentUserTag() {
