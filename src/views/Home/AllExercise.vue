@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :headers="headers" :items="items" class="elevation-1">
+    <v-data-table :headers="headers" :items="items">
         <template v-slot:item.passed="{ item }">
             <v-checkbox v-model="item.passed" hide-details color="success" readonly></v-checkbox>
         </template>

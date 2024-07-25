@@ -12,7 +12,7 @@ export interface UpdateAvatarResponse {
     avatarurl: string
 }
 
-export interface UpdateStundentIDResponse {
+export interface UpdateStudentIDResponse {
     studentid: string
 }
 
