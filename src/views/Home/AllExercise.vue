@@ -37,12 +37,12 @@
     import { ref } from 'vue'
     let dialogDelete = ref(false)
     let headers = ref([
-        { text: '测试点 ID', value: 'id' },
-        { text: '名称', value: 'name' },
-        { text: '已通过', value: 'passed' },
-        { text: '判定信息', value: 'status' },
-        { text: '分数', value: 'score' },
-        { text: '操作', value: 'action', sortable: false },
+        { title: '测试点 ID', value: 'id' },
+        { title: '名称', value: 'name' },
+        { title: '已通过', value: 'passed' },
+        { title: '判定信息', value: 'status' },
+        { title: '分数', value: 'score' },
+        { title: '操作', value: 'action', sortable: false },
     ])
     let items = ref([
         { id: 3971, name: '2024_unit1_hw1_strong_1', passed: false, status: 'ACCEPTED', score: 100 },
