@@ -1,9 +1,11 @@
 <template>
-    <ExerciseUpdater />
+    <ExerciseFinisher />
 </template>
 
 <script lang="ts" setup name="MyExercise">
-    import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
+    import ExerciseFinisher from "@/components/ExerciseFinisher.vue"
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

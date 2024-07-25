@@ -35,7 +35,7 @@
 <script lang="ts" setup name="AllExercise">
     import { getDefaultExerciseModel } from '@/utils/exercise';
     import { ref } from 'vue'
-    let dialogDelete = ref(false)
+    let activatorProps = ref(false)
     let headers = ref([
         { title: '测试点 ID', value: 'id' },
         { title: '名称', value: 'name' },
@@ -59,11 +59,11 @@
 
     function seeDetails(item: any) {
         console.log(item)
-        dialogDelete.value = true
+        activatorProps.value = true
     }
 
     function closeDelete() {
-        dialogDelete.value = false
+        activatorProps.value = false
     }
 </script>
 
