@@ -2,6 +2,18 @@ export interface LoginResponse {
     token: string
 }
 
+export interface AdminUser {
+    userid: number
+    username: string
+    avatarurl: string
+    studentid: string
+    isblock: boolean
+}
+
+export interface GetAllUserResponse {
+    users: AdminUser[]
+}
+
 export interface GetUserInfoResponse {
     username: string
     avatarurl: string
