@@ -75,6 +75,7 @@ const callapi = {
                 }
             })
             .catch((error) => {
+                console.log(error)
                 emitter.emit("fatalerror", "网络错误：" + error.code + "。请手动刷新页面")
             })
     },

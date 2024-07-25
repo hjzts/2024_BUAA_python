@@ -16,7 +16,6 @@
     let hold = ref(false)
 
     emitter.on("apierror", (message) => {
-        console.log(message)
         text.value = <string>message ? <string>message : "未知错误"
         hold.value = false
         snackbar.value = true
