@@ -100,7 +100,7 @@
         callapi.post(
             "form-data",
             "Admin",
-            "blockUser",
+            dialogType.value ? "unblockUser" : "blockUser",
             {
                 userid: dialogUserID.value,
             },
