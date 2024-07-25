@@ -1,58 +1,88 @@
 <template>
     <v-card>
-        <v-card-subtitle>题目创建者:{{ exercise.createusername }}</v-card-subtitle>
-            <v-card-subtitle>题目类型:{{ getExerciseType() }}</v-card-subtitle>
-            <v-divider />
-            <v-spacer />
-            
-            <v-card-text>{{ exercise.content }}</v-card-text>
-            <v-divider />
-            
-            <!-- ****************判断题****************** -->
-            <!-- todo: 这里不应该是修改exercise.answer，而是需要重新存储并进行对比 -->
-            <v-radio-group v-if="exercise.type === 0" v-model="exercise.answer[0]" hide-details>
-                <p class="text-subtitle-2 mt-2">你的答案是</p>
-                <v-radio label="对" value="A" color="success" />
-                <v-radio label="错" value="B" color="red" />
-            </v-radio-group>
+        <v-card-title class="text-h5">{{ exercise.title }}</v-card-title>
+        <v-card-subtitle class="text-subtitle-2" color="blue-lighten-1" style="color: rgb(85, 163, 25)">题目创建者:{{ exercise.createusername }}</v-card-subtitle>
+        <v-divider />
+        <v-spacer />
+        <v-card-subtitle class="text-subtitle-2" color="blue-lighten-1" style="color: rgb(85, 163, 25)">题目类型:{{ getExerciseType() }}</v-card-subtitle>
+        
+        <v-card-text>{{ exercise.content }}</v-card-text>
+        <v-divider />
+        
+        <!-- ****************判断题****************** -->
+        <!-- todo: 这里不应该是修改exercise.answer，而是需要重新存储并进行对比 -->
+        <v-radio-group v-if="exercise.type === 0" v-model="userAnswer[0]" hide-details>
+            <v-radio label="对" value="A" color="success" />
+            <v-radio label="错" value="B" color="red" />
+        </v-radio-group>
 
-            <!-- ****************单选题****************** -->
-            <v-radio-group v-if="exercise.type === 1" v-model="exercise.answer[0]" hide-details>
-                <p class="text-body-1 mt-2 ">你的答案是</p>
-
-                <!-- <div v-for = "(option , index) in exercise.option" :key="'S' + option" class="d-flex mt-2">
-                    <v-list lines="three" select-strategy="classic">
-                        <v-list-subheader>General</v-list-subheader>
-                        <v-list-item value="notifications">
-                            <template v-slot:prepend="{ isActive }">
-                            <v-list-item-action start>
-                                <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
-                            </v-list-item-action>
-                            </template>
-                        </v-list-item>
-                    </v-list>
-                </div> -->
-
-                <div v-for="(option , index) in exercise.option" :key="'S' + option" class="d-flex mb-2 justify-begin">
-                    <div class="d-flex flex-wrap">
-                        <v-radio :value="option" color="success" />
-                        <p class="text-subtitle-2 ml-2 mt-2">{{ exercise.option[index] }}</p>
-                    </div>
+        <!-- ****************单选题****************** -->
+        <v-radio-group v-if="exercise.type === 1" v-model="userAnswer[0]" hide-details>
+            <div v-for="(option , index) in exercise.option" :key="'S' + option" class="d-flex mb-2 justify-begin">
+                <div class="d-flex flex-wrap">
+                    <v-radio :value="option" color="success" />
+                    <p class="text-subtitle-2 ml-2 mt-2">{{ String.fromCharCode(65 + index) + '. ' + exercise.option[index] }}</p>
                 </div>
-            </v-radio-group>
+            </div>
+        </v-radio-group>
+
+        <!-- ****************多选题****************** -->
+        <div v-if="exercise.type === 2">
+            <div 
+                v-for="(option , index) in exercise.option" 
+                :key="'M' + option" 
+                class="d-flex mb-2 justify-begin"
+            >
+                <div class="d-flex flex-row">
+                    <v-checkbox 
+                        v-model="userAnswer"
+                        :value="option" 
+                        color="success"
+                        hide-details />
+                    <div class="d-flex text-justify align-center">{{ String.fromCharCode(65 + index) + '. ' + exercise.option[index] }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ****************标签****************** -->
+        <v-chip-group v-model="selectedTags" selected-class="bg-green-darken-3" readonly>
+            <v-chip 
+                v-for="(item, index) in exercise.tag" 
+                :key="item.tagid" 
+                :value="item.tagid" 
+                :style="{ 'margin-right': index < exercise.tag.length - 1 ? '10px' : '0px' }"
+                color="Green flat"
+                size="large">
+                {{ item.tagname }}
+            </v-chip>
+        </v-chip-group>
+        <v-divider />
+
+        <v-card-actions class="d-flex justify-end">
+            <v-btn
+                color="orange"
+                text="完成创建"
+                size="large"
+                prepend-icon="mdi-check-circle"
+                @click="$emit('showAnswer')">
+                完成并提交</v-btn
+            >
+        </v-card-actions>
     </v-card>
 </template>
 
 <script lang="ts" setup name="ExerciseFinisher">
-    import { ref } from "vue"
-    // import type { GotExercise } from "@/types"
+    import { ref, watch } from "vue"
 
-    let isActive = ref(false)
+    defineProps()
+    defineEmits(["showAnswer"])
+
+    let userAnswer = ref([])
     let exercise = ref({
-            type: 1,
-            title : "这是个单选题",
-            content : "这是单选题的题面:\"这个题目是错的\",那么这个题目的答案是:",
-            option:["这是A选项的内容:错误","这是B选项的内容:正确"],
+            type: 2,
+            title : "单选题标题",
+            content : "题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面题面         ",
+            option:["A选项A选项A选项A选项","B选项B选项B选项B选项","C选项C选项C选项C选项","D选项D选项D选项D选项"],
             answer : ["A"],
             exerciseid: "1223",
             createusername: "hugo",
@@ -60,15 +90,44 @@
                 {
                     tagid:111,
                     tagname:"python chapter 1"
+                },
+                {
+                    tagid:222,
+                    tagname:"python chapter 2"
                 }
             ],
     })
+    let selectedTags = exercise.value.tag.map(item => item.tagid)
+
+    watch(userAnswer, (newValue) => {
+        console.log("userAnswer: ", newValue)
+    })
+
     function getExerciseType() {
         let type =  exercise.value.type === 0 ? "判断题" :
                     exercise.value.type === 1 ? "单选题" :
                     exercise.value.type === 2 ? "多选题" :
                     "填空题" 
         return type
+    }
+
+    function submit(exerciseid: string) {
+        let isRight = checkAnswer()
+        
+    }
+
+    function checkAnswer() {
+        if (exercise.value.answer.length !== userAnswer.value.length) {
+            return false;
+        }
+        const sortedUserAnswer = userAnswer.value.sort()
+        const sortedExerciseAnswer = exercise.value.answer.sort()
+        for (let i = 0; i < sortedExerciseAnswer.length; i++) {
+            if(sortedUserAnswer[i] !== sortedExerciseAnswer[i]) {
+                return false
+            }
+        }
+        return true
     }
 </script>
 
