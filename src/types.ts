@@ -1,7 +1,9 @@
+// ===== Auth =====
 export interface LoginResponse {
     token: string
 }
 
+// ===== Admin =====
 export interface AdminUser {
     userid: number
     username: string
@@ -14,6 +16,15 @@ export interface GetAllUserResponse {
     users: AdminUser[]
 }
 
+export interface AdminExercise extends GotExercise {
+    isBlock: boolean
+}
+
+export interface GetAllExerciseResponse {
+    pages: number
+    thispage: AdminExercise[]
+}
+
 export interface AdminAdmin {
     adminid: number
     adminname: string
@@ -23,6 +34,7 @@ export interface GetAllAdminResponse {
     admins: AdminAdmin[]
 }
 
+// ===== UserInfo =====
 export interface GetUserInfoResponse {
     username: string
     avatarurl: string
@@ -35,6 +47,31 @@ export interface UpdateAvatarResponse {
 
 export interface UpdateStudentIDResponse {
     studentid: string
+}
+
+// ===== Exercise =====
+// 公共题目
+interface PublicExercise {
+    type: 0 | 1 | 2 | 10
+    title: string
+    content: string
+    option: string[]
+    answer: string[]
+}
+
+// 创建的题目，用于createExercise和updateExercise
+export interface NewExercise extends PublicExercise {
+    tag: number[]
+}
+
+// 获取的题目，用于getReachableExercise、getExerciseByID、searchExercise、getExerciseFromTag、getRecommendExercise
+export interface GotExercise extends PublicExercise {
+    exerciseid: number
+    createusername: string
+    tag: {
+        tagid: number
+        tagname: string
+    }[]
 }
 
 export interface CreateExerciseResponse {
@@ -55,44 +92,18 @@ export interface OCRResponse {
     text: string
 }
 
+// ===== Tag =====
+export interface FullTag {
+    tagid: number
+    tagname: string
+}
+
 export interface GetCurrentUserTagResponse {
     tag: FullTag[]
 }
 
-interface PublicExercise {
-    type: 0 | 1 | 2 | 10
-    title: string
-    content: string
-    option: string[]
-    answer: string[]
-}
-
-// 创建的题目，用于createExercise和updateExercise
-export interface NewExercise extends PublicExercise {
-    tag: number[]
-}
-
+// ===== Other =====
 export interface NewExerciseItem {
     exerciseid: number | undefined
     exercise: NewExercise
-}
-
-// 获取的题目，用于getReachableExercise、getExerciseByID、searchExercise、getExerciseFromTag、getRecommendExercise
-export interface GotExercise extends PublicExercise {
-    exerciseid: string
-    createusername: string
-    tag: {
-        tagid: number
-        tagname: string
-    }[]
-}
-
-// 获取有屏蔽信息的题目，用于getAllExercise
-export interface AdminExercise extends GotExercise {
-    isBlock: boolean
-}
-
-export interface FullTag {
-    tagid: number
-    tagname: string
 }
