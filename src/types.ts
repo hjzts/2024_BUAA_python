@@ -20,6 +20,16 @@ export interface CreateExerciseResponse {
     exerciseid: number
 }
 
+export interface GetListExerciseResponse {
+    pages: number
+    thispage: GotExercise[]
+}
+
+export interface GetExerciseByIDResponse {
+    isBlock: boolean
+    data: GotExercise
+}
+
 export interface OCRResponse {
     text: string
 }
@@ -43,8 +53,8 @@ export interface NewExercise extends PublicExercise {
 
 export interface NewExerciseItem {
     exerciseid: number | undefined
-    exercise: NewExercise,
-    is_upload_success: boolean,
+    exercise: NewExercise
+    is_upload_success: boolean
     last_upload_time: string | undefined
 }
 
@@ -64,6 +74,6 @@ export interface AdminExercise extends GotExercise {
 }
 
 export interface FullTag {
-    tagid: number,
+    tagid: number
     tagname: string
 }
