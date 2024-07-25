@@ -3,7 +3,9 @@ import { useToken } from "@/stores/token"
 import emitter from "./emitter"
 import router from "@/router"
 
-const baseURL = "http://localhost:5173/api/v1"
+const __PRODUCE_ENV = false
+
+const baseURL = __PRODUCE_ENV ? "http://python.1230123.xyz/api/v1" : "http://localhost:5173/api/v1"
 
 interface errDescription {
     [key: number]: string
@@ -33,7 +35,7 @@ const callapi = {
         error?: (errCode: number) => any
     ) {
         const token = useToken()
-        const url = "/" + module + "/" + method
+        const url = "/" + module + "/" + method + (__PRODUCE_ENV ? "/" : "")
         axios({
             method: "get",
             baseURL: baseURL,
@@ -86,7 +88,7 @@ const callapi = {
         error?: (errCode: number) => any
     ) {
         const token = useToken()
-        const url = "/" + module + "/" + method
+        const url = "/" + module + "/" + method + (__PRODUCE_ENV ? "/" : "")
         axios({
             method: "post",
             baseURL: baseURL,
