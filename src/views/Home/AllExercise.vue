@@ -1,70 +1,113 @@
 <template>
-    <v-data-table :headers="headers" :items="items" class="elevation-1">
-        <template v-slot:item.passed="{ item }">
-            <v-checkbox v-model="item.passed" hide-details color="success" readonly></v-checkbox>
-        </template>
-        <template v-slot:item.action="{ item }">
-            <v-btn icon @click="seeDetails(item)">
-                <v-icon>mdi-file-document</v-icon>
-            </v-btn>
-        </template>
+    <v-container fluid class="pa-6">
+        <p class="text-h4 mt-6 mb-4">所有题目</p>
+        <p class="text-subtitle-2 mb-4">点击查看详情、添加到题目组</p>
 
-        <!-- <v-dialog max-width="500">
-            <template v-slot:activator="{ props: activatorProps }">
-                <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog" variant="flat"></v-btn>
+        <v-data-table
+            :headers="headers"
+            :items="reachableExercise"
+            item-value="exerciseid"
+            disable-sort
+            sticky
+            items-per-page="20"
+            show-select
+            v-model="selectedExercise">
+            <template v-slot:item.title="{ item }">
+                <p class="text-break">{{ item.title }}</p>
             </template>
 
-            <template v-slot:default="{ isActive }">
-                <v-card title="Dialog">
-                    <v-card-text>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn>
-                    </v-card-actions>
-                </v-card>
+            <template v-slot:item.type="{ item }">
+                {{ exerciseType[item.type] }}
             </template>
-        </v-dialog> -->
 
-    </v-data-table>
+            <template v-slot:bottom>
+                <div class="text-center mt-2">
+                    <v-pagination v-model="nowPage" :length="reachablePages"></v-pagination>
+                </div>
+            </template>
+
+            <template v-slot:item.tag="{ item }">
+                <v-chip v-for="tag in item.tag" :key="tag.tagid" color="secondary" label class="me-1">{{
+                    tag.tagname
+                }}</v-chip>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+                <v-btn variant="tonal" icon density="comfortable" color="primary" class="me-1">
+                    <v-icon size="default"> mdi-file-document </v-icon>
+                </v-btn>
+                <v-btn variant="tonal" icon density="comfortable" color="secondary" class="me-1">
+                    <v-icon size="default"> mdi-tag-plus </v-icon>
+                </v-btn>
+                <v-btn
+                    v-if="item.createusername == userInfo.username"
+                    variant="tonal"
+                    icon
+                    density="comfortable"
+                    color="green"
+                    class="me-1">
+                    <v-icon size="default"> mdi-pencil </v-icon>
+                </v-btn>
+            </template>
+        </v-data-table>
+    </v-container>
 </template>
 
 <script lang="ts" setup name="AllExercise">
-    import { getDefaultExerciseModel } from '@/utils/exercise';
-    import { ref } from 'vue'
-    let activatorProps = ref(false)
-    let headers = ref([
-        { title: '测试点 ID', value: 'id' },
-        { title: '名称', value: 'name' },
-        { title: '已通过', value: 'passed' },
-        { title: '判定信息', value: 'status' },
-        { title: '分数', value: 'score' },
-        { title: '操作', value: 'action', sortable: false },
-    ])
-    let items = ref([
-        { id: 3971, name: '2024_unit1_hw1_strong_1', passed: false, status: 'ACCEPTED', score: 100 },
-        { id: 3972, name: '2024_unit1_hw1_strong_2', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3973, name: '2024_unit1_hw1_strong_3', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3974, name: '2024_unit1_hw1_strong_4', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3975, name: '2024_unit1_hw1_strong_5', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3976, name: '2024_unit1_hw1_strong_6', passed: false, status: 'ACCEPTED', score: 100 },
-        { id: 3977, name: '2024_unit1_hw1_strong_7', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3978, name: '2024_unit1_hw1_strong_8', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3979, name: '2024_unit1_hw1_strong_9', passed: true, status: 'ACCEPTED', score: 100 },
-        { id: 3980, name: '2024_unit1_hw1_strong_10', passed: true, status: 'ACCEPTED', score: 100 },
-    ])
+    import { useUserInfo } from "@/stores/userinfo"
+    import type { GetListExerciseResponse, GotExercise } from "@/types"
+    import { callapi } from "@/utils/callapi"
+    import { onMounted, ref, watch } from "vue"
+    const userInfo = useUserInfo()
 
-    function seeDetails(item: any) {
-        console.log(item)
-        activatorProps.value = true
+    const exerciseType = {
+        0: "判断题",
+        1: "单选题",
+        2: "多选题",
+        10: "填空题",
     }
 
-    function closeDelete() {
-        activatorProps.value = false
+    const headers = [
+        { title: "ID", value: "exerciseid", width: "70px", minWidth: "70px" },
+        { title: "创建者", key: "createusername" },
+        { title: "类型", key: "type", width: "75px", minWidth: "75px" },
+        { title: "标题", key: "title", maxWidth: "450px" },
+        { title: "标签", key: "tag", maxWidth: "350px" },
+        { title: "操作", key: "actions", sortable: false },
+    ]
+
+    let reachableExercise = ref(<GotExercise[]>[])
+    let reachablePages = ref(1)
+    let nowPage = ref(1)
+
+    function getReachableExercise(page: number) {
+        callapi.get(
+            "Exercise",
+            "getReachableExercise",
+            {
+                page: page,
+            },
+            (data) => {
+                const result = <GetListExerciseResponse>data
+                reachablePages.value = result.pages
+                reachableExercise.value = result.thispage
+            }
+        )
     }
+
+    onMounted(() => {
+        getReachableExercise(1)
+    })
+
+    watch(nowPage, (newValue) => {
+        getReachableExercise(newValue)
+    })
+
+    let selectedExercise = ref()
+
+    watch(selectedExercise, (newValue) => {
+        console.log(newValue)
+    })
 </script>
 
 <style scoped></style>

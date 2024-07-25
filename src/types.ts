@@ -1,7 +1,40 @@
+// ===== Auth =====
 export interface LoginResponse {
     token: string
 }
 
+// ===== Admin =====
+export interface AdminUser {
+    userid: number
+    username: string
+    avatarurl: string
+    studentid: string
+    isblock: boolean
+}
+
+export interface GetAllUserResponse {
+    users: AdminUser[]
+}
+
+export interface AdminExercise extends GotExercise {
+    isBlock: boolean
+}
+
+export interface GetAllExerciseResponse {
+    pages: number
+    thispage: AdminExercise[]
+}
+
+export interface AdminAdmin {
+    adminid: number
+    adminname: string
+}
+
+export interface GetAllAdminResponse {
+    admins: AdminAdmin[]
+}
+
+// ===== UserInfo =====
 export interface GetUserInfoResponse {
     username: string
     avatarurl: string
@@ -12,22 +45,12 @@ export interface UpdateAvatarResponse {
     avatarurl: string
 }
 
-export interface UpdateStundentIDResponse {
+export interface UpdateStudentIDResponse {
     studentid: string
 }
 
-export interface CreateExerciseResponse {
-    exerciseid: number
-}
-
-export interface OCRResponse {
-    text: string
-}
-
-export interface GetCurrentUserTagResponse {
-    tag: FullTag[]
-}
-
+// ===== Exercise =====
+// 公共题目
 interface PublicExercise {
     type: 0 | 1 | 2 | 10
     title: string
@@ -41,16 +64,9 @@ export interface NewExercise extends PublicExercise {
     tag: number[]
 }
 
-export interface NewExerciseItem {
-    exerciseid: number | undefined
-    exercise: NewExercise,
-    is_upload_success: boolean,
-    last_upload_time: string | undefined
-}
-
 // 获取的题目，用于getReachableExercise、getExerciseByID、searchExercise、getExerciseFromTag、getRecommendExercise
 export interface GotExercise extends PublicExercise {
-    exerciseid: string
+    exerciseid: number
     createusername: string
     tag: {
         tagid: number
@@ -58,12 +74,36 @@ export interface GotExercise extends PublicExercise {
     }[]
 }
 
-// 获取有屏蔽信息的题目，用于getAllExercise
-export interface AdminExercise extends GotExercise {
-    isBlock: boolean
+export interface CreateExerciseResponse {
+    exerciseid: number
 }
 
+export interface GetListExerciseResponse {
+    pages: number
+    thispage: GotExercise[]
+}
+
+export interface GetExerciseByIDResponse {
+    isBlock: boolean
+    data: GotExercise
+}
+
+export interface OCRResponse {
+    text: string
+}
+
+// ===== Tag =====
 export interface FullTag {
-    tagid: number,
+    tagid: number
     tagname: string
+}
+
+export interface GetCurrentUserTagResponse {
+    tag: FullTag[]
+}
+
+// ===== Other =====
+export interface NewExerciseItem {
+    exerciseid: number | undefined
+    exercise: NewExercise
 }

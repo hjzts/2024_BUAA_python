@@ -27,7 +27,7 @@
 
 <script lang="ts" setup name="ChangeStudentID">
     import { useUserInfo } from "@/stores/userinfo"
-    import type { UpdateStundentIDResponse } from "@/types"
+    import type { UpdateStudentIDResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { ref } from "vue"
@@ -45,12 +45,12 @@
         callapi.post(
             "form-data",
             "UserInfo",
-            "updateStundentID",
+            "updateStudentID",
             {
                 newstudentid: newstudentid.value,
             },
             (data) => {
-                userInfo.studentid = (<UpdateStundentIDResponse>data).studentid
+                userInfo.studentid = (<UpdateStudentIDResponse>data).studentid
                 emitter.emit("success_snackbar", "修改学号成功")
                 newstudentid.value = ""
                 submit_loading.value = false

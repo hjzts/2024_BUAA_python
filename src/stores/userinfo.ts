@@ -20,7 +20,7 @@ export const useUserInfo = defineStore("userinfo", {
         fillAdmin(adminname: string) {
             this.type = "admin"
             this.username = adminname
-            this.avatarurl = "http://localhost:5173/avatar/default.jpg" // TODO: 修改默认的头像地址
+            this.avatarurl = "/static/img/default.jpg" // 默认头像地址
             this.studentid = ""
         },
         clear() {

@@ -123,14 +123,16 @@
         <v-divider />
 
         <v-card-actions class="d-flex justify-end">
+            <span v-if="is_upload_success" style="color: green"> 成功上传于{{ last_upload_success_time }} </span>
             <v-btn
                 color="orange"
                 text="完成创建"
                 size="large"
                 prepend-icon="mdi-check-circle"
                 :disabled="!canSubmit"
-                @click="submit(exercise_index)">
-                完成创建</v-btn
+                :loading="submit_loading"
+                @click="onExerciseSubmit">
+                完成{{ modal.exerciseid === undefined ? "创建" : "修改" }}</v-btn
             >
         </v-card-actions>
 
@@ -139,10 +141,11 @@
 </template>
 
 <script lang="ts" setup name="ExerciseUpdater">
-    import { watch, ref, computed, onMounted } from "vue"
+    import { watch, ref, computed } from "vue"
     import emitter from "@/utils/emitter"
-    import type { NewExerciseItem } from "@/types"
+    import type { CreateExerciseResponse, NewExerciseItem } from "@/types"
     import { getNewExerciseModel } from "@/utils/exercise"
+    import { callapi } from "@/utils/callapi"
 
     // 无法自动推断类型，只能通过默认值的形式处理
     let modal = defineModel({
@@ -152,7 +155,7 @@
         },
     })
 
-    defineProps(["current_user_tag", "exercise_index", "submit"])
+    defineProps(["current_user_tag"])
     defineEmits(["add_tag"])
 
     let options = ref(["A", "B"])
@@ -206,6 +209,51 @@
             return premise
         }
     })
+
+    let submit_loading = ref(false)
+    let is_upload_success = ref(false)
+    let last_upload_success_time = ref("")
+
+    function onExerciseSubmit() {
+        submit_loading.value = true
+        if (modal.value.exerciseid == undefined) {
+            callapi.post(
+                "json",
+                "Exercise",
+                "createExercise",
+                modal.value.exercise,
+                (data) => {
+                    submit_loading.value = false
+                    modal.value.exerciseid = (<CreateExerciseResponse>data).exerciseid
+                    last_upload_success_time.value = new Date().toLocaleString()
+                    is_upload_success.value = true
+                },
+                (errCode) => {
+                    submit_loading.value = false
+                    is_upload_success.value = false
+                }
+            )
+        } else {
+            callapi.post(
+                "json",
+                "Exercise",
+                "updateExercise",
+                {
+                    exerciseid: modal.value.exerciseid,
+                    newdata: modal.value.exercise,
+                },
+                (data) => {
+                    submit_loading.value = false
+                    last_upload_success_time.value = new Date().toLocaleString()
+                    is_upload_success.value = true
+                },
+                (errCode) => {
+                    submit_loading.value = false
+                    is_upload_success.value = false
+                }
+            )
+        }
+    }
 </script>
 
 <style scoped></style>

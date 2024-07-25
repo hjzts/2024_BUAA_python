@@ -13,9 +13,7 @@
                     <ExerciseUpdater
                         v-model="new_exercise_list[key]"
                         :current_user_tag="currentUserTag"
-                        :exercise_index="key"
-                        :submit="onExerciseSubmit"
-                        @add_tag="addTagDialogActivate = true" />
+                        @add_tag="addTagDialogActive = true" />
                 </div>
             </v-col>
         </v-row>
@@ -33,15 +31,14 @@
         @click="pushNewExercise"
         class="mt-4" />
 
-    <AddTag v-model="addTagDialogActivate" @add_finish="getCurrentUserTag" />
+    <AddTag v-model="addTagDialogActive" @add_finish="getCurrentUserTag" />
 </template>
 
 <script lang="ts" setup name="CreateExercise">
     import OCR from "@/components/CreateExercise/OCR.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
-    import type { CreateExerciseResponse, FullTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
+    import type { FullTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
     import { callapi } from "@/utils/callapi"
-    import emitter from "@/utils/emitter"
     import { getNewExerciseModel } from "@/utils/exercise"
     import { onMounted, reactive, ref, watch } from "vue"
     import AddTag from "@/components/AddTag.vue"
@@ -50,7 +47,7 @@
         [key: number]: NewExerciseItem
     }
 
-    let addTagDialogActivate = ref(false)
+    let addTagDialogActive = ref(false)
     let currentUserTag = ref(<FullTag[]>[])
 
     function getCurrentUserTag() {
@@ -69,36 +66,6 @@
         new_exercise_list[Date.now()] = {
             exerciseid: undefined,
             exercise: getNewExerciseModel(),
-            is_upload_success: false,
-            last_upload_time: undefined,
-        }
-    }
-
-    function onExerciseSubmit(index: number) {
-        if (new_exercise_list[index] != undefined) {
-            if (new_exercise_list[index].exerciseid == undefined) {
-                callapi.post("json", "Exercise", "createExercise", new_exercise_list[index].exercise, (data) => {
-                    new_exercise_list[index].exerciseid = (<CreateExerciseResponse>data).exerciseid
-                    new_exercise_list[index].last_upload_time = new Date().toLocaleString()
-                    new_exercise_list[index].is_upload_success = true
-                })
-            } else {
-                callapi.post(
-                    "json",
-                    "Exercise",
-                    "updateExercise",
-                    {
-                        exerciseid: new_exercise_list[index].exerciseid,
-                        newdata: new_exercise_list[index].exercise,
-                    },
-                    (data) => {
-                        new_exercise_list[index].last_upload_time = new Date().toLocaleString()
-                        new_exercise_list[index].is_upload_success = true
-                    }
-                )
-            }
-        } else {
-            emitter.emit("fatalerror", "提交题目数组下标越界")
         }
     }
 </script>

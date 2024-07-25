@@ -2,6 +2,6 @@
     "success": true,
     "errCode": 0,
     "data": {
-        "avatarurl": "http://localhost:5173/avatar/another.jpg"
+        "avatarurl": "http://localhost:5173/static/img/another.jpg"
     }
 }
