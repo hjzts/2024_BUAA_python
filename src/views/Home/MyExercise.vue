@@ -102,7 +102,7 @@
 
     function getReachableExercise(page: number) {
         callapi.get(
-            "Exercise",
+            "Tag",
             "getExerciseFromTag",
             {
                 tagid: seletedTagId.value,

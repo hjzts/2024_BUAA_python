@@ -54,8 +54,6 @@ export interface NewExercise extends PublicExercise {
 export interface NewExerciseItem {
     exerciseid: number | undefined
     exercise: NewExercise
-    is_upload_success: boolean
-    last_upload_time: string | undefined
 }
 
 // 获取的题目，用于getReachableExercise、getExerciseByID、searchExercise、getExerciseFromTag、getRecommendExercise
