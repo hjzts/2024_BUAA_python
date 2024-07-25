@@ -36,7 +36,7 @@
     </v-card-text>
 </template>
 
-<script lang="ts" setup name="Login">
+<script lang="ts" setup name="Register">
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { useRouter } from "vue-router"

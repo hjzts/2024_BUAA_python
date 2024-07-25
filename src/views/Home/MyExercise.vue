@@ -54,6 +54,18 @@
         </v-data-table>
     </v-container>
 
+    <v-fab
+        color="primary"
+        prepend-icon="mdi-plus"
+        location="top end"
+        size="x-large"
+        position="sticky"
+        text="添加题目组"
+        extended
+        app
+        @click="addTagDialogActive = true"
+        class="mt-4" />
+
     <v-dialog max-width="500px" v-model="editDialogActive">
         <v-toolbar>
             <v-btn icon="mdi-close" @click="editDialogActive = false" />

@@ -37,7 +37,7 @@
     </v-main>
 </template>
 
-<script lang="ts" setup name="Home">
+<script lang="ts" setup name="HomeView">
     import { useToken } from "@/stores/token"
     import { useUserInfo } from "@/stores/userinfo"
     import { callapi } from "@/utils/callapi"

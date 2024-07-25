@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="pa-6">
         <p class="text-h4 mt-6 mb-4">所有题目</p>
-        <p class="text-subtitle-2 mb-8">点击查看详情、添加到题目组</p>
+        <p class="text-subtitle-2 mb-8">点击查看详情、添加到题目组、修改题目</p>
 
         <v-row justify="center" class="px-2">
             <v-col cols="4">
