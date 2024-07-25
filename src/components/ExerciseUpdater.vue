@@ -155,7 +155,7 @@
         },
     })
 
-    defineProps(["current_user_tag", "exercise_index"])
+    defineProps(["current_user_tag"])
     defineEmits(["add_tag"])
 
     let options = ref(["A", "B"])

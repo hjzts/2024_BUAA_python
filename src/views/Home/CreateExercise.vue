@@ -13,7 +13,6 @@
                     <ExerciseUpdater
                         v-model="new_exercise_list[key]"
                         :current_user_tag="currentUserTag"
-                        :exercise_index="key"
                         @add_tag="addTagDialogActivate = true" />
                 </div>
             </v-col>
