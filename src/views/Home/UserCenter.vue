@@ -50,7 +50,18 @@
                 </v-col>
             </v-row>
         </v-card>
+
+        <v-card>
+            <v-card-title>
+                折线柱状图
+            </v-card-title>
+            <v-card-text>
+                <line-bar-chart :chartData="chartData" :options="chartOptions"/>
+            </v-card-text>
+        </v-card>
     </v-container>
+
+
 
     <ChangeAvatar :activator="change_avatar_button" />
     <ChangeStudentID :activator="change_studentid_button" />
@@ -61,6 +72,19 @@
     import ChangeStudentID from "@/components/UserCenter/ChangeStudentID.vue"
     import { useUserInfo } from "@/stores/userinfo"
     import { ref } from "vue"
+    import { Line, Bar, mixins } from 'vue-chartjs'
+    import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    LineElement,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    } from 'chart.js';
+    import { ChartData, ChartOptions } from 'chart.js';
 
     const userInfo = useUserInfo()
 
