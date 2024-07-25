@@ -172,7 +172,7 @@
         { title: "创建者", key: "createusername" },
         { title: "类型", key: "type", width: "75px", minWidth: "75px" },
         { title: "标题", key: "title", maxWidth: "450px" },
-        { title: "标签", key: "tag", maxWidth: "350px" },
+        { title: "题目组", key: "tag", maxWidth: "350px" },
         { title: "操作", key: "actions", sortable: false },
     ]
 
@@ -322,7 +322,7 @@
             type: "title",
         },
         {
-            title: "标签",
+            title: "题目组",
             type: "tag",
         },
     ]

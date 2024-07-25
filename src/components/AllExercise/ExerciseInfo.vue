@@ -8,37 +8,37 @@
 
             <v-expansion-panels multiple variant="accordion" v-model="defaultActive">
                 <v-expansion-panel>
-                    <v-expansion-panel-title>标题 </v-expansion-panel-title>
+                    <v-expansion-panel-title>标题</v-expansion-panel-title>
                     <v-expansion-panel-text> {{ exercise.title }} </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel>
-                    <v-expansion-panel-title>创建者 </v-expansion-panel-title>
+                    <v-expansion-panel-title>创建者</v-expansion-panel-title>
                     <v-expansion-panel-text> {{ exercise.createusername }} </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel>
-                    <v-expansion-panel-title>类型 </v-expansion-panel-title>
+                    <v-expansion-panel-title>类型</v-expansion-panel-title>
                     <v-expansion-panel-text> {{ exerciseType[exercise.type] }} </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel>
-                    <v-expansion-panel-title>题面 </v-expansion-panel-title>
+                    <v-expansion-panel-title>题面</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <pre>{{ exercise.content }}</pre>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel v-show="exercise.type != 0 && exercise.type != 10">
-                    <v-expansion-panel-title>选项 </v-expansion-panel-title>
+                    <v-expansion-panel-title>选项</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <pre>{{ computedOption }}</pre>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel>
-                    <v-expansion-panel-title>答案 </v-expansion-panel-title>
+                    <v-expansion-panel-title>答案</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <pre>{{ computedAnswer }}</pre>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel>
-                    <v-expansion-panel-title>标签 </v-expansion-panel-title>
+                    <v-expansion-panel-title>题目组</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <v-chip v-for="tag in exercise.tag" :key="tag.tagid" color="secondary" label class="me-1">{{
                             tag.tagname
