@@ -73,6 +73,7 @@
     let allUser = ref(<AdminUser[]>[])
 
     function getAllUser() {
+        allUser.value = <AdminUser[]>[]
         callapi.get("Admin", "getAllUser", null, (data) => {
             allUser.value = (<GetAllUserResponse>data).users
         })
@@ -118,7 +119,6 @@
 
     watch(dialogActive, (newValue, oldValue) => {
         if (oldValue && !newValue) {
-            allUser.value = <AdminUser[]>[]
             getAllUser()
         }
     })

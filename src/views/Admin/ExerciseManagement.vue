@@ -79,12 +79,10 @@
 </template>
 
 <script lang="ts" setup name="ExerciseManagement">
-    import { useUserInfo } from "@/stores/userinfo"
     import type { AdminExercise, GetAllExerciseResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { onMounted, ref, watch } from "vue"
-    const userInfo = useUserInfo()
 
     const exerciseType = {
         0: "判断题",
@@ -107,6 +105,7 @@
     let nowPage = ref(1)
 
     function getAllExercise(page: number) {
+        allExercise.value = <AdminExercise[]>[]
         callapi.get(
             "Admin",
             "getAllExercise",
@@ -168,7 +167,6 @@
 
     watch(dialogActive, (newValue, oldValue) => {
         if (oldValue && !newValue) {
-            allExercise.value = <AdminExercise[]>[]
             getAllExercise(nowPage.value)
         }
     })

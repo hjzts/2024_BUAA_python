@@ -12,8 +12,8 @@
         <!-- ****************判断题****************** -->
         <!-- todo: 这里不应该是修改exercise.answer，而是需要重新存储并进行对比 -->
         <v-radio-group v-if="exercise.type === 0" v-model="userAnswer[0]" hide-details>
-            <v-radio label="对" value="A" color="success" />
-            <v-radio label="错" value="B" color="red" />
+            <v-radio label="正确" value="A" color="success" />
+            <v-radio label="错误" value="B" color="red" />
         </v-radio-group>
 
         <!-- ****************单选题****************** -->

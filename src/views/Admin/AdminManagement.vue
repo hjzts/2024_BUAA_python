@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts" setup name="AdminManagement">
-    import { useUserInfo } from "@/stores/userinfo";
+    import { useUserInfo } from "@/stores/userinfo"
     import type { AdminAdmin, GetAllAdminResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
@@ -97,6 +97,7 @@
     let allAdmin = ref(<AdminAdmin[]>[])
 
     function getAllAdmin() {
+        allAdmin.value = <AdminAdmin[]>[]
         callapi.get("Admin", "getAllAdmin", null, (data) => {
             allAdmin.value = (<GetAllAdminResponse>data).admins
         })
@@ -136,7 +137,6 @@
 
     watch(addDialogActive, (newValue, oldValue) => {
         if (oldValue && !newValue) {
-            allAdmin.value = <AdminAdmin[]>[]
             getAllAdmin()
         }
     })
@@ -173,7 +173,6 @@
 
     watch(delDialogActive, (newValue, oldValue) => {
         if (oldValue && !newValue) {
-            allAdmin.value = <AdminAdmin[]>[]
             getAllAdmin()
         }
     })

@@ -55,25 +55,23 @@
     </v-container>
 
     <v-dialog max-width="500px" v-model="editDialogActive">
-        <v-card>
-            <v-toolbar>
-                <v-btn icon="mdi-close" @click="editDialogActive = false" />
-                <v-toolbar-title>编辑题目</v-toolbar-title>
-            </v-toolbar>
+        <v-toolbar>
+            <v-btn icon="mdi-close" @click="editDialogActive = false" />
+            <v-toolbar-title>编辑题目</v-toolbar-title>
+        </v-toolbar>
 
-            <ExerciseUpdater
-                v-model="editExercise"
-                :current_user_tag="currentUserTag"
-                @add_tag="addTagDialogActive = true" />
-        </v-card>
+        <ExerciseUpdater
+            v-model="editExercise"
+            :current_user_tag="currentUserTag"
+            @add_tag="addTagDialogActive = true" />
     </v-dialog>
 
     <AddTag v-model="addTagDialogActive" @add_finish="getCurrentUserTag" />
 </template>
 
 <script lang="ts" setup name="MyExercise">
-    import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import AddTag from "@/components/AddTag.vue"
+    import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import type {
         FullTag,
         GetCurrentUserTagResponse,
@@ -122,6 +120,7 @@
 
     function getExerciseFromTag(page: number) {
         table_loading.value = true
+        exerciseFromTag.value = <GotExercise[]>[]
         callapi.get(
             "Tag",
             "getExerciseFromTag",
@@ -133,6 +132,9 @@
                 const result = <GetListExerciseResponse>data
                 exercisePages.value = result.pages
                 exerciseFromTag.value = result.thispage
+                table_loading.value = false
+            },
+            (errCode) => {
                 table_loading.value = false
             }
         )
@@ -168,7 +170,6 @@
 
     watch(editDialogActive, (newValue, oldValue) => {
         if (oldValue && !newValue) {
-            exerciseFromTag.value = <GotExercise[]>[]
             getExerciseFromTag(nowPage.value)
         }
     })
@@ -176,6 +177,4 @@
     let addTagDialogActive = ref(false)
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

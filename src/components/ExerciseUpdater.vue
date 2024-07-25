@@ -35,8 +35,8 @@
         <!-- ****************判断题****************** -->
         <v-radio-group v-if="modal.exercise.type === 0" v-model="modal.exercise.answer[0]" hide-details>
             <p class="text-subtitle-2 mt-2">正确选项</p>
-            <v-radio label="对" value="A" color="success" />
-            <v-radio label="错" value="B" color="red" />
+            <v-radio label="正确" value="A" color="success" />
+            <v-radio label="错误" value="B" color="red" />
         </v-radio-group>
 
         <!-- ****************单选题****************** -->

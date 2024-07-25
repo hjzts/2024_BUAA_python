@@ -40,7 +40,7 @@
     import type { FullTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { getNewExerciseModel } from "@/utils/exercise"
-    import { onMounted, reactive, ref, watch } from "vue"
+    import { onMounted, reactive, ref } from "vue"
     import AddTag from "@/components/AddTag.vue"
 
     interface NewExerciseList {
