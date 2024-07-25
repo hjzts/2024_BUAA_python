@@ -9,7 +9,7 @@
             </v-btn>
         </template>
 
-        <v-dialog max-width="500">
+        <!-- <v-dialog max-width="500">
             <template v-slot:activator="{ props: activatorProps }">
                 <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog" variant="flat"></v-btn>
             </template>
@@ -27,7 +27,7 @@
                     </v-card-actions>
                 </v-card>
             </template>
-        </v-dialog>
+        </v-dialog> -->
 
     </v-data-table>
 </template>
