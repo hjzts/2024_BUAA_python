@@ -11,6 +11,7 @@
                     density="comfortable"
                     color="red"
                     class="me-1"
+                    :disabled="item.adminname == userInfo.username || item.adminname == 'root'"
                     @click="delDialog(item.adminname, item.adminid)">
                     <v-icon size="default"> mdi-account-off </v-icon>
                 </v-btn>
@@ -80,10 +81,12 @@
 </template>
 
 <script lang="ts" setup name="AdminManagement">
+    import { useUserInfo } from "@/stores/userinfo";
     import type { AdminAdmin, GetAllAdminResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { onMounted, ref, watch } from "vue"
+    const userInfo = useUserInfo()
 
     const headers = [
         { title: "ID", value: "adminid" },
