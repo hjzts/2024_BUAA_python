@@ -64,11 +64,35 @@
                 text="完成创建"
                 size="large"
                 prepend-icon="mdi-check-circle"
-                @click="$emit('showAnswer')">
+                @click="submit(exercise.exerciseid)">
                 完成并提交</v-btn
             >
         </v-card-actions>
     </v-card>
+
+    <v-dialog max-width="500px0" v-model="submitInfo.isActive"> 
+        <v-card>
+            <v-toolbar>
+                <v-btn icon="mdi-close" @click="submitInfo.isActive = false" />
+            </v-toolbar>
+            <v-card-title
+                variant="outlined"
+                class="ma-2"
+                v-if="submitInfo.isRight"
+                color="success">
+                恭喜你，回答正确！
+            </v-card-title>
+            <v-card-title
+                variant="outlined"
+                class="ma-2"
+                v-if="!submitInfo.isRight"
+                color="red"
+                style="color: red;"
+                >
+                抱歉，回答错误！
+            </v-card-title>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script lang="ts" setup name="ExerciseFinisher">
@@ -98,9 +122,17 @@
             ],
     })
     let selectedTags = exercise.value.tag.map(item => item.tagid)
+    let submitInfo = ref({
+        isActive: false,
+        isRight: false
+    })
 
     watch(userAnswer, (newValue) => {
         console.log("userAnswer: ", newValue)
+    })
+
+    watch(submitInfo, (newValue) => {
+        console.log("submitInfo: ", newValue)
     })
 
     function getExerciseType() {
@@ -112,8 +144,8 @@
     }
 
     function submit(exerciseid: string) {
-        let isRight = checkAnswer()
-        
+        submitInfo.value.isRight = checkAnswer()
+        submitInfo.value.isActive = true
     }
 
     function checkAnswer() {
