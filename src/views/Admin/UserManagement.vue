@@ -47,7 +47,7 @@
 
             <template v-slot:actions>
                 <v-btn @click="dialogActive = false">取消</v-btn>
-                <v-btn color="primary" :loading="submit_loading" @click="onBlockUnblockClick">
+                <v-btn color="red" :loading="submit_loading" @click="onBlockUnblockClick">
                     {{ dialogType ? "解封" : "封禁" }}
                 </v-btn>
             </template>
@@ -59,7 +59,7 @@
     import type { AdminUser, GetAllUserResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
-    import { onMounted, ref } from "vue"
+    import { onMounted, ref, watch } from "vue"
 
     const headers = [
         { title: "ID", value: "userid" },
@@ -94,6 +94,7 @@
     }
 
     let submit_loading = ref(false)
+
     function onBlockUnblockClick() {
         submit_loading.value = true
         callapi.post(
@@ -113,6 +114,13 @@
             }
         )
     }
+
+    watch(dialogActive, (newValue, oldValue) => {
+        if (oldValue && !newValue) {
+            allUser.value = <AdminUser[]>[]
+            getAllUser()
+        }
+    })
 </script>
 
 <style scoped></style>

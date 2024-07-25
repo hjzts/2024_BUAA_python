@@ -14,6 +14,15 @@ export interface GetAllUserResponse {
     users: AdminUser[]
 }
 
+export interface AdminAdmin {
+    adminid: number
+    adminname: string
+}
+
+export interface GetAllAdminResponse {
+    admins: AdminAdmin[]
+}
+
 export interface GetUserInfoResponse {
     username: string
     avatarurl: string
