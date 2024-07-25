@@ -1,7 +1,51 @@
 <template>
     <v-container fluid class="pa-6">
         <p class="text-h4 mt-6 mb-4">所有题目</p>
-        <p class="text-subtitle-2 mb-4">点击查看详情、添加到题目组</p>
+        <p class="text-subtitle-2 mb-8">点击查看详情、添加到题目组</p>
+
+        <v-row justify="center" class="px-2">
+            <v-col cols="4">
+                <v-text-field
+                    v-model="searchID"
+                    placeholder="搜索题目ID"
+                    persistent-placeholder
+                    label="题目ID"
+                    prepend-inner-icon="mdi-magnify"
+                    variant="outlined"
+                    class="me-2"
+                    type="number"
+                    density="comfortable"
+                    clearable>
+                    <template #append>
+                        <v-btn color="secondary" size="large" variant="flat" @click="idSearch"> 搜索 </v-btn>
+                    </template>
+                </v-text-field>
+            </v-col>
+            <v-col cols="8" class="d-flex">
+                <v-select
+                    variant="outlined"
+                    class="me-2"
+                    max-width="200px"
+                    density="comfortable"
+                    :items="searchTypeList"
+                    item-value="type"
+                    v-model="searchType">
+                    <template #prepend> 根据 </template>
+                </v-select>
+                <v-text-field
+                    v-model="searchString"
+                    placeholder="请输入搜索关键词"
+                    prepend-inner-icon="mdi-magnify"
+                    variant="outlined"
+                    class="me-2"
+                    density="comfortable"
+                    clearable>
+                    <template #append>
+                        <v-btn color="primary" size="large" variant="flat" @click="stringSearch"> 搜索 </v-btn>
+                    </template>
+                </v-text-field>
+            </v-col>
+        </v-row>
 
         <v-data-table
             :headers="headers"
@@ -36,6 +80,7 @@
                     density="comfortable"
                     color="primary"
                     class="me-1"
+                    :disabled="reachableExerciseBlock"
                     @click="infoDialog(index)">
                     <v-icon size="default"> mdi-file-document </v-icon>
                 </v-btn>
@@ -47,6 +92,7 @@
                     density="comfortable"
                     color="green"
                     class="me-1"
+                    :disabled="reachableExerciseBlock"
                     @click="editDialog(index)">
                     <v-icon size="default"> mdi-pencil </v-icon>
                 </v-btn>
@@ -58,6 +104,7 @@
                     density="comfortable"
                     color="secondary"
                     class="me-1"
+                    :disabled="reachableExerciseBlock"
                     @click="addToTagDialog(item.exerciseid, item.title)">
                     <v-icon size="default"> mdi-tag-plus </v-icon>
                 </v-btn>
@@ -104,6 +151,7 @@
     import type {
         FullTag,
         GetCurrentUserTagResponse,
+        GetExerciseByIDResponse,
         GetListExerciseResponse,
         GotExercise,
         NewExerciseItem,
@@ -140,7 +188,9 @@
         getCurrentUserTag()
     })
 
+    let reachableExerciseGetType = 0
     let reachableExercise = ref(<GotExercise[]>[])
+    let reachableExerciseBlock = ref(false)
     let reachablePages = ref(1)
     let nowPage = ref(1)
     let table_loading = ref(false)
@@ -148,22 +198,67 @@
     function getReachableExercise(page: number) {
         table_loading.value = true
         reachableExercise.value = <GotExercise[]>[]
-        callapi.get(
-            "Exercise",
-            "getReachableExercise",
-            {
-                page: page,
-            },
-            (data) => {
-                const result = <GetListExerciseResponse>data
-                reachablePages.value = result.pages
-                reachableExercise.value = result.thispage
-                table_loading.value = false
-            },
-            (errCode) => {
-                table_loading.value = false
-            }
-        )
+        switch (reachableExerciseGetType) {
+            case 0:
+                callapi.get(
+                    "Exercise",
+                    "getReachableExercise",
+                    {
+                        page: page,
+                    },
+                    (data) => {
+                        const result = <GetListExerciseResponse>data
+                        reachablePages.value = result.pages
+                        reachableExerciseBlock.value = false
+                        reachableExercise.value = result.thispage
+                        table_loading.value = false
+                    },
+                    (errCode) => {
+                        table_loading.value = false
+                    }
+                )
+                break
+            case 1:
+            case 2:
+                callapi.get(
+                    "Exercise",
+                    "searchExercise",
+                    {
+                        page: page,
+                        type: reachableExerciseGetType === 1 ? "title" : "tag",
+                        pattern: searchString.value,
+                    },
+                    (data) => {
+                        const result = <GetListExerciseResponse>data
+                        reachablePages.value = result.pages
+                        reachableExerciseBlock.value = false
+                        reachableExercise.value = result.thispage
+                        table_loading.value = false
+                    },
+                    (errCode) => {
+                        table_loading.value = false
+                    }
+                )
+                break
+            case 3:
+                callapi.get(
+                    "Exercise",
+                    "getExerciseByID",
+                    {
+                        exerciseid: searchID.value,
+                    },
+                    (data) => {
+                        const result = <GetExerciseByIDResponse>data
+                        reachableExercise.value[0] = result.data
+                        reachableExerciseBlock.value = result.isBlock
+                        reachablePages.value = 1
+                        table_loading.value = false
+                    },
+                    (errCode) => {
+                        table_loading.value = false
+                    }
+                )
+        }
     }
 
     onMounted(() => {
@@ -220,6 +315,50 @@
         infoDialogExercise.value = reachableExercise.value[index]
         infoDialogActive.value = true
     }
+
+    const searchTypeList = [
+        {
+            title: "标题",
+            type: "title",
+        },
+        {
+            title: "标签",
+            type: "tag",
+        },
+    ]
+
+    let searchType = ref("title")
+    let searchString = ref()
+    let searchID = ref()
+
+    function stringSearch() {
+        if (searchType.value == "title") {
+            reachableExerciseGetType = 1
+        } else {
+            reachableExerciseGetType = 2
+        }
+        getReachableExercise(1)
+    }
+
+    watch(searchString, (newValue) => {
+        if (newValue == "" || newValue == null) {
+            reachableExerciseGetType = 0
+            getReachableExercise(1)
+        }
+    })
+
+    function idSearch() {
+        reachableExerciseGetType = 3
+        getReachableExercise(1)
+    }
+
+    watch(searchID, (newValue) => {
+        console.log(newValue)
+        if (newValue == "" || newValue == null) {
+            reachableExerciseGetType = 0
+            getReachableExercise(1)
+        }
+    })
 
     let selectedExercise = ref()
 
