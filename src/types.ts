@@ -125,7 +125,7 @@ export interface GetCurrentUserGroupResponse {
 }
 
 // ===== Log =====
-export interface UserEvaluation {
+export interface GetCurrentEvaluationResponse {
     score: number[]
     time: string[]
 }
