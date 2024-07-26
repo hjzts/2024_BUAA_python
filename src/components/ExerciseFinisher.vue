@@ -70,28 +70,43 @@
         </v-card-actions>
     </v-card>
 
-    <v-dialog max-width="500px0" v-model="submitInfo.isActive"> 
-        <v-card>
+    <v-dialog max-width="500px" v-model="submitInfo.isActive"> 
+        <v-card >
             <v-toolbar>
                 <v-btn icon="mdi-close" @click="submitInfo.isActive = false" />
             </v-toolbar>
+            <v-img
+                color="surface-variant"
+                src="static/img/right.png"
+                v-if="submitInfo.isRight"
+                cover
+            ></v-img>
             <v-card-title
                 variant="outlined"
-                class="ma-2"
+                class="ma-2 d-flex justify-center"
                 v-if="submitInfo.isRight"
                 color="success"
                 style="color:rgb(73, 209, 73)">
                 恭喜你，回答正确！
             </v-card-title>
+
+            <v-img
+                color="surface-variant"
+                src="static/img/wrong.png"
+                v-if="!submitInfo.isRight"
+                cover
+            ></v-img>
+            
             <v-card-title
                 variant="outlined"
-                class="ma-2"
+                class="ma-2 d-flex justify-center"
                 v-if="!submitInfo.isRight"
                 color="red"
                 style="color: rgb(231, 88, 88);"
                 >
                 抱歉，回答错误！
             </v-card-title>
+
         </v-card>
     </v-dialog>
 </template>
