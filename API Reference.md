@@ -1182,8 +1182,8 @@ f{
       {
         "tagid": tagid, // 题目组的 {题目组ID}
         "tagname": "{tagname}", // 题目组的名称
-        "createrusername": "{username}", // 创建者的用户名
-        "createravatarurl": "{avatarurl}" // 创建者的头像图片完整URL地址
+        "createusername": "{username}", // 创建者的用户名
+        "createavatarurl": "{avatarurl}" // 创建者的头像图片完整URL地址
       }
       ...
     ]
@@ -1206,9 +1206,8 @@ f{
       {
         "groupid": groupid, // 共享群组的 {共享群组ID}
         "groupname": "{groupname}", // 共享群组的名称
-        "createrusername": "{username}", // 创建者的用户名
-        "createravatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
-        "iscreater": true | false // 是否是共享群组的创建者
+        "createusername": "{username}", // 创建者的用户名
+        "createavatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
       }
       ...
     ]
