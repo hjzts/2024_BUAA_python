@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup name="ExerciseInfo">
-    import { computed, defineModel, defineProps, ref } from "vue"
+    import { computed, ref } from "vue"
     import type { GotExercise } from "@/types"
 
     const exerciseType = {

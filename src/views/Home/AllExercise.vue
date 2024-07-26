@@ -170,7 +170,7 @@
         NewExerciseItem,
     } from "@/types"
     import { callapi } from "@/utils/callapi"
-    import { onMounted, ref, toValue, watch } from "vue"
+    import { onMounted, ref, watch } from "vue"
     const userInfo = useUserInfo()
 
     const exerciseType = {

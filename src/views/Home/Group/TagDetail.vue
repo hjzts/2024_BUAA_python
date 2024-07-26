@@ -57,7 +57,7 @@
 <script lang="ts" setup name="TagDetail">
     import type { FullTag, GetListExerciseResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
-    import { onMounted, ref, watch } from "vue"
+    import { onMounted, ref } from "vue"
     import { onBeforeRouteUpdate } from "vue-router"
 
     const exerciseType = {
@@ -135,7 +135,7 @@
     })
 
     let selectedExercise = ref()
-    
+
     function doSelectedExercise() {}
 </script>
 
