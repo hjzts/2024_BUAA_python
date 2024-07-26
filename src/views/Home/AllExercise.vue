@@ -1,7 +1,8 @@
 <template>
     <v-container fluid class="pa-6">
         <p class="text-h4 mt-6 mb-4">所有题目</p>
-        <p class="text-subtitle-2 mb-8">点击查看详情、添加到题目组</p>
+        <p class="text-subtitle-2 mb-4">点击查看详情、添加到题目组、修改题目</p>
+        <p class="text-subtitle-2 mb-8">选择题目，进入练习</p>
 
         <v-row justify="center" class="px-2">
             <v-col cols="4">
@@ -118,6 +119,18 @@
         </v-data-table>
     </v-container>
 
+    <v-fab
+        color="green"
+        prepend-icon="mdi-share"
+        location="top end"
+        size="x-large"
+        position="sticky"
+        text="练习所选题目"
+        extended
+        app
+        @click="doSelectedExercise"
+        class="mt-4" />
+
     <v-dialog max-width="500px" v-model="editDialogActive">
         <v-toolbar>
             <v-btn icon="mdi-close" @click="editDialogActive = false" />
@@ -149,7 +162,7 @@
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import { useUserInfo } from "@/stores/userinfo"
     import type {
-        FullTag,
+        PublicTag,
         GetCurrentUserTagResponse,
         GetExerciseByIDResponse,
         GetListExerciseResponse,
@@ -157,7 +170,7 @@
         NewExerciseItem,
     } from "@/types"
     import { callapi } from "@/utils/callapi"
-    import { onMounted, ref, toValue, watch } from "vue"
+    import { onMounted, ref, watch } from "vue"
     const userInfo = useUserInfo()
 
     const exerciseType = {
@@ -176,7 +189,7 @@
         { title: "操作", key: "actions", sortable: false },
     ]
 
-    let currentUserTag = ref(<FullTag[]>[])
+    let currentUserTag = ref(<PublicTag[]>[])
 
     function getCurrentUserTag() {
         callapi.get("Tag", "getCurrentUserTag", null, (data) => {
@@ -362,9 +375,7 @@
 
     let selectedExercise = ref()
 
-    watch(selectedExercise, (newValue) => {
-        console.log(newValue)
-    })
+    function doSelectedExercise() {}
 </script>
 
 <style scoped></style>

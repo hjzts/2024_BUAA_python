@@ -775,6 +775,10 @@ f{
 }
 ```
 
+| errCode | errDescription   |
+| ------- | ---------------- |
+| 400401  | 无此ID对应的题目 |
+
 ### 5. searchExercise
 
 | Method | Content-Type | 描述                                                         |
@@ -947,7 +951,7 @@ f{
 
 | Key   | Value类型 | 描述                                   |
 | ----- | --------- | -------------------------------------- |
-| tagid | Integer   | 请求获取的题目组的 {题目组ID}          |
+| tagid | Integer   | 请求获取所有题目的题目组的 {题目组ID}  |
 | page  | Integer   | 获取的所有可查看的题目结果第 {page} 页 |
 
 **注：必须提供page，默认page参数为1**
@@ -1000,7 +1004,43 @@ f{
 }
 ```
 
-### 4. getCurrentUserTag
+| errCode | errDescription     |
+| ------- | ------------------ |
+| 500301  | 无此ID对应的题目组 |
+
+### 4. getTagInfoByID
+
+| Method | Content-Type | 描述             |
+| ------ | ------------ | ---------------- |
+| GET    | /            | 获取题目组的信息 |
+
+请求参数
+
+| Key   | Value类型 | 描述                              |
+| ----- | --------- | --------------------------------- |
+| tagid | Integer   | 请求获取信息的题目组的 {题目组ID} |
+
+**注：建议不检查该用户是否有权限访问这个题目组**
+
+成功返回
+
+```json
+{
+  "data": {
+    "tagid": tagid, // 题目组的 {题目组ID}
+    "tagname": "{tagname}", // 题目组的名称
+    "createusername": "{username}", // 创建者的用户名
+    "createavatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
+    ]
+  }
+}
+```
+
+| errCode | errDescription     |
+| ------- | ------------------ |
+| 500401  | 无此ID对应的题目组 |
+
+### 5. getCurrentUserTag
 
 | Method | Content-Type | 描述                             |
 | ------ | ------------ | -------------------------------- |
@@ -1171,7 +1211,7 @@ f{
 | ------- | --------- | --------------------------------------- |
 | groupid | Integer   | 请求获取题目组的共享群组的 {共享群组ID} |
 
-**注：建议不检查该用户是否有权限访问这个题目组**
+**注：建议不检查该用户是否有权限访问这个共享群组**
 
 成功返回
 
@@ -1182,8 +1222,8 @@ f{
       {
         "tagid": tagid, // 题目组的 {题目组ID}
         "tagname": "{tagname}", // 题目组的名称
-        "createrusername": "{username}", // 创建者的用户名
-        "createravatarurl": "{avatarurl}" // 创建者的头像图片完整URL地址
+        "createusername": "{username}", // 创建者的用户名
+        "createavatarurl": "{avatarurl}" // 创建者的头像图片完整URL地址
       }
       ...
     ]
@@ -1191,7 +1231,45 @@ f{
 }
 ```
 
-### 7. getCurrentUserGroup
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 600601  | 无此ID对应的共享群组 |
+
+### 7. getGroupInfoByID
+
+| Method | Content-Type | 描述                 |
+| ------ | ------------ | -------------------- |
+| GET    | /            | 获取共享群组中的信息 |
+
+**注：公共共享区为 *{共享群组ID}* 为1的群组，每个用户在注册时即加入，且不可退出。**
+
+请求参数
+
+| Key     | Value类型 | 描述                                  |
+| ------- | --------- | ------------------------------------- |
+| groupid | Integer   | 请求获取信息的共享群组的 {共享群组ID} |
+
+**注：建议不检查该用户是否有权限访问这个共享群组**
+
+成功返回
+
+```json
+{
+  "data": {
+    "groupid": groupid, // 共享群组的 {共享群组ID}
+    "groupname": "{groupname}", // 共享群组的名称
+    "createusername": "{username}", // 创建者的用户名
+    "createavatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
+    ]
+  }
+}
+```
+
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 600701  | 无此ID对应的共享群组 |
+
+### 8. getCurrentUserGroup
 
 | Method | Content-Type | 描述                                     |
 | ------ | ------------ | ---------------------------------------- |
@@ -1206,9 +1284,8 @@ f{
       {
         "groupid": groupid, // 共享群组的 {共享群组ID}
         "groupname": "{groupname}", // 共享群组的名称
-        "createrusername": "{username}", // 创建者的用户名
-        "createravatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
-        "iscreater": true | false // 是否是共享群组的创建者
+        "createusername": "{username}", // 创建者的用户名
+        "createavatarurl": "{avatarurl}", // 创建者的头像图片完整URL地址
       }
       ...
     ]

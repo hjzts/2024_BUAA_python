@@ -5,7 +5,10 @@ import Register from "@/views/Auth/Register.vue"
 import AdminLogin from "@/views/Auth/AdminLogin.vue"
 import Home from "@/views/Home/HomeView.vue"
 import AllExercise from "@/views/Home/AllExercise.vue"
-import Group from "@/views/Home/Group.vue"
+import GroupView from "@/views/Home/GroupView.vue"
+import AllGroup from "@/views/Home/Group/AllGroup.vue"
+import GroupDetail from "@/views/Home/Group/GroupDetail.vue"
+import TagDetail from "@/views/Home/Group/TagDetail.vue"
 import MyExercise from "@/views/Home/MyExercise.vue"
 import CreateExercise from "@/views/Home/CreateExercise.vue"
 import UserCenter from "@/views/Home/UserCenter.vue"
@@ -56,9 +59,27 @@ const router = createRouter({
                     component: AllExercise,
                 },
                 {
-                    name: "group",
                     path: "group",
-                    component: Group,
+                    component: GroupView,
+                    children: [
+                        {
+                            name: "group",
+                            path: "",
+                            component: AllGroup,
+                        },
+                        {
+                            name: "groupDetail",
+                            path: ":groupid",
+                            component: GroupDetail,
+                            props: true,
+                        },
+                        {
+                            name: "tagDetail",
+                            path: ":groupid/:tagid",
+                            component: TagDetail,
+                            props: true,
+                        },
+                    ],
                 },
 
                 {

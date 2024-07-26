@@ -20,11 +20,17 @@
 
     <v-app-bar density="compact" elevation="1" location="top">
         <template #prepend>
-            <v-btn v-if="navigator" variant="text" icon density="comfortable" class="ml-2" @click="navigateBack">
+            <v-btn
+                v-if="$route.name == 'groupDetail' || $route.name == 'tagDetail'"
+                variant="text"
+                icon
+                density="comfortable"
+                class="ml-2"
+                @click="navigateBack">
                 <v-icon size="default"> mdi-arrow-left </v-icon>
             </v-btn>
         </template>
-        <v-app-bar-title>{{ title_dict[selected[0]] }}</v-app-bar-title>
+        <v-app-bar-title>{{ title_dict[<string>$route.name] }}</v-app-bar-title>
         <v-spacer />
         <p>{{ userInfo.username }}</p>
         <v-btn icon @click="onLogoutClick">
@@ -37,7 +43,7 @@
     </v-main>
 </template>
 
-<script lang="ts" setup name="Home">
+<script lang="ts" setup name="HomeView">
     import { useToken } from "@/stores/token"
     import { useUserInfo } from "@/stores/userinfo"
     import { callapi } from "@/utils/callapi"
@@ -53,6 +59,8 @@
     } = {
         allExercise: "所有题目",
         group: "共享群组",
+        groupDetail: "共享群组详情",
+        tagDetail: "题目组详情",
         myExercise: "我的题目",
         createExercise: "创建题目",
         userCenter: "个人中心",
@@ -63,8 +71,6 @@
     watch(selected, (newValue) => {
         router.push({ name: newValue[0] })
     })
-
-    let navigator = ref(false)
 
     function navigateBack() {
         router.back()

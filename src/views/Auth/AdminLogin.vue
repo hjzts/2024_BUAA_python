@@ -30,7 +30,7 @@
     </v-card-text>
 </template>
 
-<script lang="ts" setup name="Login">
+<script lang="ts" setup name="AdminLogin">
     import { useToken } from "@/stores/token"
     import { useUserInfo } from "@/stores/userinfo"
     import type { LoginResponse } from "@/types"

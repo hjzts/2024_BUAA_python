@@ -21,7 +21,7 @@
     </v-main>
 </template>
 
-<script lang="ts" setup name="Login">
+<script lang="ts" setup name="AuthView">
     import { useToken } from "@/stores/token"
     import { useUserInfo } from "@/stores/userinfo"
     import type { GetUserInfoResponse } from "@/types"
