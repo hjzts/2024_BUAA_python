@@ -775,6 +775,10 @@ f{
 }
 ```
 
+| errCode | errDescription   |
+| ------- | ---------------- |
+| 400401  | 无此ID对应的题目 |
+
 ### 5. searchExercise
 
 | Method | Content-Type | 描述                                                         |
@@ -1000,6 +1004,10 @@ f{
 }
 ```
 
+| errCode | errDescription     |
+| ------- | ------------------ |
+| 500301  | 无此ID对应的题目组 |
+
 ### 4. getCurrentUserTag
 
 | Method | Content-Type | 描述                             |
@@ -1193,6 +1201,10 @@ f{
   }
 }
 ```
+
+| errCode | errDescription       |
+| ------- | -------------------- |
+| 600601  | 无此ID对应的共享群组 |
 
 ### 7. getCurrentUserGroup
 
