@@ -1,12 +1,12 @@
 <template>
     <p class="text-h4 mt-6 mb-4">共享群组详情：{{ groupname }}</p>
-    <p class="text-subtitle-2 mb-4">查看共享群组中的题目组</p>
     <p class="text-subtitle-2 mb-4">共享群组ID：{{ groupid }}</p>
-    <p class="text-subtitle-2 mb-4">
+    <p class="text-subtitle-2 mb-6">
         创建者：
         <v-avatar :image="createavatarurl" size="small" rounded="50" />
         {{ createusername }}
     </p>
+    <p class="text-h6 mb-4">共享群组中的题目组：</p>
 
     <v-container fluid class="d-flex fill-height justify-space-between">
         <v-card v-for="tag in tagFromGroup" width="24%" class="my-3">
@@ -100,7 +100,7 @@
     })
 
     onBeforeRouteUpdate((to) => {
-        getGroupInfo(parseInt(props.groupid))
+        getGroupInfo(parseInt(<string>to.params.groupid))
         getTagFromGroup(parseInt(<string>to.params.groupid))
     })
 
