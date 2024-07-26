@@ -1,64 +1,70 @@
 <template>
-    <v-container>
-        <line-chart :chart-data="chartData" :options="chartOptions"></line-chart>
-    </v-container>
+    <v-chart class="chart" :option="option" />
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { Line } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+<script lang="ts" setup name="UserEvaluation">
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { PieChart } from "echarts/charts";
+import {
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent
+} from "echarts/components";
+import VChart, { THEME_KEY } from "vue-echarts";
+import { ref, provide } from "vue";
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement);
+use([
+    CanvasRenderer,
+    PieChart,
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent
+]);
 
-export default defineComponent({
-    name: 'LineBarChart',
-    components: {
-        LineChart: Line,
+provide(THEME_KEY, "dark");
+
+const option = ref({
+    title: {
+        text: "Traffic Sources",
+        left: "center"
     },
-    setup() {
-        const chartData = ref({
-            labels: ['2024-07-01', '2024-07-02', '2024-07-03'],
-            datasets: [
-                {
-                    type: 'line',
-                    label: 'Score Line',
-                    data: [85, 90, 78],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: false,
-                },
-                {
-                    type: 'bar',
-                    label: 'Score Bar',
-                    data: [85, 90, 78],
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    borderWidth: 1,
-                },
+    tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: "vertical",
+        left: "left",
+        data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
+    },
+    series: [
+        {
+            name: "Traffic Sources",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [
+                { value: 335, name: "Direct" },
+                { value: 310, name: "Email" },
+                { value: 234, name: "Ad Networks" },
+                { value: 135, name: "Video Ads" },
+                { value: 1548, name: "Search Engines" }
             ],
-        });
-
-        const chartOptions = ref({
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-        });
-
-        return {
-            chartData,
-            chartOptions,
-        };
-    },
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: "rgba(0, 0, 0, 0.5)"
+                }
+            }
+        }
+    ]
 });
 </script>
   
 <style scoped>
-.v-container {
+.chart {
     height: 400px;
 }
 </style>

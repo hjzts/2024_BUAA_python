@@ -49,6 +49,11 @@ export interface UpdateStudentIDResponse {
     studentid: string
 }
 
+export interface UserEvaluation {
+    score: number[]
+    time: Date[]
+}
+
 // ===== Exercise =====
 // 公共题目
 interface PublicExercise {
