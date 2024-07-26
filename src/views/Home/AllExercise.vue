@@ -18,7 +18,14 @@
                     density="comfortable"
                     clearable>
                     <template #append>
-                        <v-btn color="secondary" size="large" variant="flat" @click="idSearch"> 搜索 </v-btn>
+                        <v-btn
+                            color="secondary"
+                            size="large"
+                            variant="flat"
+                            :disabled="searchID == '' || searchID == null"
+                            @click="idSearch">
+                            搜索
+                        </v-btn>
                     </template>
                 </v-text-field>
             </v-col>
@@ -42,7 +49,14 @@
                     density="comfortable"
                     clearable>
                     <template #append>
-                        <v-btn color="primary" size="large" variant="flat" @click="stringSearch"> 搜索 </v-btn>
+                        <v-btn
+                            color="primary"
+                            size="large"
+                            variant="flat"
+                            :disabled="searchString == ''"
+                            @click="stringSearch">
+                            搜索
+                        </v-btn>
                     </template>
                 </v-text-field>
             </v-col>
@@ -346,8 +360,8 @@
     ]
 
     let searchType = ref("title")
-    let searchString = ref()
-    let searchID = ref()
+    let searchString = ref("")
+    let searchID = ref(null)
 
     function stringSearch() {
         if (searchType.value == "title") {
@@ -382,7 +396,7 @@
 
     function doSelectedExercise() {
         globalexerciselist.reload(selectedExercise.value)
-        router.push('/exercise')
+        router.push("/exercise")
     }
 </script>
 

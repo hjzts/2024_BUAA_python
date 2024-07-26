@@ -108,7 +108,6 @@ export interface GetCurrentUserTagResponse {
 }
 
 // ===== Group =====
-
 export interface GetTagFromGroupResponse {
     tag: FullTag[]
 }
@@ -128,6 +127,11 @@ export interface GetCurrentUserGroupResponse {
 export interface GetCurrentEvaluationResponse {
     score: number[]
     time: string[]
+}
+
+export interface GetRecommendExerciseResponse {
+    statisfy: boolean
+    recommend: number[]
 }
 
 // ===== Other =====

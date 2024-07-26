@@ -61,6 +61,45 @@
                     :legend-visibl="false" />
             </div>
         </v-card>
+
+        <v-card prepend-icon="mdi-gift-open" title="题目推荐" max-width="600px" class="mt-10" location="bottom">
+            <v-divider />
+            <v-row class="mt-4 px-3">
+                <v-col cols="7">
+                    <v-text-field
+                        v-model="recommendPattern"
+                        label="推荐题目关键词"
+                        prepend-inner-icon="mdi-magnify"
+                        variant="outlined"
+                        class="me-1"
+                        density="comfortable"
+                        clearable />
+                </v-col>
+                <v-col cols="5">
+                    <v-text-field
+                        v-model="recommendQuantity"
+                        label="推荐题目数量"
+                        variant="outlined"
+                        density="comfortable"
+                        type="number"
+                        clearable>
+                        <template #append>
+                            <v-btn
+                                color="primary"
+                                size="large"
+                                variant="flat"
+                                :loading="submit_loading"
+                                :disabled="
+                                    recommendPattern == '' || recommendQuantity == '' || recommendQuantity == null
+                                "
+                                @click="recommend">
+                                搜索
+                            </v-btn>
+                        </template>
+                    </v-text-field>
+                </v-col>
+            </v-row>
+        </v-card>
     </v-container>
 
     <ChangeAvatar :activator="change_avatar_button" />
@@ -71,7 +110,7 @@
     import ChangeAvatar from "@/components/UserCenter/ChangeAvatar.vue"
     import ChangeStudentID from "@/components/UserCenter/ChangeStudentID.vue"
     import { useUserInfo } from "@/stores/userinfo"
-    import type { GetCurrentEvaluationResponse } from "@/types"
+    import type { GetCurrentEvaluationResponse, GetRecommendExerciseResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref } from "vue"
     import { use } from "echarts/core"
@@ -80,6 +119,9 @@
     import { GridComponent } from "echarts/components"
     import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components"
     import VChart from "vue-echarts"
+    import { useGlobalExerciseList } from "@/stores/globalexerciselist"
+    import { useRouter } from "vue-router"
+    import emitter from "@/utils/emitter"
 
     use([
         CanvasRenderer,
@@ -93,6 +135,8 @@
     ])
 
     const userInfo = useUserInfo()
+    const globalexerciselist = useGlobalExerciseList()
+    const router = useRouter()
 
     let change_avatar_button = ref()
     let change_studentid_button = ref()
@@ -135,7 +179,35 @@
     onMounted(() => {
         getCurrentEvaluation()
     })
-    
+
+    let recommendPattern = ref("")
+    let recommendQuantity = ref(null)
+
+    let submit_loading = ref(false)
+
+    function recommend() {
+        submit_loading.value = true
+        callapi.get(
+            "Log",
+            "getRecommendExercise",
+            {
+                pattern: recommendPattern.value,
+                quantity: recommendQuantity.value,
+            },
+            (data) => {
+                const result = <GetRecommendExerciseResponse>data
+                globalexerciselist.reload(result.recommend)
+                if (!result.statisfy) {
+                    emitter.emit("normalerror", "因题目数量不足，未能满足推荐数量需求")
+                }
+                submit_loading.value = false
+                router.push("/exercise")
+            },
+            (errCode) => {
+                submit_loading.value = false
+            }
+        )
+    }
 </script>
 
 <style scoped></style>
