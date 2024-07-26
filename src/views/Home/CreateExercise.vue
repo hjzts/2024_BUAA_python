@@ -37,7 +37,7 @@
 <script lang="ts" setup name="CreateExercise">
     import OCR from "@/components/CreateExercise/OCR.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
-    import type { FullTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
+    import type { PublicTag, GetCurrentUserTagResponse, NewExerciseItem } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { getNewExerciseModel } from "@/utils/exercise"
     import { onMounted, reactive, ref } from "vue"
@@ -48,7 +48,7 @@
     }
 
     let addTagDialogActive = ref(false)
-    let currentUserTag = ref(<FullTag[]>[])
+    let currentUserTag = ref(<PublicTag[]>[])
 
     function getCurrentUserTag() {
         callapi.get("Tag", "getCurrentUserTag", null, (data) => {

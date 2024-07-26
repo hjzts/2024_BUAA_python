@@ -3,58 +3,60 @@
         <v-card>
             <v-toolbar>
                 <v-btn icon="mdi-close" @click="isActive = false" />
-                <v-toolbar-title>添加题目到题目组</v-toolbar-title>
+                <v-toolbar-title>共享题目组到此共享群组</v-toolbar-title>
             </v-toolbar>
-            <v-card-item> 题目ID：{{ exerciseid }} </v-card-item>
-            <v-card-item> 题目标题：{{ title }} </v-card-item>
 
             <v-select
-                v-model="newtagid"
+                v-model="addtagid"
                 :items="current_user_tag"
                 item-title="tagname"
                 item-value="tagid"
-                :rules="[(v) => !!v || '请选择要添加到的题目组']"
-                label="要添加到的题目组"
+                :rules="[(v) => !!v || '请选择要共享的题目组']"
+                label="要共享的题目组"
                 variant="outlined"
                 class="ma-2" />
             <template v-slot:actions>
                 <v-btn @click="isActive = false">取消</v-btn>
-                <v-btn color="primary" :disabled="newtagid == ''" :loading="submit_loading" @click="onAddToTagClick"
-                    >添加题目组</v-btn
+                <v-btn
+                    color="primary"
+                    :disabled="addtagid == ''"
+                    :loading="submit_loading"
+                    @click="onAddTagToGroupClick"
+                    >共享题目组</v-btn
                 >
             </template>
         </v-card>
     </v-dialog>
 </template>
 
-<script lang="ts" setup name="AddExerciseToTag">
+<script lang="ts" setup name="AddTagToGroup">
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
     import { ref } from "vue"
 
-    const props = defineProps(["current_user_tag", "exerciseid", "title"])
+    const props = defineProps(["current_user_tag", "groupid"])
 
     const emit = defineEmits(["add_finish"])
 
     let isActive = defineModel({ default: false })
 
     let submit_loading = ref(false)
-    let newtagid = ref()
+    let addtagid = ref()
 
-    function onAddToTagClick() {
+    function onAddTagToGroupClick() {
         submit_loading.value = true
         callapi.post(
             "form-data",
-            "Tag",
-            "addExerciseToTag",
+            "Group",
+            "addTagToGroup",
             {
-                tagid: newtagid.value,
-                exerciseid: props.exerciseid,
+                groupid: props.groupid,
+                tagid: addtagid.value,
             },
             (data) => {
                 emit("add_finish")
-                emitter.emit("success_snackbar", "添加到题目组成功")
-                newtagid.value = null
+                emitter.emit("success_snackbar", "共享题目组成功")
+                addtagid.value = null
                 submit_loading.value = false
                 isActive.value = false
             },

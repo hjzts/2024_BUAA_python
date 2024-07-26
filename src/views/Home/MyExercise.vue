@@ -85,7 +85,7 @@
     import AddTag from "@/components/AddTag.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import type {
-        FullTag,
+        PublicTag,
         GetCurrentUserTagResponse,
         GetListExerciseResponse,
         GotExercise,
@@ -112,7 +112,7 @@
         { title: "操作", key: "actions", sortable: false },
     ]
 
-    let currentUserTag = ref(<FullTag[]>[])
+    let currentUserTag = ref(<PublicTag[]>[])
 
     function getCurrentUserTag() {
         callapi.get("Tag", "getCurrentUserTag", null, (data) => {

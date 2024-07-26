@@ -93,13 +93,35 @@ export interface OCRResponse {
 }
 
 // ===== Tag =====
-export interface FullTag {
+export interface PublicTag {
     tagid: number
     tagname: string
 }
 
+export interface FullTag extends PublicTag {
+    createusername: string
+    createavatarurl: string
+}
+
 export interface GetCurrentUserTagResponse {
+    tag: PublicTag[]
+}
+
+// ===== Group =====
+
+export interface GetTagFromGroupResponse {
     tag: FullTag[]
+}
+
+export interface GotGroup {
+    groupid: number
+    groupname: string
+    createusername: string
+    createavatarurl: string
+}
+
+export interface GetCurrentUserGroupResponse {
+    group: GotGroup[]
 }
 
 // ===== Other =====

@@ -149,7 +149,7 @@
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import { useUserInfo } from "@/stores/userinfo"
     import type {
-        FullTag,
+        PublicTag,
         GetCurrentUserTagResponse,
         GetExerciseByIDResponse,
         GetListExerciseResponse,
@@ -176,7 +176,7 @@
         { title: "操作", key: "actions", sortable: false },
     ]
 
-    let currentUserTag = ref(<FullTag[]>[])
+    let currentUserTag = ref(<PublicTag[]>[])
 
     function getCurrentUserTag() {
         callapi.get("Tag", "getCurrentUserTag", null, (data) => {
