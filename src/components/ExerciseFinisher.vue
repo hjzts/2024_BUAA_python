@@ -80,9 +80,12 @@
                 <v-btn icon="mdi-close" @click="dialogActive = false" />
                 <v-toolbar-title>{{ isRight ? "恭喜你，回答正确！" : "抱歉，回答错误！" }}</v-toolbar-title>
             </v-toolbar>
-            <!-- TODO -->
+
+            <v-img v-if="isRight" src="static/img/right.png" cover></v-img>
+            <v-img v-else src="static/img/wrong.png" cover></v-img>
+
             <template v-slot:actions>
-                <v-btn v-if="isEnd" color="primary"> 完成答题，返回 </v-btn>
+                <v-btn v-if="isEnd" color="primary" @click="dialogActive = false"> 完成答题</v-btn>
                 <v-btn
                     v-else
                     color="primary"
@@ -147,7 +150,16 @@
     }
 
     function checkAnswer() {
-        // TODO
+        if (props.exercise.answer.length !== userAnswer.value.answer.length) {
+            return false
+        }
+        const sortedUserAnswer = userAnswer.value.answer.sort()
+        const sortedExerciseAnswer = props.exercise.answer.sort()
+        for (let i = 0; i < sortedExerciseAnswer.length; i++) {
+            if (sortedUserAnswer[i] !== props.exercise.option[sortedExerciseAnswer[i].charCodeAt(0) - 65]) {
+                return false
+            }
+        }
         return true
     }
 </script>
@@ -159,6 +171,6 @@
     }
 
     pre {
-        white-space: pre-wrap
+        white-space: pre-wrap;
     }
 </style>

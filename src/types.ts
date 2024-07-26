@@ -124,6 +124,12 @@ export interface GetCurrentUserGroupResponse {
     group: GotGroup[]
 }
 
+// ===== Log =====
+export interface UserEvaluation {
+    score: number[]
+    time: string[]
+}
+
 // ===== Other =====
 export interface NewExerciseItem {
     exerciseid: number | undefined
