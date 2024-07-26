@@ -16,6 +16,7 @@ import AdminView from "@/views/Admin/AdminView.vue"
 import UserManagement from "@/views/Admin/UserManagement.vue"
 import ExerciseManagement from "@/views/Admin/ExerciseManagement.vue"
 import AdminManagement from "@/views/Admin/AdminManagement.vue"
+import ExerciseView from "@/views/Exercise/ExerciseView.vue"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -125,6 +126,10 @@ const router = createRouter({
                     component: AdminManagement,
                 },
             ],
+        },
+        {
+            path: "/exercise",
+            component: ExerciseView,
         },
     ],
 })

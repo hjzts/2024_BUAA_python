@@ -6,10 +6,13 @@
         "data": {
             "exerciseid": 1,
             "createusername": "hugo",
-            "type": 0,
+            "type": 1,
             "title": "测试题目1",
-            "content": "这是第一题的正文",
-            "option": [],
+            "content": "这是第一题的正文\n这是第一题的正文",
+            "option": [
+                "A",
+                "B"
+            ],
             "answer": [
                 "A"
             ],
@@ -22,8 +25,7 @@
                     "tagid": 2,
                     "tagname": "Python-Chapter1"
                 }
-            ],
-            "isBlock": false
+            ]
         }
     }
 }

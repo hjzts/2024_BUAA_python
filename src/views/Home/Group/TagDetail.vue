@@ -50,15 +50,19 @@
         text="练习所选题目"
         extended
         app
+        :disabled="selectedExercise.length == 0"
         @click="doSelectedExercise"
         class="mt-4" />
 </template>
 
 <script lang="ts" setup name="TagDetail">
+    import { useGlobalExerciseList } from "@/stores/globalexerciselist";
     import type { FullTag, GetListExerciseResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref } from "vue"
-    import { onBeforeRouteUpdate } from "vue-router"
+    import { onBeforeRouteUpdate, useRouter } from "vue-router"
+    const globalexerciselist = useGlobalExerciseList()
+    const router = useRouter()
 
     const exerciseType = {
         0: "判断题",
@@ -134,9 +138,12 @@
         getExerciseFromTag(parseInt(<string>to.params.groupid), 1)
     })
 
-    let selectedExercise = ref()
+    let selectedExercise = ref(<number[]>[])
 
-    function doSelectedExercise() {}
+    function doSelectedExercise() {
+        globalexerciselist.reload(selectedExercise.value)
+        router.push('/exercise')
+    }
 </script>
 
 <style scoped></style>

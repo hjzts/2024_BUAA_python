@@ -95,4 +95,8 @@
     })
 </script>
 
-<style scoped></style>
+<style scoped>
+    pre {
+        white-space: pre-wrap;
+    }
+</style>
