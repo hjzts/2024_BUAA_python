@@ -51,7 +51,7 @@ export interface UpdateStudentIDResponse {
 
 export interface UserEvaluation {
     score: number[]
-    time: Date[]
+    time: string[]
 }
 
 // ===== Exercise =====

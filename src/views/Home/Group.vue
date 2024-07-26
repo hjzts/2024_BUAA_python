@@ -1,4 +1,6 @@
-<template>共享群组</template>
+<template>
+    <ExerciseFinisher/>
+</template>
 
 <script lang="ts" setup name="CreateGroup">
     import ExerciseFinisher from "@/components/ExerciseFinisher.vue"

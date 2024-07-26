@@ -79,7 +79,8 @@
                 variant="outlined"
                 class="ma-2"
                 v-if="submitInfo.isRight"
-                color="success">
+                color="success"
+                style="color:rgb(73, 209, 73)">
                 恭喜你，回答正确！
             </v-card-title>
             <v-card-title
@@ -87,7 +88,7 @@
                 class="ma-2"
                 v-if="!submitInfo.isRight"
                 color="red"
-                style="color: red;"
+                style="color: rgb(231, 88, 88);"
                 >
                 抱歉，回答错误！
             </v-card-title>
@@ -96,7 +97,8 @@
 </template>
 
 <script lang="ts" setup name="ExerciseFinisher">
-    import { ref, watch } from "vue"
+    import { toValue } from "vue";
+import { ref, watch } from "vue"
 
     defineProps()
     defineEmits(["showAnswer"])
@@ -155,7 +157,7 @@
         const sortedUserAnswer = userAnswer.value.sort()
         const sortedExerciseAnswer = exercise.value.answer.sort()
         for (let i = 0; i < sortedExerciseAnswer.length; i++) {
-            if(sortedUserAnswer[i] !== sortedExerciseAnswer[i]) {
+            if(sortedUserAnswer[i] !== exercise.value.option[(sortedExerciseAnswer[i].charCodeAt(0))-65]) {
                 return false
             }
         }

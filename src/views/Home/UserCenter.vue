@@ -1,6 +1,6 @@
 <template>
     <v-container class="my-3">
-        <v-card prepend-icon="mdi-account-circle" title="查看您的信息" max-width="600px" location="bottom">
+        <v-card prepend-icon="mdi-account-circle" title="查看您的信息" max-width="600px" location="bottom" class="flat">
             <v-divider />
             <v-row no-gutters class="my-10" align="center" justify="center">
                 <v-col cols="4">
@@ -49,11 +49,14 @@
                     </v-list>
                 </v-col>
             </v-row>
+            <v-divider/>
+            
         </v-card>
 
+        <v-card class=" d-flex justify-center flat">
+            <UserEvaluation />
+        </v-card>
     </v-container>
-
-    <UserEvaluation/>
 
 
     <ChangeAvatar :activator="change_avatar_button" />
