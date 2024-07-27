@@ -154,6 +154,7 @@
 
         <ExerciseUpdater
             v-model="editExercise"
+            :limit_textarea="true"
             :current_user_tag="currentUserTag"
             @add_tag="addTagDialogActive = true" />
     </v-dialog>
@@ -187,10 +188,8 @@
     } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref, watch } from "vue"
-    import { useRouter } from "vue-router"
     const userInfo = useUserInfo()
     const globalexerciselist = useGlobalExerciseList()
-    const router = useRouter()
 
     const exerciseType = {
         0: "判断题",

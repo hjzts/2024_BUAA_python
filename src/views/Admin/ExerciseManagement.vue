@@ -30,7 +30,17 @@
                 }}</v-chip>
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:item.actions="{ item, index }">
+                <v-btn
+                    variant="tonal"
+                    icon
+                    density="comfortable"
+                    color="primary"
+                    class="me-1"
+                    @click="infoDialog(index)">
+                    <v-icon size="default"> mdi-file-document </v-icon>
+                </v-btn>
+
                 <v-btn
                     v-if="item.isBlock"
                     variant="tonal"
@@ -76,9 +86,12 @@
             </template>
         </v-card>
     </v-dialog>
+
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" />
 </template>
 
 <script lang="ts" setup name="ExerciseManagement">
+    import ExerciseInfo from "@/components/AllExercise/ExerciseInfo.vue"
     import type { AdminExercise, GetAllExerciseResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"
@@ -170,6 +183,14 @@
             getAllExercise(nowPage.value)
         }
     })
+
+    let infoDialogActive = ref(false)
+    let infoDialogExercise = ref(<AdminExercise>{})
+
+    function infoDialog(index: number) {
+        infoDialogExercise.value = allExercise.value[index]
+        infoDialogActive.value = true
+    }
 </script>
 
 <style scoped></style>

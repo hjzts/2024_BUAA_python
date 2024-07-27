@@ -60,9 +60,8 @@
     import type { FullTag, GetListExerciseResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref } from "vue"
-    import { onBeforeRouteUpdate, useRouter } from "vue-router"
+    import { onBeforeRouteUpdate } from "vue-router"
     const globalexerciselist = useGlobalExerciseList()
-    const router = useRouter()
 
     const exerciseType = {
         0: "判断题",

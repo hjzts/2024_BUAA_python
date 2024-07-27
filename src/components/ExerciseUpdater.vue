@@ -24,7 +24,7 @@
             color="primary"
             density="compact"
             hide-details
-            auto-grow
+            :auto-grow="!limit_textarea"
             no-resize
             clearable
             :rules="[(v:string) => !!v]"
@@ -141,9 +141,9 @@
 </template>
 
 <script lang="ts" setup name="ExerciseUpdater">
-    import { watch, ref, computed } from "vue"
+    import { watch, ref, computed, onMounted } from "vue"
     import emitter from "@/utils/emitter"
-    import type { CreateExerciseResponse, NewExerciseItem } from "@/types"
+    import type { CreateExerciseResponse, NewExerciseItem, PublicTag } from "@/types"
     import { getNewExerciseModel } from "@/utils/exercise"
     import { callapi } from "@/utils/callapi"
 
@@ -155,10 +155,22 @@
         },
     })
 
-    defineProps(["current_user_tag"])
+    defineProps<{limit_textarea: boolean, current_user_tag: PublicTag[]}>()
     defineEmits(["add_tag"])
 
     let options = ref(["A", "B"])
+
+    onMounted(() => {
+        if (modal.value.exercise.option.length <= 2) {
+            options.value = ["A", "B"]
+        } else {
+            let newOptions = <string[]>[]
+            for (let i = 0; i < modal.value.exercise.option.length; i++) {
+                newOptions.push((String.fromCharCode(65 + i)))
+            }
+            options.value = newOptions
+        }
+    })
 
     function addOptions() {
         if (options.value.length >= 26) {

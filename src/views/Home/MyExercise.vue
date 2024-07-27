@@ -74,6 +74,7 @@
 
         <ExerciseUpdater
             v-model="editExercise"
+            :limit_textarea="false"
             :current_user_tag="currentUserTag"
             @add_tag="addTagDialogActive = true" />
     </v-dialog>

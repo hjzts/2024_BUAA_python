@@ -120,7 +120,6 @@
     import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components"
     import VChart from "vue-echarts"
     import { useGlobalExerciseList } from "@/stores/globalexerciselist"
-    import { useRouter } from "vue-router"
     import emitter from "@/utils/emitter"
 
     use([
@@ -136,7 +135,6 @@
 
     const userInfo = useUserInfo()
     const globalexerciselist = useGlobalExerciseList()
-    const router = useRouter()
 
     let change_avatar_button = ref()
     let change_studentid_button = ref()
