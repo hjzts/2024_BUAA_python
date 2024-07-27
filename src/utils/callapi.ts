@@ -5,7 +5,7 @@ import router from "@/router"
 
 const __PRODUCE_ENV = false
 
-const baseURL = __PRODUCE_ENV ? "http://python.1230123.xyz/api/v1" : "http://localhost:5173/api/v1"
+const baseURL = "/api/v1"
 
 interface errDescription {
     [key: number]: string

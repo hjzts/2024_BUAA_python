@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"
 import Auth from "@/views/Auth/AuthView.vue"
 import login from "@/views/Auth/Login.vue"
 import Register from "@/views/Auth/Register.vue"
@@ -19,7 +19,7 @@ import AdminManagement from "@/views/Admin/AdminManagement.vue"
 import ExerciseView from "@/views/Exercise/ExerciseView.vue"
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
         {
             path: "/",

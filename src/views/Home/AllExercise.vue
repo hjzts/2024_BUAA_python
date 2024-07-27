@@ -335,7 +335,6 @@
 
     function addToTagDialog(exerciseid: number, title: string) {
         addToTagExerciseID.value = exerciseid
-        console.log(addToTagExerciseID.value)
         addToTagExerciseTitle.value = title
         addToTagDialogActive.value = true
     }
@@ -385,7 +384,6 @@
     }
 
     watch(searchID, (newValue) => {
-        console.log(newValue)
         if (newValue == "" || newValue == null) {
             reachableExerciseGetType = 0
             getReachableExercise(1)
@@ -396,7 +394,7 @@
 
     function doSelectedExercise() {
         globalexerciselist.reload(selectedExercise.value)
-        router.push("/exercise")
+        window.open("/exercise")
     }
 </script>
 

@@ -15,7 +15,7 @@
             text="返回"
             extended
             app
-            @click="$router.back"
+            @click="goBack"
             class="ml-4 mt-4" />
 
         <v-container fluid class="w-100 mt-10">
@@ -69,6 +69,10 @@
     function next() {
         nowExercise.value += 1
         getExercise(globalexerciselist.list[nowExercise.value - 1])
+    }
+
+    function goBack() {
+        window.close()
     }
 </script>
 

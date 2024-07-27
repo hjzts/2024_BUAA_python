@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup name="TagDetail">
-    import { useGlobalExerciseList } from "@/stores/globalexerciselist";
+    import { useGlobalExerciseList } from "@/stores/globalexerciselist"
     import type { FullTag, GetListExerciseResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref } from "vue"
@@ -79,7 +79,7 @@
         { title: "题目组", key: "tag", maxWidth: "350px" },
     ]
 
-    const props = defineProps<{ groupid: string }>()
+    const props = defineProps<{ groupid: string; tagid: string }>()
 
     let tagname = ref("")
     let createusername = ref("")
@@ -129,20 +129,20 @@
     }
 
     onMounted(() => {
-        getTagInfo(parseInt(props.groupid))
-        getExerciseFromTag(parseInt(props.groupid), 1)
+        getTagInfo(parseInt(props.tagid))
+        getExerciseFromTag(parseInt(props.tagid), 1)
     })
 
     onBeforeRouteUpdate((to) => {
-        getTagInfo(parseInt(<string>to.params.groupid))
-        getExerciseFromTag(parseInt(<string>to.params.groupid), 1)
+        getTagInfo(parseInt(<string>to.params.tagid))
+        getExerciseFromTag(parseInt(<string>to.params.tagid), 1)
     })
 
     let selectedExercise = ref(<number[]>[])
 
     function doSelectedExercise() {
         globalexerciselist.reload(selectedExercise.value)
-        router.push('/exercise')
+        window.open("/exercise")
     }
 </script>
 

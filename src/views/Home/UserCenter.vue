@@ -201,7 +201,7 @@
                     emitter.emit("normalerror", "因题目数量不足，未能满足推荐数量需求")
                 }
                 submit_loading.value = false
-                router.push("/exercise")
+                window.open("/exercise")
             },
             (errCode) => {
                 submit_loading.value = false
