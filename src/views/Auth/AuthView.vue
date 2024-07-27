@@ -42,19 +42,10 @@
             token.clear()
             router.replace({ name: "login" })
         } else if (token.isUser) {
-            callapi.get(
-                "UserInfo",
-                "getCurrentUserInfo",
-                null,
-                (data) => {
-                    userInfo.fillUser(<GetUserInfoResponse>data)
-                    router.replace("/home")
-                },
-                (errCode) => {
-                    token.clear()
-                    router.replace({ name: "login" })
-                }
-            )
+            callapi.get("UserInfo", "getCurrentUserInfo", null, (data) => {
+                userInfo.fillUser(<GetUserInfoResponse>data)
+                router.replace("/home")
+            })
         }
     })
 

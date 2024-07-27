@@ -110,7 +110,7 @@ const callapi = {
                         emitter.emit("apierror", errDescription[result.errCode])
                         if (result.errCode == 99991) {
                             token.clear()
-                            router.replace("/")
+                            router.replace({ name: "login" })
                         } else if (error != undefined) {
                             error(result.errCode)
                         }
@@ -167,7 +167,7 @@ const callapi = {
                         emitter.emit("apierror", errDescription[result.errCode])
                         if (result.errCode == 99991) {
                             token.clear()
-                            router.replace("/")
+                            router.replace({ name: "login" })
                         } else if (error != undefined) {
                             error(result.errCode)
                         }
