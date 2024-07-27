@@ -71,21 +71,20 @@
                         label="推荐题目关键词"
                         prepend-inner-icon="mdi-magnify"
                         variant="outlined"
-                        class="me-1"
                         density="comfortable"
                         clearable />
                 </v-col>
                 <v-col cols="5">
                     <v-text-field
                         v-model="recommendQuantity"
-                        label="推荐题目数量"
+                        label="数量"
                         variant="outlined"
                         density="comfortable"
                         type="number"
                         clearable>
                         <template #append>
                             <v-btn
-                                color="primary"
+                                style="background: linear-gradient(45deg, #1e90ff, #8a2be2); color: white"
                                 size="large"
                                 variant="flat"
                                 :loading="submit_loading"
@@ -93,7 +92,7 @@
                                     recommendPattern == '' || recommendQuantity == '' || recommendQuantity == null
                                 "
                                 @click="recommend">
-                                搜索
+                                AI推荐
                             </v-btn>
                         </template>
                     </v-text-field>
@@ -112,7 +111,7 @@
     import { useUserInfo } from "@/stores/userinfo"
     import type { GetCurrentEvaluationResponse, GetRecommendExerciseResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
-    import { onMounted, ref } from "vue"
+    import { onMounted, ref, watch } from "vue"
     import { use } from "echarts/core"
     import { CanvasRenderer } from "echarts/renderers"
     import { PieChart, BarChart, LineChart } from "echarts/charts"
@@ -179,7 +178,13 @@
     })
 
     let recommendPattern = ref("")
-    let recommendQuantity = ref(null)
+    let recommendQuantity = ref()
+
+    watch(recommendQuantity, (newValue) => {
+        if (newValue <= 0) {
+            recommendQuantity.value = 1
+        }
+    })
 
     let submit_loading = ref(false)
 
