@@ -12,6 +12,7 @@
                 <div v-for="(value, key) in new_exercise_list" :key="key" class="mb-4">
                     <ExerciseUpdater
                         v-model="new_exercise_list[key]"
+                        :limit_textarea="false"
                         :current_user_tag="currentUserTag"
                         @add_tag="addTagDialogActive = true" />
                 </div>
