@@ -8,8 +8,8 @@
     </p>
     <p class="text-h6 mb-4">共享群组中的题目组：</p>
 
-    <v-container fluid class="d-flex fill-height justify-space-between">
-        <v-card v-for="tag in tagFromGroup" width="24%" class="my-3">
+    <v-container fluid class="d-flex fill-height">
+        <v-card v-for="tag in tagFromGroup" width="23%" class="my-3 me-3">
             <v-card-title>{{ tag.tagname }}</v-card-title>
             <v-card-text>
                 创建者：

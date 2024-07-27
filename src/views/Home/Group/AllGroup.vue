@@ -2,8 +2,8 @@
     <p class="text-h4 mt-6 mb-4">共享群组</p>
     <p class="text-subtitle-2 mb-4">通过共享群组共享题目</p>
 
-    <v-container fluid class="d-flex fill-height justify-space-between">
-        <v-card v-for="group in currentUserGroup" width="24%" class="my-3">
+    <v-container fluid class="d-flex fill-height">
+        <v-card v-for="group in currentUserGroup" width="23%" class="my-3 me-3">
             <v-card-title>{{ group.groupname }}</v-card-title>
             <v-card-text>
                 <p class="mb-3">群组ID： {{ group.groupid }}</p>
