@@ -86,17 +86,7 @@
 
             <template v-slot:actions>
                 <v-btn v-if="isEnd" color="primary" @click="dialogActive = false"> 完成答题</v-btn>
-                <v-btn
-                    v-else
-                    color="primary"
-                    @click="
-                        () => {
-                            dialogActive = false
-                            $emit('next')
-                        }
-                    "
-                    >下一题</v-btn
-                >
+                <v-btn v-else color="primary" @click="next">下一题</v-btn>
             </template>
         </v-card>
     </v-dialog>
@@ -111,7 +101,7 @@
     const loading = defineModel("loading", {
         default: false,
     })
-    defineEmits(["next"])
+    const emit = defineEmits(["next"])
 
     const exerciseType = {
         0: "判断题",
@@ -161,6 +151,12 @@
             }
         }
         return true
+    }
+
+    function next() {
+        dialogActive.value = false
+        userAnswer.value.answer = <string[]>[]
+        emit("next")
     }
 </script>
 
