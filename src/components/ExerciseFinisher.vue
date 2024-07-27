@@ -155,8 +155,8 @@
         }
         const sortedUserAnswer = userAnswer.value.answer.sort()
         const sortedExerciseAnswer = props.exercise.answer.sort()
-        for (let i = 0; i < sortedExerciseAnswer.length; i++) {
-            if (sortedUserAnswer[i] !== props.exercise.option[sortedExerciseAnswer[i].charCodeAt(0) - 65]) {
+        for (let i = 0; i < sortedUserAnswer.length; i++) {
+            if (sortedUserAnswer[i] !== sortedExerciseAnswer[i]) {
                 return false
             }
         }
