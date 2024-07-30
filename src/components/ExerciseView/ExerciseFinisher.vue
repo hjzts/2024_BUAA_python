@@ -162,6 +162,7 @@
     }
 
     function next() {
+        isFinish.value = false
         userAnswer.value.answer = <string[]>[]
         emit("next")
     }

@@ -31,7 +31,10 @@
                     @showComment="showComment = true" />
             </v-row>
             <v-row class="w-100 justify-center" v-if="showComment">
-                <ExerciseComment :comment="comment" />
+                <ExerciseComment
+                    :exerciseid="exercise.exerciseid"
+                    :comment="comment"
+                    @refresh="getComment(exercise.exerciseid)" />
             </v-row>
         </v-container>
     </v-main>
@@ -64,6 +67,10 @@
                 loading.value = false
             }
         )
+        getComment(exerciseid)
+    }
+
+    function getComment(exerciseid: number) {
         comment.value = <GotComment[]>[]
         callapi.get(
             "Exercise",
@@ -82,7 +89,7 @@
     })
 
     let nowExercise = ref(1)
-    let showComment = ref(true)
+    let showComment = ref(false)
 
     function next() {
         showComment.value = false
