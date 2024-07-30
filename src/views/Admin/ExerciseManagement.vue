@@ -87,11 +87,11 @@
         </v-card>
     </v-dialog>
 
-    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" />
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="true"/>
 </template>
 
 <script lang="ts" setup name="ExerciseManagement">
-    import ExerciseInfo from "@/components/AllExercise/ExerciseInfo.vue"
+    import ExerciseInfo from "@/components/ExerciseInfo.vue"
     import type { AdminExercise, GetAllExerciseResponse } from "@/types"
     import { callapi } from "@/utils/callapi"
     import emitter from "@/utils/emitter"

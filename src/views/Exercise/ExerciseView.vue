@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup name="ExerciseView">
-    import ExerciseFinisher from "@/components/ExerciseFinisher.vue"
+    import ExerciseFinisher from "@/components/ExerciseView/ExerciseFinisher.vue"
     import { useGlobalExerciseList } from "@/stores/globalexerciselist"
     import type { GetExerciseByIDResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"

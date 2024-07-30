@@ -31,7 +31,7 @@
                         <pre>{{ computedOption }}</pre>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
-                <v-expansion-panel>
+                <v-expansion-panel v-if="showAnswer">
                     <v-expansion-panel-title>答案</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <pre>{{ computedAnswer }}</pre>
@@ -63,7 +63,7 @@
 
     let isActive = defineModel({ default: false })
 
-    const props = defineProps<{ exercise: GotExercise }>()
+    const props = defineProps<{ exercise: GotExercise, showAnswer: boolean }>()
 
     let defaultActive = ref([0, 1, 2, 3, 4, 5, 6])
 

@@ -168,13 +168,13 @@
 
     <AddTag v-model="addTagDialogActive" @add_finish="getReachableExercise(nowPage)" />
 
-    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" />
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="false"/>
 </template>
 
 <script lang="ts" setup name="AllExercise">
     import AddTag from "@/components/AddTag.vue"
     import AddExerciseToTag from "@/components/AllExercise/AddExerciseToTag.vue"
-    import ExerciseInfo from "@/components/AllExercise/ExerciseInfo.vue"
+    import ExerciseInfo from "@/components/ExerciseInfo.vue"
     import ExerciseUpdater from "@/components/ExerciseUpdater.vue"
     import { useGlobalExerciseList } from "@/stores/globalexerciselist"
     import { useUserInfo } from "@/stores/userinfo"

@@ -34,6 +34,12 @@
             }}</v-chip>
         </template>
 
+        <template v-slot:item.actions="{ item, index }">
+            <v-btn variant="tonal" icon density="comfortable" color="primary" class="me-1" @click="infoDialog(index)">
+                <v-icon size="default"> mdi-file-document </v-icon>
+            </v-btn>
+        </template>
+
         <template v-slot:bottom>
             <div class="text-center mt-2">
                 <v-pagination v-model="nowPage" :length="exercisePages"></v-pagination>
@@ -53,9 +59,12 @@
         :disabled="selectedExercise.length == 0"
         @click="doSelectedExercise"
         class="mt-4" />
+
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="false" />
 </template>
 
 <script lang="ts" setup name="TagDetail">
+    import ExerciseInfo from "@/components/ExerciseInfo.vue"
     import { useGlobalExerciseList } from "@/stores/globalexerciselist"
     import type { FullTag, GetListExerciseResponse, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
@@ -76,6 +85,7 @@
         { title: "类型", key: "type", width: "75px", minWidth: "75px" },
         { title: "标题", key: "title", maxWidth: "450px" },
         { title: "题目组", key: "tag", maxWidth: "350px" },
+        { title: "操作", key: "actions", sortable: false },
     ]
 
     const props = defineProps<{ groupid: string; tagid: string }>()
@@ -142,6 +152,14 @@
     function doSelectedExercise() {
         globalexerciselist.reload(selectedExercise.value)
         window.open("/exercise")
+    }
+
+    let infoDialogActive = ref(false)
+    let infoDialogExercise = ref(<GotExercise>{})
+
+    function infoDialog(index: number) {
+        infoDialogExercise.value = exerciseFromTag.value[index]
+        infoDialogActive.value = true
     }
 </script>
 
