@@ -155,7 +155,7 @@
         },
     })
 
-    defineProps<{limit_textarea: boolean, current_user_tag: PublicTag[]}>()
+    defineProps<{ limit_textarea: boolean; current_user_tag: PublicTag[] }>()
     defineEmits(["add_tag"])
 
     let options = ref(["A", "B"])
@@ -166,7 +166,7 @@
         } else {
             let newOptions = <string[]>[]
             for (let i = 0; i < modal.value.exercise.option.length; i++) {
-                newOptions.push((String.fromCharCode(65 + i)))
+                newOptions.push(String.fromCharCode(65 + i))
             }
             options.value = newOptions
         }

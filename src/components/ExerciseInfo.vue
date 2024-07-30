@@ -63,7 +63,7 @@
 
     let isActive = defineModel({ default: false })
 
-    const props = defineProps<{ exercise: GotExercise, showAnswer: boolean }>()
+    const props = defineProps<{ exercise: GotExercise; showAnswer: boolean }>()
 
     let defaultActive = ref([0, 1, 2, 3, 4, 5, 6])
 

@@ -168,7 +168,7 @@
 
     <AddTag v-model="addTagDialogActive" @add_finish="getReachableExercise(nowPage)" />
 
-    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="false"/>
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="false" />
 </template>
 
 <script lang="ts" setup name="AllExercise">
@@ -348,16 +348,16 @@
 
     const searchTypeList = [
         {
-            title: "标题",
-            type: "title",
-        },
-        {
             title: "题目组",
             type: "tag",
         },
+        {
+            title: "标题",
+            type: "title",
+        },
     ]
 
-    let searchType = ref("title")
+    let searchType = ref("tag")
     let searchString = ref("")
     let searchID = ref(null)
 

@@ -87,7 +87,7 @@
         </v-card>
     </v-dialog>
 
-    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="true"/>
+    <ExerciseInfo v-model="infoDialogActive" :exercise="infoDialogExercise" :showAnswer="true" />
 </template>
 
 <script lang="ts" setup name="ExerciseManagement">
