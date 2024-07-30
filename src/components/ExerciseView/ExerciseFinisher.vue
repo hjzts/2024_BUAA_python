@@ -70,7 +70,13 @@
         <v-divider />
 
         <v-card-actions class="d-flex justify-end">
-            <v-btn color="orange" size="large" prepend-icon="mdi-check-circle" @click="submit"> 完成并提交</v-btn>
+            <v-btn v-if="isFinish && !isEnd" color="green" size="large" prepend-icon="mdi-arrow-right" @click="next"
+                >下一题</v-btn
+            >
+            <v-btn v-else-if="isFinish && isEnd" color="green" size="large" disabled
+                >已完成答题，点击左上角返回按钮以返回</v-btn
+            >
+            <v-btn v-else color="orange" size="large" prepend-icon="mdi-check-circle" @click="submit">完成并提交</v-btn>
         </v-card-actions>
     </v-card>
 
@@ -85,8 +91,7 @@
             <v-img v-else src="static/img/wrong.png" cover></v-img>
 
             <template v-slot:actions>
-                <v-btn v-if="isEnd" color="primary" @click="dialogActive = false"> 完成答题</v-btn>
-                <v-btn v-else color="primary" @click="next">下一题</v-btn>
+                <v-btn color="primary" @click="dialogActive = false">关闭</v-btn>
             </template>
         </v-card>
     </v-dialog>
@@ -101,7 +106,7 @@
     const loading = defineModel("loading", {
         default: false,
     })
-    const emit = defineEmits(["next"])
+    const emit = defineEmits(["next", "showComment"])
 
     const exerciseType = {
         0: "判断题",
@@ -122,11 +127,14 @@
         answer: <string[]>[],
     })
 
-    let dialogActive = ref(false)
+    let isFinish = ref(false)
     let isRight = ref(false)
+    let dialogActive = ref(false)
 
     function submit() {
+        isFinish.value = true
         isRight.value = checkAnswer()
+        emit("showComment")
         dialogActive.value = true
         if (isRight.value) {
             callapi.post("form-data", "Log", "addRightLog", {
@@ -154,7 +162,6 @@
     }
 
     function next() {
-        dialogActive.value = false
         userAnswer.value.answer = <string[]>[]
         emit("next")
     }

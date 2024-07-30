@@ -22,27 +22,33 @@
             <v-row class="w-100 justify-center mb-10">
                 <p class="text-h4">题目 {{ nowExercise }} / {{ globalexerciselist.length }}</p>
             </v-row>
-            <v-row class="w-100 justify-center">
+            <v-row class="w-100 justify-center mb-5">
                 <ExerciseFinisher
                     v-model:loading="loading"
                     :exercise="exercise"
                     :isEnd="nowExercise == globalexerciselist.length"
-                    @next="next" />
+                    @next="next"
+                    @showComment="showComment = true" />
+            </v-row>
+            <v-row class="w-100 justify-center" v-if="showComment">
+                <ExerciseComment :comment="comment" />
             </v-row>
         </v-container>
     </v-main>
 </template>
 
 <script lang="ts" setup name="ExerciseView">
+    import ExerciseComment from "@/components/ExerciseView/ExerciseComment.vue"
     import ExerciseFinisher from "@/components/ExerciseView/ExerciseFinisher.vue"
     import { useGlobalExerciseList } from "@/stores/globalexerciselist"
-    import type { GetExerciseByIDResponse, GotExercise } from "@/types"
+    import type { GetCommentByIDResponse, GetExerciseByIDResponse, GotComment, GotExercise } from "@/types"
     import { callapi } from "@/utils/callapi"
     import { onMounted, ref } from "vue"
 
     const globalexerciselist = useGlobalExerciseList()
 
     let exercise = ref(<GotExercise>{})
+    let comment = ref(<GotComment[]>[])
     let loading = ref(false)
 
     function getExercise(exerciseid: number) {
@@ -58,6 +64,17 @@
                 loading.value = false
             }
         )
+        comment.value = <GotComment[]>[]
+        callapi.get(
+            "Exercise",
+            "getCommentByID",
+            {
+                exerciseid: exerciseid,
+            },
+            (data) => {
+                comment.value = (<GetCommentByIDResponse>data).comment
+            }
+        )
     }
 
     onMounted(() => {
@@ -65,8 +82,10 @@
     })
 
     let nowExercise = ref(1)
+    let showComment = ref(true)
 
     function next() {
+        showComment.value = false
         nowExercise.value += 1
         getExercise(globalexerciselist.list[nowExercise.value - 1])
     }

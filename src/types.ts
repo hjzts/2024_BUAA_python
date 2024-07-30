@@ -92,6 +92,17 @@ export interface OCRResponse {
     text: string
 }
 
+export interface GotComment {
+    createusername: string
+    createavatarurl: string
+    time: string
+    content: string
+}
+
+export interface GetCommentByIDResponse {
+    comment: GotComment[]
+}
+
 // ===== Tag =====
 export interface PublicTag {
     tagid: number
