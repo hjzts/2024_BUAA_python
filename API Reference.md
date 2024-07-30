@@ -898,6 +898,7 @@ f{
       {
         "createusername": "{username}", // 创建该讨论的的用户名
         "createavatarurl": "{avatarurl}", // 创建该讨论的的用户头像
+        "time": "{YYYY-MM-DD HH:MM:SS}", // 讨论创建的时间，例如2024-01-01 23:59:59
         "content": "{content}", // 讨论的内容
       }
       ......
